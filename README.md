@@ -27,7 +27,7 @@ Sales CRM系统相关协议
 
 ## 客户
 
-### 获取客户列表
+### 获取客户管理客户列表
 REQ:  
 
 GET /sales-crm/customers/page-get?page=0&size=2
@@ -136,6 +136,117 @@ RESP:
     }
 }
 ```
+
+### 获取我的客户客户列表
+REQ:  
+
+GET /sales-crm/customers/page-get/myself?page=0&size=2
+```json
+RESP:
+{
+    "links": [
+        {
+            "rel": "first",
+            "href": "http://localhost:8080/sales-crm/customers/page-get/myself?page=0&size=2"
+        },
+        {
+            "rel": "self",
+            "href": "http://localhost:8080/sales-crm/customers/page-get/myself"
+        },
+        {
+            "rel": "next",
+            "href": "http://localhost:8080/sales-crm/customers/page-get/myself?page=1&size=2"
+        },
+        {
+            "rel": "last",
+            "href": "http://localhost:8080/sales-crm/customers/page-get/myself?page=1&size=2"
+        }
+    ],
+    "content": [
+        {
+            "id": "49bf2265-83c4-11e7-964c-c81f66c50f7d",
+            "createdDate": "2017-08-18T03:21:13Z",
+            "createdBy": "sato:user:keycloak:sales",
+            "lastModifiedDate": "2017-08-18T03:21:13Z",
+            "lastModifiedBy": "sato:user:keycloak:sales",
+            "version": 0,
+            "contactName": "孙昊9",
+            "contactMobile": "18612172119",
+            "xuebaNo": null,
+            "name": "孙昊9",
+            "mobile": "18612172119",
+            "gender": null,
+            "qq": null,
+            "parents": null,
+            "parentsMobile": null,
+            "province": null,
+            "city": null,
+            "district": null,
+            "school": null,
+            "grade": null,
+            "gradeNote": null,
+            "teachingAterial": null,
+            "teachingAterialNote": null,
+            "scores": null,
+            "fullMarks": null,
+            "comment": null,
+            "tutorialFlag": null,
+            "learningProcess": null,
+            "nextTest": null,
+            "nextTestDate": null,
+            "answerInterval": null,
+            "ownedSalesID": 2,
+            "ownedSalesName": "孙昊",
+            "ownedSalesUserName": "sales",
+            "links": []
+        },
+        {
+            "id": "4191b4ac-83c4-11e7-964c-c81f66c50f7d",
+            "createdDate": "2017-08-18T03:20:59Z",
+            "createdBy": "sato:user:keycloak:sales",
+            "lastModifiedDate": "2017-08-18T03:20:59Z",
+            "lastModifiedBy": "sato:user:keycloak:sales",
+            "version": 0,
+            "contactName": "孙昊5",
+            "contactMobile": "18612172115",
+            "xuebaNo": null,
+            "name": "孙昊5",
+            "mobile": "18612172115",
+            "gender": null,
+            "qq": null,
+            "parents": null,
+            "parentsMobile": null,
+            "province": null,
+            "city": null,
+            "district": null,
+            "school": null,
+            "grade": null,
+            "gradeNote": null,
+            "teachingAterial": null,
+            "teachingAterialNote": null,
+            "scores": null,
+            "fullMarks": null,
+            "comment": null,
+            "tutorialFlag": null,
+            "learningProcess": null,
+            "nextTest": null,
+            "nextTestDate": null,
+            "answerInterval": null,
+            "ownedSalesID": 2,
+            "ownedSalesName": "孙昊",
+            "ownedSalesUserName": "sales",
+            "links": []
+        }
+    ],
+    "page": {
+        "size": 2,
+        "totalElements": 4,
+        "totalPages": 2,
+        "number": 0
+    }
+}
+```
+
 ### 增加客户
 REQ:  
 

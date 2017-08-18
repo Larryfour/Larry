@@ -1,0 +1,22 @@
+stages:
+  - build
+  - test
+  - package
+  - release
+  - deploy
+
+maven-verify:
+  stage: test
+  script:
+    - ./mvnw verify -DskipDocker
+
+maven-deply:
+  stage: deploy
+  script:
+    - ./mvnw clean package deploy -Dmaven.skip.test=true -P with-docker
+  only:
+    - tags
+
+maven-build:
+  stage: build
+  script: ./mvnw compile

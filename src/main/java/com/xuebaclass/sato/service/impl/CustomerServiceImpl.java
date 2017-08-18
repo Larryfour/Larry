@@ -46,6 +46,15 @@ public class CustomerServiceImpl implements CustomerService {
 		PageInfo<Customer> pageInfo = new PageInfo<>(customerMapper.getCustomers(sort, customer));
 		return new PageImpl<Customer>(pageInfo.getList(), pageable, pageInfo.getTotal());
 	}
+
+	@Override
+	public Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) {
+		PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
+		String sort = SatoSort.getSort(pageable, "CREATED_DATE");
+		PageInfo<Customer> pageInfo = new PageInfo<>(customerMapper.getMyselfCustomers(sort, customer));
+		return new PageImpl<Customer>(pageInfo.getList(), pageable, pageInfo.getTotal());
+	}
+
 	@Override
 	public void distribution(DistributionRequest request){
 		customerMapper.distribution(request);

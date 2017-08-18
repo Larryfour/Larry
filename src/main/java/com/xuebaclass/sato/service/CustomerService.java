@@ -17,6 +17,8 @@ public interface CustomerService {
 
     Page<Customer> getCustomers(Pageable pageable, Customer customer) ;
 
+    Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) ;
+
     void distribution(DistributionRequest request);
 
 

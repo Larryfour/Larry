@@ -108,6 +108,19 @@ public interface CustomerMapper {
             }.toString();
         }
 
+        public String getMyselfCustomers(Map<String, Object> parameters) {
+            String sortField = (String) parameters.get("sortField");
+            return new SQL() {
+                {
+                    SELECT("*");
+                    FROM(TABLE_NAME);
+                    WHERE("1=1");
+                    WHERE("OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "'");
+                    ORDER_BY(sortField + " desc");
+                }
+            }.toString();
+        }
+
         public String distribution(Map<String, Object> parameters) {
             DistributionRequest distributionRequest = (DistributionRequest) parameters.get("distributionRequest");
 
@@ -164,6 +177,14 @@ public interface CustomerMapper {
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getCustomers")
     List<Customer> getCustomers(@Param("sortField") String sortField, Customer customer);
+
+    /**
+     * @param sortField
+     * @param customer
+     * @return
+     */
+    @SelectProvider(type = CustomerSqlProvider.class, method = "getMyselfCustomers")
+    List<Customer> getMyselfCustomers(@Param("sortField") String sortField, Customer customer);
 
     /**
      * @param distributionRequest

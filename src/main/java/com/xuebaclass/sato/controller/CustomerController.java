@@ -55,4 +55,12 @@ public class CustomerController {
         return ResponseEntity.ok(distributionRequest);
     }
 
+    @RequestMapping(value = "/page-get/myself", method = RequestMethod.GET)
+    public ResponseEntity<PagedResources<Resource<Customer>>>
+    getMyselfCustomers(@PageableDefault Pageable pageable,
+                 PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) {
+        Page<Customer> customers = customerService.getMyselfCustomers(pageable, customer);
+        return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
+    }
+
 }

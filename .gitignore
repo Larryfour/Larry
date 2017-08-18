@@ -1,0 +1,12 @@
+target/
+.project
+.settings/
+.classpath
+
+.idea
+.mvn
+.iws
+sato-order.iml
+/pom.xml.releaseBackup
+/release.properties
+/.springBeans
