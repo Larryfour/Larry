@@ -1,0 +1,12 @@
+{
+  "realm": "sato",
+  "auth-server-url": "https://dev.xuebastudy.com/auth",
+  "ssl-required": "external",
+  "resource": "sato-order",
+  "credentials": {
+    "secret": "b12cd152-70a3-4943-94d3-5140a8e577a8"
+  },
+  "use-resource-role-mappings": false,
+  "principal-attribute": "preferred_username",
+  "enable-basic-auth": true
+}
