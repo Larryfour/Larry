@@ -5,8 +5,9 @@ target/
 
 .idea
 .mvn
-.iws
-sato-order.iml
+sales-crm.ipr
+sales-crm.iml
+sales-crm.iws
 /pom.xml.releaseBackup
 /release.properties
 /.springBeans
