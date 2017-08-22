@@ -187,7 +187,7 @@ public interface CustomerMapper {
      * @param mobile
      */
     @Select("SELECT * FROM CUSTOMER WHERE MOBILE = #{mobile} AND ID <> #{id}")
-    Customer checkMobileExist(String mobile, String id);
+    Customer checkMobileExist(@Param("mobile") String mobile, @Param("id") String id);
 
     /**
      * @param sortField

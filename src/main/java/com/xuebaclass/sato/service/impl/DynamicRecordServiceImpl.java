@@ -47,7 +47,6 @@ public class DynamicRecordServiceImpl implements DynamicRecordService {
         } catch (Exception e) {
             throw CrmException.newException(e.getMessage());
         }
-        dynamicRecordMapper.create(record);
     }
 
     /**
