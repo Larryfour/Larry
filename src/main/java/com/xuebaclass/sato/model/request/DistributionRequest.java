@@ -3,7 +3,7 @@ package com.xuebaclass.sato.model.request;
 import java.util.List;
 
 /**
- * Created by kangfei on 2017-08-18.
+ * Created by sunhao on 2017-08-18.
  */
 public class DistributionRequest {
     private Integer ownedSalesID;

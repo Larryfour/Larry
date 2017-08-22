@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
- * Created by kangfei on 2017-08-17.
+ * Created by sunhao on 2017-08-17.
  */
 public interface TagGroupMapper {
 
@@ -32,7 +32,6 @@ public interface TagGroupMapper {
     }
 
     /**
-     * 创建订单
      *
      * @param tagGroup
      */

@@ -6,21 +6,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Created by kangfei on 2017-08-11.
+ * Created by sunhao on 2017-08-11.
  */
 public interface CustomerService {
-    void create(Customer customer);
+    void create(Customer customer) throws Exception;
 
-    void update(Customer customer);
+    void update(Customer customer) throws Exception;
 
-    Customer getById(String id);
+    Customer getById(String id) throws Exception;
 
-    Page<Customer> getCustomers(Pageable pageable, Customer customer) ;
+    Customer getByContactMobile(String contactMobile) throws Exception;
 
-    Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) ;
+    Page<Customer> getCustomers(Pageable pageable, Customer customer) throws Exception;
 
-    void distribution(DistributionRequest request);
+    Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) throws Exception;
 
+    void distribution(DistributionRequest request) throws Exception;
 
 
 }

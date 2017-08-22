@@ -2,29 +2,47 @@ package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.DynamicRecord;
 import com.xuebaclass.sato.service.DynamicRecordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
- * Created by kangfei on 2017-08-11.
+ * Created by sunhao on 2017-08-11.
  */
 @RestController
 @RequestMapping("record")
 public class DynamicRecordController {
+    private static final Logger logger = LoggerFactory.getLogger(DynamicRecordController.class);
 
     @Autowired
     private DynamicRecordService dynamicRecordService;
 
+    /**
+     * 创建动态日志
+     *
+     * @return
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody DynamicRecord dynamicRecord) {
+    public ResponseEntity create(@RequestBody DynamicRecord dynamicRecord) throws Exception{
+        logger.info("################### create dynamic record #######################");
         dynamicRecordService.create(dynamicRecord);
         return ResponseEntity.ok(dynamicRecord);
     }
 
+    /**
+     * 根据客户id，获取动态日志
+     *
+     * @return
+     */
     @RequestMapping(value = "/customer-id/{customerId}", method = RequestMethod.GET)
-    public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) {
-        return ResponseEntity.ok(dynamicRecordService.getRecordByCustomerId(customerId));
+    public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) throws Exception{
+        logger.info("################### get record by customer id #######################");
+        List<DynamicRecord> dynamicRecords = dynamicRecordService.getRecordByCustomerId(customerId);
+        return ResponseEntity.ok(dynamicRecords);
     }
 
 

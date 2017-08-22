@@ -1,6 +1,6 @@
 FROM registry.xuebastudy.com/java:8
 
-MAINTAINER ZhaoJin <zhaojin@xuebaclass.com>
+MAINTAINER SunHao <sunhao@xuebaedu.com>
 
 VOLUME /tmp
 

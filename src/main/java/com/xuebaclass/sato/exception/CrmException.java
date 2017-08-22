@@ -9,7 +9,7 @@ package com.xuebaclass.sato.exception;
 public class CrmException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private int code = 0;
-	private String title = "Sato Crm Exception";
+	private String title = "Sales Crm Exception";
 
 	public CrmException(String message) {
 		super(message);

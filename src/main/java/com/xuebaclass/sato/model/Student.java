@@ -24,10 +24,13 @@ public class Student extends AbstractPersistable {
     private String parentMobile;
 
     private String answerTime;
+    private String callperiod;
+    private String title;
+    private String attendtraining;
 
     // 云信
     private String nimAccountId;
-
+    private String processInstanceId;
     private Map<String, String> extensions;
 
     @Override
@@ -158,5 +161,37 @@ public class Student extends AbstractPersistable {
 
     public void setExtensions(Map<String, String> extensions) {
         this.extensions = extensions;
+    }
+
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
+    public String getCallperiod() {
+        return callperiod;
+    }
+
+    public void setCallperiod(String callperiod) {
+        this.callperiod = callperiod;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAttendtraining() {
+        return attendtraining;
+    }
+
+    public void setAttendtraining(String attendtraining) {
+        this.attendtraining = attendtraining;
     }
 }

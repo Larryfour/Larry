@@ -5,11 +5,11 @@ import com.xuebaclass.sato.model.DynamicRecord;
 import java.util.List;
 
 /**
- * Created by kangfei on 2017-08-11.
+ * Created by sunhao on 2017-08-11.
  */
 public interface DynamicRecordService {
-    void create(DynamicRecord record);
+    void create(DynamicRecord record) throws Exception;
 
-    List<DynamicRecord> getRecordByCustomerId(String customerId);
+    List<DynamicRecord> getRecordByCustomerId(String customerId) throws Exception;
 
 }

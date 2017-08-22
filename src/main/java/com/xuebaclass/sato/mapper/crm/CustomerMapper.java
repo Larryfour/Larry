@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Created by kangfei on 2017-08-17.
+ * Created by sunhao on 2017-08-17.
  */
 public interface CustomerMapper {
 
@@ -49,9 +49,9 @@ public interface CustomerMapper {
                 VALUES("NEXT_TEST", "#{nextTest}");
                 VALUES("NEXT_TEST_DATE", "#{nextTestDate}");
                 VALUES("ANSWER_INTERVAL", "#{answerInterval}");
-                VALUES("OWNED_SALES_ID", "'1'");
-                VALUES("OWNED_SALES_USERNAME", "'linyiran'");
-                VALUES("OWNED_SALES_NAME", "'林依然'");
+                VALUES("OWNED_SALES_ID", "#{ownedSalesID}");
+                VALUES("OWNED_SALES_USERNAME", "#{ownedSalesUserName}");
+                VALUES("OWNED_SALES_NAME", "#{ownedSalesName}");
 
                 VALUES("CREATED_BY", "'" + getCurrentAuditor() + "'");
                 VALUES("CREATED_DATE", "utc_timestamp()");
@@ -169,6 +169,25 @@ public interface CustomerMapper {
      */
     @Select("SELECT * FROM CUSTOMER WHERE ID = #{id}")
     Customer getById(String id);
+
+    /**
+     * @param mobile
+     */
+    @Select("SELECT * FROM CUSTOMER WHERE CONTACT_MOBILE = #{mobile}")
+    Customer getByContactMobile(String mobile);
+
+
+    /**
+     * @param mobile
+     */
+    @Select("SELECT * FROM CUSTOMER WHERE MOBILE = #{mobile}")
+    Customer getByMobile(String mobile);
+
+    /**
+     * @param mobile
+     */
+    @Select("SELECT * FROM CUSTOMER WHERE MOBILE = #{mobile} AND ID <> #{id}")
+    Customer checkMobileExist(String mobile, String id);
 
     /**
      * @param sortField

@@ -3,7 +3,7 @@ package com.xuebaclass.sato.model;
 import java.util.Date;
 
 /**
- * Created by kangfei on 2017-08-17.
+ * Created by sunhao on 2017-08-17.
  */
 public class Customer extends AbstractPersistable{
     private String contactName;

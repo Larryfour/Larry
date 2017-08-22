@@ -9,7 +9,7 @@ import org.apache.ibatis.jdbc.SQL;
 import java.util.List;
 
 /**
- * Created by kangfei on 2017-08-17.
+ * Created by sunhao on 2017-08-17.
  */
 public interface TagMapper {
 

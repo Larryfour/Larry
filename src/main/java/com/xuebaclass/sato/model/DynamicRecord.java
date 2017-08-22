@@ -1,7 +1,7 @@
 package com.xuebaclass.sato.model;
 
 /**
- * Created by kangfei on 2017-08-17.
+ * Created by sunhao on 2017-08-17.
  */
 public class DynamicRecord extends AbstractPersistable {
     private String customerId;
