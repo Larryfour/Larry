@@ -88,8 +88,8 @@ public interface CustomerMapper {
                 SET("NEXT_TEST_DATE=#{nextTestDate}");
                 SET("ANSWER_INTERVAL=#{answerInterval}");
 
-                VALUES("LAST_MODIFIED_BY", "'" + getCurrentAuditor() + "'");
-                VALUES("LAST_MODIFIED_DATE", "utc_timestamp()");
+                SET("LAST_MODIFIED_BY='" + getCurrentAuditor() + "'");
+                SET("LAST_MODIFIED_DATE=utc_timestamp()");
 
                 WHERE("ID = #{id}");
             }}.toString();
@@ -139,8 +139,8 @@ public interface CustomerMapper {
                 SET("OWNED_SALES_NAME=#{distributionRequest.ownedSalesName}");
                 SET("OWNED_SALES_USERNAME=#{distributionRequest.ownedSalesUserName}");
 
-                VALUES("LAST_MODIFIED_BY", "'" + getCurrentAuditor() + "'");
-                VALUES("LAST_MODIFIED_DATE", "utc_timestamp()");
+                SET("LAST_MODIFIED_BY='" + getCurrentAuditor() + "'");
+                SET("LAST_MODIFIED_DATE=utc_timestamp()");
 
                 WHERE("ID IN (" + StringUtils.join(customerIds.toArray(), ",") + ")");
             }}.toString();
