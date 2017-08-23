@@ -124,15 +124,13 @@ public interface CustomerMapper {
         public String distribution(Map<String, Object> parameters) {
             DistributionRequest distributionRequest = (DistributionRequest) parameters.get("distributionRequest");
 
-            distributionRequest.setCustomerIds(
-                    distributionRequest
-                            .getCustomerIds()
-                            .stream()
-                            .map(string -> {
-                                return "'" + string + "'";
-                            })
-                            .collect(Collectors.toList()));
-
+            List<String> customerIds = distributionRequest
+                    .getCustomerIds()
+                    .stream()
+                    .map(string -> {
+                        return "'" + string + "'";
+                    })
+                    .collect(Collectors.toList());
 
             return new SQL() {{
                 UPDATE(TABLE_NAME);
@@ -144,7 +142,7 @@ public interface CustomerMapper {
                 VALUES("LAST_MODIFIED_BY", "'" + getCurrentAuditor() + "'");
                 VALUES("LAST_MODIFIED_DATE", "utc_timestamp()");
 
-                WHERE("ID IN (" + StringUtils.join(distributionRequest.getCustomerIds().toArray(), ",") + ")");
+                WHERE("ID IN (" + StringUtils.join(customerIds.toArray(), ",") + ")");
             }}.toString();
         }
 

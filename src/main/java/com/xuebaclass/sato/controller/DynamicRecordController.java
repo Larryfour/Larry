@@ -27,10 +27,10 @@ public class DynamicRecordController {
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody DynamicRecord dynamicRecord) throws Exception{
+    public ResponseEntity create(@RequestBody DynamicRecord dynamicRecord) throws Exception {
         logger.info("################### create dynamic record #######################");
-        dynamicRecordService.create(dynamicRecord);
-        return ResponseEntity.ok(dynamicRecord);
+
+        return ResponseEntity.ok(dynamicRecordService.create(dynamicRecord));
     }
 
     /**
@@ -39,8 +39,9 @@ public class DynamicRecordController {
      * @return
      */
     @RequestMapping(value = "/customer-id/{customerId}", method = RequestMethod.GET)
-    public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) throws Exception{
+    public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) throws Exception {
         logger.info("################### get record by customer id #######################");
+
         List<DynamicRecord> dynamicRecords = dynamicRecordService.getRecordByCustomerId(customerId);
         return ResponseEntity.ok(dynamicRecords);
     }

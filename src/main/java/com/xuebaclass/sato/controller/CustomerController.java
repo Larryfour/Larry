@@ -34,6 +34,7 @@ public class CustomerController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Customer customer) throws Exception {
         logger.info("################### create customer #######################");
+
         customerService.create(customer);
         return ResponseEntity.ok(customer);
     }
@@ -46,6 +47,7 @@ public class CustomerController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody Customer customer) throws Exception {
         logger.info("################### update customer #######################");
+
         customerService.update(customer);
         return ResponseEntity.ok(customer);
     }
@@ -60,6 +62,7 @@ public class CustomerController {
     getCustomers(@PageableDefault Pageable pageable,
                  PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
         logger.info("################### get page customer #######################");
+
         Page<Customer> customers = customerService.getCustomers(pageable, customer);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
@@ -72,6 +75,7 @@ public class CustomerController {
     @RequestMapping(value = "/id/{customerId}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable String customerId) throws Exception {
         logger.info("################### get customer info by id #######################");
+
         return ResponseEntity.ok(customerService.getById(customerId));
     }
 
@@ -83,6 +87,7 @@ public class CustomerController {
     @RequestMapping(value = "/distribution", method = RequestMethod.POST)
     public ResponseEntity distribution(@RequestBody DistributionRequest distributionRequest) throws Exception {
         logger.info("################### distribution customers for sales #######################");
+
         customerService.distribution(distributionRequest);
         return ResponseEntity.ok(distributionRequest);
     }
@@ -97,6 +102,7 @@ public class CustomerController {
     getMyselfCustomers(@PageableDefault Pageable pageable,
                        PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
         logger.info("################### get customers for myself  #######################");
+
         Page<Customer> customers = customerService.getMyselfCustomers(pageable, customer);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }

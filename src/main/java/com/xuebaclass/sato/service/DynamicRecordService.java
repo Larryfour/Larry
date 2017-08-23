@@ -8,7 +8,7 @@ import java.util.List;
  * Created by sunhao on 2017-08-11.
  */
 public interface DynamicRecordService {
-    void create(DynamicRecord record) throws Exception;
+    DynamicRecord create(DynamicRecord record) throws Exception;
 
     List<DynamicRecord> getRecordByCustomerId(String customerId) throws Exception;
 
