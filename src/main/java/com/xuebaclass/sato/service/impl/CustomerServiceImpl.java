@@ -15,6 +15,7 @@ import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.request.DistributionRequest;
 import com.xuebaclass.sato.service.CustomerService;
 import com.xuebaclass.sato.utils.CurrentUser;
+import com.xuebaclass.sato.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("contact mobile:[" + customer.getContactMobile() + "]");
 
         try {
+
+            if (!Utils.isMobile(customer.getContactMobile())){
+                throw CrmException.newException("电话号码不符合规范!");
+            }
+
             Customer existCustomer = customerMapper.getByContactMobile(customer.getContactMobile());
             if (existCustomer != null) {
                 throw CrmException.newException("客户联络电话已存在!");
@@ -55,7 +61,6 @@ public class CustomerServiceImpl implements CustomerService {
             DynamicRecord record = new DynamicRecord();
             record.setType("1");
             record.setComment("创建客户。");
-            record.setCustomerId(customer.getId());
 
             if (customer.getOwnedSalesID() == null
                     && StringUtils.isEmpty(customer.getOwnedSalesUserName())
@@ -82,6 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
             try {
+                record.setCustomerId(customer.getId());
                 dynamicRecordMapper.create(record);
             } catch (Exception e) {
                 logger.error("customer create dynamic record error occurred.", e);
@@ -97,6 +103,15 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("update customer id[" + customer.getId() + "]");
 
         try {
+
+            if (!Utils.isMobile(customer.getMobile())){
+                throw CrmException.newException("学生电话号码不符合规范!");
+            }
+
+            if (!Utils.isMobile(customer.getParentsMobile())){
+                throw CrmException.newException("家长电话号码不符合规范!");
+            }
+
             Customer existCustomer = customerMapper.getById(customer.getId());
             if (existCustomer == null) {
                 throw CrmException.newException("客户不存在!");
@@ -107,21 +122,34 @@ public class CustomerServiceImpl implements CustomerService {
                 throw CrmException.newException("学生电话已存在!");
             }
 
-            customerMapper.update(customer);
+            Sales sales = null;
 
-            Sales sales = salesMapper.getSalesByUserName(CurrentUser.getInstance().getCurrentAuditorName());
-            if (sales == null) {
-                throw CrmException.newException("分配账户不存在！");
+            DynamicRecord record = new DynamicRecord();
+
+            if (customer.getOwnedSalesID() == null
+                    && StringUtils.isEmpty(customer.getOwnedSalesUserName())
+                    && StringUtils.isEmpty(customer.getOwnedSalesUserName())) {
+
+                String userName = CurrentUser.getInstance().getCurrentAuditorName();
+                sales = salesMapper.getSalesByUserName(userName);
+                if (sales == null) {
+                    throw CrmException.newException("修改账户不存在！");
+                }
+
+                record.setName(sales.getName());
+                record.setUserName(sales.getUserName());
+            } else {
+                record.setName(customer.getOwnedSalesName());
+                record.setUserName(customer.getOwnedSalesUserName());
             }
 
 
+            customerMapper.update(customer);
+
             try {
-                DynamicRecord record = new DynamicRecord();
                 record.setType("2");
                 record.setComment("更新客户信息。");
                 record.setCustomerId(customer.getId());
-                record.setName(sales.getName());
-                record.setUserName(sales.getUserName());
                 dynamicRecordMapper.create(record);
             } catch (Exception e) {
                 logger.error("customer update dynamic record error occurred.", e);

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Utils {
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
     private static final String ORDERUUID_FORMAT_STRING = "yyyyMMddHHmmsssss";
+    private static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
 
     /**
      * 获取系统当前日期
@@ -204,4 +206,8 @@ public class Utils {
         return xuebaNo.substring(0, xuebaNo.length() - 1);
     }
 
+
+    public static boolean isMobile(String mobile) {
+        return Pattern.matches(REGEX_MOBILE, mobile);
+    }
 }
