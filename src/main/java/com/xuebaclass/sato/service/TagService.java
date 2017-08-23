@@ -2,6 +2,7 @@ package com.xuebaclass.sato.service;
 
 import com.xuebaclass.sato.model.Tag;
 import com.xuebaclass.sato.model.TagGroup;
+import com.xuebaclass.sato.model.response.ManagementTagsResponse;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface TagService {
 
     void createTagGroup(TagGroup tagGroup);
 
-    List<Tag> getTags();
+    List<Tag> getAllTags();
+
+    List<ManagementTagsResponse> getManagementTags();
 }

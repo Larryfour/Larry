@@ -616,4 +616,127 @@ RESP:
 ```
 
 
+### 获取标签管理列表
+REQ:
+  
+GET /sales-crm/tag/management/all
+```json
+
+```
+
+RESP:
+```json
+[
+    {
+        "tagGroupId": 1,
+        "tagGroupName": "客户状态",
+        "tags": [
+            {
+                "id": "1",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "无法接通",
+                "comment": "无法接通",
+                "tagGroupId": 1,
+                "flag": false
+            },
+            {
+                "id": "2",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "错号/空号",
+                "comment": "错号/空号",
+                "tagGroupId": 1,
+                "flag": false
+            },
+            {
+                "id": "3",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "很有意向",
+                "comment": "很有意向",
+                "tagGroupId": 1,
+                "flag": false
+            },
+            {
+                "id": "4",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "意向不确定",
+                "comment": "意向不确定",
+                "tagGroupId": 1,
+                "flag": false
+            },
+            {
+                "id": "5",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "明确拒绝",
+                "comment": "明确拒绝",
+                "tagGroupId": 1,
+                "flag": false
+            },
+            {
+                "id": "8",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "测试标签3",
+                "comment": "测试标签3",
+                "tagGroupId": 1,
+                "flag": false
+            }
+        ]
+    },
+    {
+        "tagGroupId": 2,
+        "tagGroupName": "测试组",
+        "tags": [
+            {
+                "id": "6",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "测试标签1",
+                "comment": "测试标签1",
+                "tagGroupId": 2,
+                "flag": false
+            },
+            {
+                "id": "7",
+                "createdDate": "2017-08-23T09:11:38Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "测试标签2",
+                "comment": "测试标签2",
+                "tagGroupId": 2,
+                "flag": false
+            }
+        ]
+    }
+]
+```
+
+
 

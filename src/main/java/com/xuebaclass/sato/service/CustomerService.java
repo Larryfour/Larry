@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 public interface CustomerService {
     void create(Customer customer) throws Exception;
 
-    void update(Customer customer) throws Exception;
+    void update(String id, Customer customer) throws Exception;
 
     Customer getById(String id) throws Exception;
 

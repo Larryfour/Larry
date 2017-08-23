@@ -60,38 +60,41 @@ public interface CustomerMapper {
             }}.toString();
         }
 
-        public String update() {
+        public String update(Map<String, Object> parameters) {
+            String id = (String) parameters.get("id");
+            Customer customer = (Customer) parameters.get("customer");
+
             return new SQL() {{
                 UPDATE(TABLE_NAME);
 
-                SET("XUEBA_NO=#{xuebaNo}");
-                SET("NAME=#{name}");
-                SET("MOBILE=#{mobile}");
-                SET("GENDER=#{gender}");
-                SET("QQ=#{qq}");
-                SET("PARENTS=#{parents}");
-                SET("PARENTS_MOBILE=#{parentsMobile}");
-                SET("PROVINCE=#{province}");
-                SET("CITY=#{city}");
-                SET("DISTRICT=#{district}");
-                SET("SCHOOL=#{school}");
-                SET("GRADE=#{grade}");
-                SET("GRADE_NOTE=#{gradeNote}");
-                SET("TEACHING_ATERIAL=#{teachingAterial}");
-                SET("TEACHING_ATERIAL_NOTE=#{teachingAterialNote}");
-                SET("SCORES=#{scores}");
-                SET("FULL_MARKS=#{fullMarks}");
-                SET("COMMENT=#{comment}");
-                SET("TUTORIAL_FLAG=#{tutorialFlag}");
-                SET("LEARNING_PROCESS=#{learningProcess}");
-                SET("NEXT_TEST=#{nextTest}");
-                SET("NEXT_TEST_DATE=#{nextTestDate}");
-                SET("ANSWER_INTERVAL=#{answerInterval}");
+                SET("XUEBA_NO=#{customer.xuebaNo}");
+                SET("NAME=#{customer.name}");
+                SET("MOBILE=#{customer.mobile}");
+                SET("GENDER=#{customer.gender}");
+                SET("QQ=#{customer.qq}");
+                SET("PARENTS=#{customer.parents}");
+                SET("PARENTS_MOBILE=#{customer.parentsMobile}");
+                SET("PROVINCE=#{customer.province}");
+                SET("CITY=#{customer.city}");
+                SET("DISTRICT=#{customer.district}");
+                SET("SCHOOL=#{customer.school}");
+                SET("GRADE=#{customer.grade}");
+                SET("GRADE_NOTE=#{customer.gradeNote}");
+                SET("TEACHING_ATERIAL=#{customer.teachingAterial}");
+                SET("TEACHING_ATERIAL_NOTE=#{customer.teachingAterialNote}");
+                SET("SCORES=#{customer.scores}");
+                SET("FULL_MARKS=#{customer.fullMarks}");
+                SET("COMMENT=#{customer.comment}");
+                SET("TUTORIAL_FLAG=#{customer.tutorialFlag}");
+                SET("LEARNING_PROCESS=#{customer.learningProcess}");
+                SET("NEXT_TEST=#{customer.nextTest}");
+                SET("NEXT_TEST_DATE=#{customer.nextTestDate}");
+                SET("ANSWER_INTERVAL=#{customer.answerInterval}");
 
                 SET("LAST_MODIFIED_BY='" + getCurrentAuditor() + "'");
                 SET("LAST_MODIFIED_DATE=utc_timestamp()");
 
-                WHERE("ID = #{id}");
+                WHERE("ID = '"+id+"'");
             }}.toString();
         }
 
@@ -160,7 +163,7 @@ public interface CustomerMapper {
      * @param customer
      */
     @UpdateProvider(type = CustomerSqlProvider.class, method = "update")
-    void update(Customer customer);
+    void update(@Param("id") String id, @Param("customer") Customer customer);
 
     /**
      * @param id

@@ -5,35 +5,37 @@ import com.xuebaclass.sato.model.TagGroup;
 import com.xuebaclass.sato.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by sunhao on 2017-08-11.
  */
 @RestController
-@RequestMapping("tag")
+@RequestMapping("tags")
 public class TagController {
 
     @Autowired
     private TagService tagService;
 
-    @RequestMapping(value = "/group/create", method = RequestMethod.POST)
+    @PostMapping(value = "/group")
     public ResponseEntity createTagGroup(@RequestBody TagGroup tagGroup) {
         tagService.createTagGroup(tagGroup);
-        return ResponseEntity.ok(200);
+        return ResponseEntity.ok(tagGroup);
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity createTag(@RequestBody Tag tag) {
         tagService.createTag(tag);
-        return ResponseEntity.ok(200);
+        return ResponseEntity.ok(tag);
     }
 
-    @RequestMapping(value = "/get-all", method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity getTags() {
-        return ResponseEntity.ok(tagService.getTags());
+        return ResponseEntity.ok(tagService.getAllTags());
+    }
+
+    @GetMapping(value = "/select/management")
+    public ResponseEntity getManagementTags() {
+        return ResponseEntity.ok(tagService.getManagementTags());
     }
 }

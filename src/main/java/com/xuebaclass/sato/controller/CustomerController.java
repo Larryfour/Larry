@@ -31,7 +31,7 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity create(@RequestBody Customer customer) throws Exception {
         logger.info("################### create customer #######################");
 
@@ -44,11 +44,11 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity update(@RequestBody Customer customer) throws Exception {
+    @PutMapping(value = "/{id}")
+    public ResponseEntity update(@PathVariable String id, @RequestBody Customer customer) throws Exception {
         logger.info("################### update customer #######################");
 
-        customerService.update(customer);
+        customerService.update(id, customer);
         return ResponseEntity.ok(customer);
     }
 
@@ -57,7 +57,7 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/page-get", method = RequestMethod.GET)
+    @GetMapping(value = "/select")
     public ResponseEntity<PagedResources<Resource<Customer>>>
     getCustomers(@PageableDefault Pageable pageable,
                  PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
@@ -72,11 +72,11 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/id/{customerId}", method = RequestMethod.GET)
-    public ResponseEntity getById(@PathVariable String customerId) throws Exception {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity getById(@PathVariable String id) throws Exception {
         logger.info("################### get customer info by id #######################");
 
-        return ResponseEntity.ok(customerService.getById(customerId));
+        return ResponseEntity.ok(customerService.getById(id));
     }
 
     /**
@@ -84,7 +84,7 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/distribution", method = RequestMethod.POST)
+    @PostMapping(value = "/distribution")
     public ResponseEntity distribution(@RequestBody DistributionRequest distributionRequest) throws Exception {
         logger.info("################### distribution customers for sales #######################");
 
@@ -97,7 +97,7 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/page-get/myself", method = RequestMethod.GET)
+    @RequestMapping(value = "/select/myself", method = RequestMethod.GET)
     public ResponseEntity<PagedResources<Resource<Customer>>>
     getMyselfCustomers(@PageableDefault Pageable pageable,
                        PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {

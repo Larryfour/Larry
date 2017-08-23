@@ -26,7 +26,7 @@ public class DynamicRecordController {
      *
      * @return
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity create(@RequestBody DynamicRecord dynamicRecord) throws Exception {
         logger.info("################### create dynamic record #######################");
 
@@ -38,7 +38,7 @@ public class DynamicRecordController {
      *
      * @return
      */
-    @RequestMapping(value = "/customer-id/{customerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/customer-id/{customerId}")
     public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) throws Exception {
         logger.info("################### get record by customer id #######################");
 

@@ -47,6 +47,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         try {
 
+            if (StringUtils.isEmpty(customer.getContactMobile())){
+                throw CrmException.newException("电话号码不能为空!");
+            }
+
             if (!Utils.isMobile(customer.getContactMobile())){
                 throw CrmException.newException("电话号码不符合规范!");
             }
@@ -99,16 +103,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void update(Customer customer) throws Exception {
-        logger.info("update customer id[" + customer.getId() + "]");
+    public void update(String id, Customer customer) throws Exception {
+        logger.info("update customer id[" + id + "]");
 
         try {
 
-            if (!Utils.isMobile(customer.getMobile())){
+            if (!StringUtils.isEmpty(customer.getMobile()) && !Utils.isMobile(customer.getMobile())){
                 throw CrmException.newException("学生电话号码不符合规范!");
             }
 
-            if (!Utils.isMobile(customer.getParentsMobile())){
+            if (!StringUtils.isEmpty(customer.getParentsMobile()) && !Utils.isMobile(customer.getParentsMobile())){
                 throw CrmException.newException("家长电话号码不符合规范!");
             }
 
@@ -144,7 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
 
-            customerMapper.update(customer);
+            customerMapper.update(id,customer);
 
             try {
                 record.setType("2");

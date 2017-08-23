@@ -42,7 +42,7 @@ public interface TagMapper {
     void create(Tag tag);
 
 
-    @Select("SELECT * FROM TAG")
-    List<Tag> getTags();
+    @Select("SELECT * FROM TAG WHERE FLAG = 0 ORDER BY TAG_GROUP_ID, ID")
+    List<Tag> getAllTags();
 
 }
