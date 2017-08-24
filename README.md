@@ -386,7 +386,7 @@ RESP:
 ### 根据客户id，获取客户详细信息
 REQ:  
 
-GET /sales-crm/customers/id/81d32b61-83bd-11e7-964c-c81f66c50f7d
+GET /sales-crm/customers/81d32b61-83bd-11e7-964c-c81f66c50f7d
 ```json
 ```
 
@@ -482,17 +482,17 @@ POST /sales-crm/record
 RESP:
 ```json
 {
-    "id": "11",
-    "createdDate": null,
-    "createdBy": null,
+    "id": "28",
+    "createdDate": "2017-08-23T05:16:23.445Z",
+    "createdBy": "sato:user:keycloak:sales",
     "lastModifiedDate": null,
     "lastModifiedBy": null,
     "version": 0,
     "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
     "comment": "续单成功",
     "type": "2",
-    "name": null,
-    "userName": null
+    "name": "测试",
+    "userName": "sales"
 }
 ```
 
