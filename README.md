@@ -619,7 +619,7 @@ RESP:
 ### 获取标签管理列表
 REQ:
   
-GET /sales-crm/tag/management
+GET /sales-crm/tags/management
 ```json
 
 ```
@@ -776,7 +776,7 @@ RESP:
 ### 获取客户标签列表
 REQ:
   
-GET /customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/myself
+GET /sales-crm/tags/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/myself
 ```json
 
 ```
