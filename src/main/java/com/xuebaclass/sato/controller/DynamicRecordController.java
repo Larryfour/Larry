@@ -38,7 +38,7 @@ public class DynamicRecordController {
      *
      * @return
      */
-    @GetMapping(value = "/customer-id/{customerId}")
+    @GetMapping(value = "/customer/{customerId}")
     public ResponseEntity getRecordByCustomerId(@PathVariable String customerId) throws Exception {
         logger.info("################### get record by customer id #######################");
 

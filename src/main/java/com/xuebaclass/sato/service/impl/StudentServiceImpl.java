@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 @Service
 public class StudentServiceImpl implements StudentService {
 	private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
 	@Resource
 	private StudentMapper studentMapper;
 

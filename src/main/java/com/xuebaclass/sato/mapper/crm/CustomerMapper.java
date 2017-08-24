@@ -94,7 +94,7 @@ public interface CustomerMapper {
                 SET("LAST_MODIFIED_BY='" + getCurrentAuditor() + "'");
                 SET("LAST_MODIFIED_DATE=utc_timestamp()");
 
-                WHERE("ID = '"+id+"'");
+                WHERE("ID = '" + id + "'");
             }}.toString();
         }
 
@@ -154,6 +154,7 @@ public interface CustomerMapper {
 
     /**
      * @param customer
+     * @return
      */
     @InsertProvider(type = CustomerSqlProvider.class, method = "create")
     @SelectKey(statement = "SELECT UUID() FROM DUAL;", keyProperty = "id", before = true, resultType = String.class)
@@ -161,18 +162,21 @@ public interface CustomerMapper {
 
     /**
      * @param customer
+     * @return
      */
     @UpdateProvider(type = CustomerSqlProvider.class, method = "update")
     void update(@Param("id") String id, @Param("customer") Customer customer);
 
     /**
      * @param id
+     * @return
      */
     @Select("SELECT * FROM CUSTOMER WHERE ID = #{id}")
     Customer getById(String id);
 
     /**
      * @param mobile
+     * @return
      */
     @Select("SELECT * FROM CUSTOMER WHERE CONTACT_MOBILE = #{mobile}")
     Customer getByContactMobile(String mobile);
@@ -180,12 +184,14 @@ public interface CustomerMapper {
 
     /**
      * @param mobile
+     * @return
      */
     @Select("SELECT * FROM CUSTOMER WHERE MOBILE = #{mobile}")
     Customer getByMobile(String mobile);
 
     /**
      * @param mobile
+     * @return
      */
     @Select("SELECT * FROM CUSTOMER WHERE MOBILE = #{mobile} AND ID <> #{id}")
     Customer checkMobileExist(@Param("mobile") String mobile, @Param("id") String id);
@@ -208,6 +214,7 @@ public interface CustomerMapper {
 
     /**
      * @param distributionRequest
+     * @return
      */
     @UpdateProvider(type = CustomerSqlProvider.class, method = "distribution")
     void distribution(@Param("distributionRequest") DistributionRequest distributionRequest);

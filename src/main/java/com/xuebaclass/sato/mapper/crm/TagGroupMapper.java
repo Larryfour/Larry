@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface TagGroupMapper {
 
-    class TagGroupSqlProvider extends SpringSecurityKeycloakAutditorAware{
+    class TagGroupSqlProvider extends SpringSecurityKeycloakAutditorAware {
         private final static String TABLE_NAME = "TAG_GROUP";
 
         public String create() {
@@ -35,12 +35,16 @@ public interface TagGroupMapper {
     }
 
     /**
-     *
      * @param tagGroup
+     * @return
      */
     @InsertProvider(type = TagGroupSqlProvider.class, method = "create")
     void create(TagGroup tagGroup);
 
+    /**
+     * @param
+     * @return
+     */
     @Select("SELECT * FROM TAG_GROUP WHERE FLAG = 0")
     List<TagGroup> getAllTagGroups();
 

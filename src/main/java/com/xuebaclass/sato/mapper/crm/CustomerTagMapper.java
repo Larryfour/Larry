@@ -2,10 +2,8 @@ package com.xuebaclass.sato.mapper.crm;
 
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.CustomerTag;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.UpdateProvider;
+import com.xuebaclass.sato.model.response.CustomerTagResponse;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
 import org.thymeleaf.util.StringUtils;
 
@@ -59,10 +57,24 @@ public interface CustomerTagMapper {
             }}.toString();
         }
 
+        public String getCustomerTags(Map<String, Object> parameters) {
+            String customerId = (String) parameters.get("customerId");
+
+            return new SQL() {{
+                SELECT("ct.CUSTOMER_ID,t.ID,t.NAME");
+                FROM("CUSTOMER_TAG ct,TAG t");
+                WHERE("ct.TAG_ID = t.ID");
+                WHERE("ct.FLAG = 0");
+                WHERE("ct.CUSTOMER_ID='" + customerId + "'");
+                ORDER_BY("t.ID");
+
+            }}.toString();
+        }
     }
 
     /**
      * @param customerTag
+     * @return
      */
     @InsertProvider(type = CustomerTagSqlProvider.class, method = "create")
     void create(CustomerTag customerTag);
@@ -70,14 +82,19 @@ public interface CustomerTagMapper {
     /**
      * @param customerId
      * @param tagIds
+     * @return
      */
     @UpdateProvider(type = CustomerTagSqlProvider.class, method = "cancel")
     void cancel(@Param("customerId") String customerId, @Param("tagIds") List<String> tagIds);
 
     /**
      * @param customerId
+     * @return
      */
-    @Select("SELECT * FROM CUSTOMER_TAG WHERE CUSTOMER_ID = #{customerId} AND FLAG = 0 ORDER BY TAG_ID")
-    List<CustomerTag> getCustomerTags(@Param("customerId") String customerId);
+    @SelectProvider(type = CustomerTagSqlProvider.class, method = "getCustomerTags")
+    @Results({@Result(column = "CUSTOMER_ID", property = "customerId"),
+            @Result(column = "ID", property = "tagId"),
+            @Result(column = "NAME", property = "tagName")})
+    List<CustomerTagResponse> getCustomerTags(@Param("customerId") String customerId);
 
 }

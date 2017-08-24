@@ -40,6 +40,7 @@ public interface DynamicRecordMapper {
 
     /**
      * @param dynamicRecord
+     * @return
      */
     @InsertProvider(type = RecordSqlProvider.class, method = "create")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = String.class)
@@ -47,6 +48,7 @@ public interface DynamicRecordMapper {
 
     /**
      * @param customerId
+     * @return
      */
     @Select("SELECT * FROM DYNAMIC_RECORD WHERE CUSTOMER_ID = #{customerId} ORDER BY CREATED_DATE DESC")
     List<DynamicRecord> getRecordByCustomerId(String customerId);

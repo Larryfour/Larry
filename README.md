@@ -500,7 +500,7 @@ RESP:
 ### 获取动态日志列表
 REQ:
   
-GET /sales-crm/record/customer-id/81d32b61-83bd-11e7-964c-c81f66c50f7d 
+GET /sales-crm/record/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d 
 ```json
 
 ```
@@ -785,48 +785,24 @@ RESP:
 ```json
 [
     {
-        "id": "1",
-        "createdDate": "2017-08-24T04:27:23Z",
-        "createdBy": "sato:user:keycloak:sales",
-        "lastModifiedDate": "2017-08-24T04:27:23Z",
-        "lastModifiedBy": "sato:user:keycloak:sales",
-        "version": 0,
         "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
         "tagId": "1",
-        "flag": false
+        "tagName": "无法接通"
     },
     {
-        "id": "3",
-        "createdDate": "2017-08-24T04:27:23Z",
-        "createdBy": "sato:user:keycloak:sales",
-        "lastModifiedDate": "2017-08-24T04:27:23Z",
-        "lastModifiedBy": "sato:user:keycloak:sales",
-        "version": 0,
-        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
-        "tagId": "5",
-        "flag": false
-    },
-    {
-        "id": "5",
-        "createdDate": "2017-08-24T04:27:32Z",
-        "createdBy": "sato:user:keycloak:sales",
-        "lastModifiedDate": "2017-08-24T04:27:32Z",
-        "lastModifiedBy": "sato:user:keycloak:sales",
-        "version": 0,
         "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
         "tagId": "2",
-        "flag": false
+        "tagName": "错号/空号"
     },
     {
-        "id": "6",
-        "createdDate": "2017-08-24T04:27:32Z",
-        "createdBy": "sato:user:keycloak:sales",
-        "lastModifiedDate": "2017-08-24T04:27:32Z",
-        "lastModifiedBy": "sato:user:keycloak:sales",
-        "version": 0,
         "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
         "tagId": "4",
-        "flag": false
+        "tagName": "意向不确定"
+    },
+    {
+        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+        "tagId": "5",
+        "tagName": "明确拒绝"
     }
 ]
 ```

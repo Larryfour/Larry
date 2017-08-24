@@ -1,10 +1,7 @@
 package com.xuebaclass.sato.exception;
 
 /**
- * 异常处理类
- * 
- * @author lee
- * @since 2017-07-13
+ * Created by sunhao on 2017-08-24.
  */
 public class CrmException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

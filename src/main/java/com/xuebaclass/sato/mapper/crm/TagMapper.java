@@ -37,11 +37,16 @@ public interface TagMapper {
 
     /**
      * @param tag
+     * @return
      */
     @InsertProvider(type = TagSqlProvider.class, method = "create")
     void create(Tag tag);
 
 
+    /**
+     * @param
+     * @return
+     */
     @Select("SELECT * FROM TAG WHERE FLAG = 0 ORDER BY TAG_GROUP_ID, ID")
     List<Tag> getAllTags();
 

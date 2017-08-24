@@ -5,7 +5,12 @@ import org.apache.ibatis.annotations.Select;
 import com.xuebaclass.sato.model.Student;
 
 public interface StudentMapper {
-	@Select("SELECT * FROM STUDENT WHERE UID = #{uid}")
-	Student getStudentByUid(String uid);
+
+    /**
+     * @param uid
+     * @return
+     */
+    @Select("SELECT * FROM STUDENT WHERE UID = #{uid}")
+    Student getStudentByUid(String uid);
 
 }
