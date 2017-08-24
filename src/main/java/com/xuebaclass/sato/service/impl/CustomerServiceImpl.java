@@ -4,7 +4,6 @@ import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xuebaclass.sato.common.SatoSort;
-import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.CustomerMapper;
 import com.xuebaclass.sato.mapper.crm.DynamicRecordMapper;
@@ -13,6 +12,7 @@ import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.DynamicRecord;
 import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.response.DistributionResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import com.xuebaclass.sato.utils.CurrentUser;
 import com.xuebaclass.sato.utils.Utils;
@@ -47,11 +47,11 @@ public class CustomerServiceImpl implements CustomerService {
 
         try {
 
-            if (StringUtils.isEmpty(customer.getContactMobile())){
+            if (StringUtils.isEmpty(customer.getContactMobile())) {
                 throw CrmException.newException("电话号码不能为空!");
             }
 
-            if (!Utils.isMobile(customer.getContactMobile())){
+            if (!Utils.isMobile(customer.getContactMobile())) {
                 throw CrmException.newException("电话号码不符合规范!");
             }
 
@@ -108,11 +108,11 @@ public class CustomerServiceImpl implements CustomerService {
 
         try {
 
-            if (!StringUtils.isEmpty(customer.getMobile()) && !Utils.isMobile(customer.getMobile())){
+            if (!StringUtils.isEmpty(customer.getMobile()) && !Utils.isMobile(customer.getMobile())) {
                 throw CrmException.newException("学生电话号码不符合规范!");
             }
 
-            if (!StringUtils.isEmpty(customer.getParentsMobile()) && !Utils.isMobile(customer.getParentsMobile())){
+            if (!StringUtils.isEmpty(customer.getParentsMobile()) && !Utils.isMobile(customer.getParentsMobile())) {
                 throw CrmException.newException("家长电话号码不符合规范!");
             }
 
@@ -148,7 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
 
-            customerMapper.update(id,customer);
+            customerMapper.update(id, customer);
 
             try {
                 record.setType("2");
@@ -215,7 +215,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void distribution(DistributionRequest request) throws Exception {
+    public DistributionResponse distribution(DistributionRequest request) throws Exception {
+        DistributionResponse response = new DistributionResponse();
         try {
 
             Sales sales = salesMapper.getSalesByUserName(CurrentUser.getInstance().getCurrentAuditorName());
@@ -227,9 +228,15 @@ public class CustomerServiceImpl implements CustomerService {
 
             dynamicRecordDistributionCreate(sales, request);
 
+            response.setCustomerIds(request.getCustomerIds());
+            response.setOwnedSalesID(request.getOwnedSalesID());
+            response.setOwnedSalesName(request.getOwnedSalesName());
+            response.setOwnedSalesUserName(request.getOwnedSalesUserName());
+
         } catch (Exception e) {
             throw CrmException.newException(e.getMessage());
         }
+        return response;
     }
 
     private void dynamicRecordDistributionCreate(Sales sales, DistributionRequest request) throws Exception {

@@ -57,7 +57,7 @@ public class CustomerController {
      *
      * @return
      */
-    @GetMapping(value = "/select")
+    @GetMapping
     public ResponseEntity<PagedResources<Resource<Customer>>>
     getCustomers(@PageableDefault Pageable pageable,
                  PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
@@ -88,8 +88,7 @@ public class CustomerController {
     public ResponseEntity distribution(@RequestBody DistributionRequest distributionRequest) throws Exception {
         logger.info("################### distribution customers for sales #######################");
 
-        customerService.distribution(distributionRequest);
-        return ResponseEntity.ok(distributionRequest);
+        return ResponseEntity.ok(customerService.distribution(distributionRequest));
     }
 
     /**
@@ -97,7 +96,7 @@ public class CustomerController {
      *
      * @return
      */
-    @RequestMapping(value = "/select/myself", method = RequestMethod.GET)
+    @GetMapping(value = "/myself")
     public ResponseEntity<PagedResources<Resource<Customer>>>
     getMyselfCustomers(@PageableDefault Pageable pageable,
                        PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {

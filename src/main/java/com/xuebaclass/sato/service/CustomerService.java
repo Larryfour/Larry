@@ -2,6 +2,7 @@ package com.xuebaclass.sato.service;
 
 import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.response.DistributionResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +22,6 @@ public interface CustomerService {
 
     Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) throws Exception;
 
-    void distribution(DistributionRequest request) throws Exception;
-
+    DistributionResponse distribution(DistributionRequest request) throws Exception;
 
 }

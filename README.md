@@ -30,7 +30,7 @@ Sales CRM系统相关协议
 ### 获取客户管理客户列表
 REQ:  
 
-GET /sales-crm/customers/select?page=0&size=2
+GET /sales-crm/customers?page=0&size=2
 ```json
 RESP:
 {
@@ -140,7 +140,7 @@ RESP:
 ### 获取我的客户客户列表
 REQ:  
 
-GET /sales-crm/customers/select/myself?page=0&size=2
+GET /sales-crm/customers/myself?page=0&size=2
 ```json
 RESP:
 {
@@ -734,6 +734,99 @@ RESP:
                 "flag": false
             }
         ]
+    }
+]
+```
+
+### 客户标签设置
+REQ:
+  
+POST /sales-crm/tags/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/set
+```json
+{
+    "setTagIds": [
+        "2",
+        "4"
+    ], 
+	"cancelTagIds": [
+        "3",
+        "7",
+        "6"
+    ]
+}
+```
+
+RESP:
+```json
+{
+    "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+    "setTagIds": [
+        "2",
+        "4"
+    ],
+    "cancelTagIds": [
+        "3",
+        "7",
+        "6"
+    ]
+}
+```
+
+
+### 获取客户标签列表
+REQ:
+  
+GET /customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/myself
+```json
+
+```
+
+RESP:
+```json
+[
+    {
+        "id": "1",
+        "createdDate": "2017-08-24T04:27:23Z",
+        "createdBy": "sato:user:keycloak:sales",
+        "lastModifiedDate": "2017-08-24T04:27:23Z",
+        "lastModifiedBy": "sato:user:keycloak:sales",
+        "version": 0,
+        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+        "tagId": "1",
+        "flag": false
+    },
+    {
+        "id": "3",
+        "createdDate": "2017-08-24T04:27:23Z",
+        "createdBy": "sato:user:keycloak:sales",
+        "lastModifiedDate": "2017-08-24T04:27:23Z",
+        "lastModifiedBy": "sato:user:keycloak:sales",
+        "version": 0,
+        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+        "tagId": "5",
+        "flag": false
+    },
+    {
+        "id": "5",
+        "createdDate": "2017-08-24T04:27:32Z",
+        "createdBy": "sato:user:keycloak:sales",
+        "lastModifiedDate": "2017-08-24T04:27:32Z",
+        "lastModifiedBy": "sato:user:keycloak:sales",
+        "version": 0,
+        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+        "tagId": "2",
+        "flag": false
+    },
+    {
+        "id": "6",
+        "createdDate": "2017-08-24T04:27:32Z",
+        "createdBy": "sato:user:keycloak:sales",
+        "lastModifiedDate": "2017-08-24T04:27:32Z",
+        "lastModifiedBy": "sato:user:keycloak:sales",
+        "version": 0,
+        "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
+        "tagId": "4",
+        "flag": false
     }
 ]
 ```

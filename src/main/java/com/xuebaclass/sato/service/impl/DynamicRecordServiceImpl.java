@@ -57,7 +57,7 @@ public class DynamicRecordServiceImpl implements DynamicRecordService {
 
             record.setName(sales.getName());
             record.setUserName(sales.getUserName());
-
+            record.setComment("添加动态记录:" + record.getComment());
             dynamicRecordMapper.create(record);
 
             record.setCreatedBy(CurrentUser.getInstance().getCurrentAuditor());
