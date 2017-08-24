@@ -30,7 +30,7 @@ Sales CRM系统相关协议
 ### 获取客户管理客户列表
 REQ:  
 
-GET /sales-crm/customers/page-get?page=0&size=2
+GET /sales-crm/customers/select?page=0&size=2
 ```json
 RESP:
 {
@@ -140,7 +140,7 @@ RESP:
 ### 获取我的客户客户列表
 REQ:  
 
-GET /sales-crm/customers/page-get/myself?page=0&size=2
+GET /sales-crm/customers/select/myself?page=0&size=2
 ```json
 RESP:
 {
@@ -250,7 +250,7 @@ RESP:
 ### 增加客户
 REQ:  
 
-POST /sales-crm/customers/create
+POST /sales-crm/customers
 ```json
 {
     "contactName": "孙昊（必填项）",
@@ -322,7 +322,7 @@ RESP:
 ### 更新客户
 REQ:  
 
-PUT /sales-crm/customers/update
+PUT /sales-crm/customers/81d32b61-83bd-11e7-964c-c81f66c50f7d
 ```json
 {
 	"id":"81d32b61-83bd-11e7-964c-c81f66c50f7d",
@@ -470,7 +470,7 @@ RESP:
 REQ:
   
 ### type 1:系统日志 2:人为操作日志
-POST /sales-crm/record/create 
+POST /sales-crm/record 
 ```json
 {
     "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
@@ -619,7 +619,7 @@ RESP:
 ### 获取标签管理列表
 REQ:
   
-GET /sales-crm/tag/management/all
+GET /sales-crm/tag/management
 ```json
 
 ```
