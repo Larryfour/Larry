@@ -741,7 +741,7 @@ RESP:
 ### 客户标签设置
 REQ:
   
-POST /sales-crm/tags/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/set
+POST /sales-crm/tags/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/setting
 ```json
 {
     "setTagIds": [
