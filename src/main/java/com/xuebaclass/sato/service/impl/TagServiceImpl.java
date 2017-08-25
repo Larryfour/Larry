@@ -2,19 +2,15 @@ package com.xuebaclass.sato.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.xuebaclass.sato.exception.CrmException;
-import com.xuebaclass.sato.mapper.crm.CustomerMapper;
-import com.xuebaclass.sato.mapper.crm.CustomerTagMapper;
-import com.xuebaclass.sato.mapper.crm.TagGroupMapper;
-import com.xuebaclass.sato.mapper.crm.TagMapper;
-import com.xuebaclass.sato.model.Customer;
-import com.xuebaclass.sato.model.CustomerTag;
-import com.xuebaclass.sato.model.Tag;
-import com.xuebaclass.sato.model.TagGroup;
+import com.xuebaclass.sato.mapper.crm.*;
+import com.xuebaclass.sato.mapper.sato.SalesMapper;
+import com.xuebaclass.sato.model.*;
 import com.xuebaclass.sato.model.request.TagSetRequest;
 import com.xuebaclass.sato.model.response.CustomerTagResponse;
 import com.xuebaclass.sato.model.response.ManagementTagsResponse;
 import com.xuebaclass.sato.model.response.TagSetResponse;
 import com.xuebaclass.sato.service.TagService;
+import com.xuebaclass.sato.utils.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +38,12 @@ public class TagServiceImpl implements TagService {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private DynamicRecordMapper dynamicRecordMapper;
+
+    @Autowired
+    private SalesMapper salesMapper;
 
     @Override
     public void createTag(Tag tag) throws Exception {
@@ -102,29 +104,70 @@ public class TagServiceImpl implements TagService {
         TagSetResponse response = new TagSetResponse();
 
         try {
+            String cancelNames = null;
+            String setNames = null;
+
             Customer customer = customerMapper.getById(customerId);
             if (customer == null) {
                 throw CrmException.newException("客户不存在!");
             }
 
-            if (!tagSetRequest.getCancelTagIds().isEmpty()) {
-                customerTagMapper.cancel(customerId, tagSetRequest.getCancelTagIds());
+            List<Tag> cancelTags = tagSetRequest.getCancelTags();
+            if (!cancelTags.isEmpty()) {
+                customerTagMapper.cancel(customerId, cancelTags);
+                List<String> cancelTagNames = cancelTags.stream().map(Tag::getName).collect(Collectors.toList());
+                cancelNames = org.thymeleaf.util.StringUtils.join(cancelTagNames.toArray(), "、");
+
             }
 
-            List<String> setTagIds = tagSetRequest.getSetTagIds();
+            List<Tag> setTags = tagSetRequest.getSetTags();
 
-            if (!setTagIds.isEmpty()) {
+            if (!setTags.isEmpty()) {
                 CustomerTag customerTag = new CustomerTag();
                 customerTag.setCustomerId(customerId);
-                for (String setTagId : setTagIds) {
-                    customerTag.setTagId(setTagId);
+                setTags.forEach(t -> {
+                    customerTag.setTagId(t.getId());
                     customerTagMapper.create(customerTag);
-                }
+                });
+                List<String> setTagNames = setTags.stream().map(Tag::getName).collect(Collectors.toList());
+                setNames = org.thymeleaf.util.StringUtils.join(setTagNames.toArray(), "、");
             }
 
+            String userName = CurrentUser.getInstance().getCurrentAuditorName();
+            Sales sales = salesMapper.getSalesByUserName(userName);
+            if (sales == null) {
+                throw CrmException.newException("修改账户不存在！");
+            }
+
+            StringBuffer recordComment = new StringBuffer();
+            if (!StringUtils.isEmpty(setNames)) {
+                recordComment.append("添加标签:");
+                recordComment.append(setNames);
+            }
+
+            if (!StringUtils.isEmpty(recordComment) && !StringUtils.isEmpty(cancelNames)) {
+                recordComment.append(",");
+            }
+
+            if (!StringUtils.isEmpty(cancelNames)) {
+                recordComment.append("取消标签:");
+                recordComment.append(cancelNames);
+            }
+
+            recordComment.append("。");
+
+            DynamicRecord record = new DynamicRecord();
+            record.setCustomerId(customerId);
+            record.setComment(recordComment.toString());
+            record.setType(RecordType.ARTIFICIAL.getCode());
+            record.setName(sales.getName());
+            record.setUserName(sales.getUserName());
+
+            dynamicRecordMapper.create(record);
+
             response.setCustomerId(customerId);
-            response.setSetTagIds(tagSetRequest.getSetTagIds());
-            response.setCancelTagIds(tagSetRequest.getCancelTagIds());
+            response.setSetTags(tagSetRequest.getSetTags());
+            response.setCancelTags(tagSetRequest.getCancelTags());
 
         } catch (Exception e) {
             logger.error("tag setting error occurred.", e);

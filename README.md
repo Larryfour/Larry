@@ -744,14 +744,21 @@ REQ:
 POST /sales-crm/tags/customer/81d32b61-83bd-11e7-964c-c81f66c50f7d/setting
 ```json
 {
-    "setTagIds": [
-        "2",
-        "4"
-    ], 
-	"cancelTagIds": [
-        "3",
-        "7",
-        "6"
+    "setTags": [
+        {
+            "id": "4",
+            "name": "意向不确定"
+        },
+        {
+            "id": "7",
+            "name": "测试标签2"
+        }
+    ],
+    "cancelTags": [
+        {
+            "id": "3",
+            "name": "很有意向"
+        }
     ]
 }
 ```
@@ -760,14 +767,45 @@ RESP:
 ```json
 {
     "customerId": "81d32b61-83bd-11e7-964c-c81f66c50f7d",
-    "setTagIds": [
-        "2",
-        "4"
+    "setTags": [
+        {
+            "id": "4",
+            "createdDate": null,
+            "createdBy": null,
+            "lastModifiedDate": null,
+            "lastModifiedBy": null,
+            "version": 0,
+            "name": "意向不确定",
+            "comment": null,
+            "tagGroupId": null,
+            "flag": false
+        },
+        {
+            "id": "7",
+            "createdDate": null,
+            "createdBy": null,
+            "lastModifiedDate": null,
+            "lastModifiedBy": null,
+            "version": 0,
+            "name": "测试标签2",
+            "comment": null,
+            "tagGroupId": null,
+            "flag": false
+        }
     ],
-    "cancelTagIds": [
-        "3",
-        "7",
-        "6"
+    "cancelTags": [
+        {
+            "id": "3",
+            "createdDate": null,
+            "createdBy": null,
+            "lastModifiedDate": null,
+            "lastModifiedBy": null,
+            "version": 0,
+            "name": "很有意向",
+            "comment": null,
+            "tagGroupId": null,
+            "flag": false
+        }
     ]
 }
 ```

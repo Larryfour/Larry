@@ -1,5 +1,7 @@
 package com.xuebaclass.sato.model.response;
 
+import com.xuebaclass.sato.model.Tag;
+
 import java.util.List;
 
 /**
@@ -7,8 +9,8 @@ import java.util.List;
  */
 public class TagSetResponse {
     private String customerId;
-    private List<String> setTagIds;
-    private List<String> cancelTagIds;
+    private List<Tag> setTags;
+    private List<Tag> cancelTags;
 
     public String getCustomerId() {
         return customerId;
@@ -18,19 +20,19 @@ public class TagSetResponse {
         this.customerId = customerId;
     }
 
-    public List<String> getSetTagIds() {
-        return setTagIds;
+    public List<Tag> getSetTags() {
+        return setTags;
     }
 
-    public void setSetTagIds(List<String> setTagIds) {
-        this.setTagIds = setTagIds;
+    public void setSetTags(List<Tag> setTags) {
+        this.setTags = setTags;
     }
 
-    public List<String> getCancelTagIds() {
-        return cancelTagIds;
+    public List<Tag> getCancelTags() {
+        return cancelTags;
     }
 
-    public void setCancelTagIds(List<String> cancelTagIds) {
-        this.cancelTagIds = cancelTagIds;
+    public void setCancelTags(List<Tag> cancelTags) {
+        this.cancelTags = cancelTags;
     }
 }
