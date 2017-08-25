@@ -770,41 +770,17 @@ RESP:
     "setTags": [
         {
             "id": "4",
-            "createdDate": null,
-            "createdBy": null,
-            "lastModifiedDate": null,
-            "lastModifiedBy": null,
-            "version": 0,
-            "name": "意向不确定",
-            "comment": null,
-            "tagGroupId": null,
-            "flag": false
+            "name": "意向不确定"
         },
         {
             "id": "7",
-            "createdDate": null,
-            "createdBy": null,
-            "lastModifiedDate": null,
-            "lastModifiedBy": null,
-            "version": 0,
-            "name": "测试标签2",
-            "comment": null,
-            "tagGroupId": null,
-            "flag": false
+            "name": "测试标签2"
         }
     ],
     "cancelTags": [
         {
             "id": "3",
-            "createdDate": null,
-            "createdBy": null,
-            "lastModifiedDate": null,
-            "lastModifiedBy": null,
-            "version": 0,
-            "name": "很有意向",
-            "comment": null,
-            "tagGroupId": null,
-            "flag": false
+            "name": "很有意向"
         }
     ]
 }

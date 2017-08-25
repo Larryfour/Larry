@@ -1,6 +1,6 @@
 package com.xuebaclass.sato.model.response;
 
-import com.xuebaclass.sato.model.Tag;
+import com.xuebaclass.sato.model.request.TagSetRequest;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class TagSetResponse {
     private String customerId;
-    private List<Tag> setTags;
-    private List<Tag> cancelTags;
+    private List<TagSetRequest.InnerTag> setTags;
+    private List<TagSetRequest.InnerTag> cancelTags;
 
     public String getCustomerId() {
         return customerId;
@@ -20,19 +20,19 @@ public class TagSetResponse {
         this.customerId = customerId;
     }
 
-    public List<Tag> getSetTags() {
+    public List<TagSetRequest.InnerTag> getSetTags() {
         return setTags;
     }
 
-    public void setSetTags(List<Tag> setTags) {
+    public void setSetTags(List<TagSetRequest.InnerTag> setTags) {
         this.setTags = setTags;
     }
 
-    public List<Tag> getCancelTags() {
+    public List<TagSetRequest.InnerTag> getCancelTags() {
         return cancelTags;
     }
 
-    public void setCancelTags(List<Tag> cancelTags) {
+    public void setCancelTags(List<TagSetRequest.InnerTag> cancelTags) {
         this.cancelTags = cancelTags;
     }
 }

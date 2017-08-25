@@ -112,15 +112,15 @@ public class TagServiceImpl implements TagService {
                 throw CrmException.newException("客户不存在!");
             }
 
-            List<Tag> cancelTags = tagSetRequest.getCancelTags();
+            List<TagSetRequest.InnerTag> cancelTags = tagSetRequest.getCancelTags();
             if (!cancelTags.isEmpty()) {
                 customerTagMapper.cancel(customerId, cancelTags);
-                List<String> cancelTagNames = cancelTags.stream().map(Tag::getName).collect(Collectors.toList());
+                List<String> cancelTagNames = cancelTags.stream().map(TagSetRequest.InnerTag::getName).collect(Collectors.toList());
                 cancelNames = org.thymeleaf.util.StringUtils.join(cancelTagNames.toArray(), "、");
 
             }
 
-            List<Tag> setTags = tagSetRequest.getSetTags();
+            List<TagSetRequest.InnerTag> setTags = tagSetRequest.getSetTags();
 
             if (!setTags.isEmpty()) {
                 CustomerTag customerTag = new CustomerTag();
@@ -129,7 +129,7 @@ public class TagServiceImpl implements TagService {
                     customerTag.setTagId(t.getId());
                     customerTagMapper.create(customerTag);
                 });
-                List<String> setTagNames = setTags.stream().map(Tag::getName).collect(Collectors.toList());
+                List<String> setTagNames = setTags.stream().map(TagSetRequest.InnerTag::getName).collect(Collectors.toList());
                 setNames = org.thymeleaf.util.StringUtils.join(setTagNames.toArray(), "、");
             }
 

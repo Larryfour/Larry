@@ -3,6 +3,7 @@ package com.xuebaclass.sato.mapper.crm;
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.CustomerTag;
 import com.xuebaclass.sato.model.Tag;
+import com.xuebaclass.sato.model.request.TagSetRequest;
 import com.xuebaclass.sato.model.response.CustomerTagResponse;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
@@ -38,7 +39,7 @@ public interface CustomerTagMapper {
 
         public String cancel(Map<String, Object> parameters) {
             String customerId = (String) parameters.get("customerId");
-            List<Tag> tags = (List<Tag>) parameters.get("tags");
+            List<TagSetRequest.InnerTag> tags = (List<TagSetRequest.InnerTag>) parameters.get("tags");
 
             List<String> cancelTagIds = tags
                     .stream()
@@ -86,7 +87,7 @@ public interface CustomerTagMapper {
      * @return
      */
     @UpdateProvider(type = CustomerTagSqlProvider.class, method = "cancel")
-    void cancel(@Param("customerId") String customerId, @Param("tags") List<Tag> tags);
+    void cancel(@Param("customerId") String customerId, @Param("tags") List<TagSetRequest.InnerTag> tags);
 
     /**
      * @param customerId

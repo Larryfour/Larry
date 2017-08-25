@@ -1,29 +1,48 @@
 package com.xuebaclass.sato.model.request;
 
-import com.xuebaclass.sato.model.Tag;
-
 import java.util.List;
 
 /**
  * Created by sunhao on 2017-08-18.
  */
 public class TagSetRequest {
-    private List<Tag> setTags;
-    private List<Tag> cancelTags;
+    public static class InnerTag{
+        private String id;
+        private String name;
 
-    public List<Tag> getSetTags() {
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    private List<InnerTag> setTags;
+    private List<InnerTag> cancelTags;
+
+    public List<InnerTag> getSetTags() {
         return setTags;
     }
 
-    public void setSetTags(List<Tag> setTags) {
+    public void setSetTags(List<InnerTag> setTags) {
         this.setTags = setTags;
     }
 
-    public List<Tag> getCancelTags() {
+    public List<InnerTag> getCancelTags() {
         return cancelTags;
     }
 
-    public void setCancelTags(List<Tag> cancelTags) {
+    public void setCancelTags(List<InnerTag> cancelTags) {
         this.cancelTags = cancelTags;
     }
 }
