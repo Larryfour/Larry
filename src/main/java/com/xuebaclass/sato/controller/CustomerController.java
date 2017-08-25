@@ -2,6 +2,7 @@ package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,12 +59,12 @@ public class CustomerController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<PagedResources<Resource<Customer>>>
+    public ResponseEntity<PagedResources<Resource<CustomersResponse>>>
     getCustomers(@PageableDefault Pageable pageable,
-                 PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
+                 PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, Customer customer) throws Exception {
         logger.info("################### get page customer #######################");
 
-        Page<Customer> customers = customerService.getCustomers(pageable, customer);
+        Page<CustomersResponse> customers = customerService.getCustomers(pageable, customer);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
 
@@ -97,12 +98,12 @@ public class CustomerController {
      * @return
      */
     @GetMapping(value = "/myself")
-    public ResponseEntity<PagedResources<Resource<Customer>>>
+    public ResponseEntity<PagedResources<Resource<CustomersResponse>>>
     getMyselfCustomers(@PageableDefault Pageable pageable,
-                       PagedResourcesAssembler<Customer> pagedResourcesAssembler, Customer customer) throws Exception {
+                       PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, Customer customer) throws Exception {
         logger.info("################### get customers for myself  #######################");
 
-        Page<Customer> customers = customerService.getMyselfCustomers(pageable, customer);
+        Page<CustomersResponse> customers = customerService.getMyselfCustomers(pageable, customer);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
 

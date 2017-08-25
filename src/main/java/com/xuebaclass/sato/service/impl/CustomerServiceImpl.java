@@ -12,6 +12,7 @@ import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.DynamicRecord;
 import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.model.response.DistributionResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import com.xuebaclass.sato.utils.CurrentUser;
@@ -189,8 +190,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> getCustomers(Pageable pageable, Customer customer) throws Exception {
-        PageInfo<Customer> pageInfo = null;
+    public Page<CustomersResponse> getCustomers(Pageable pageable, Customer customer) throws Exception {
+        PageInfo<CustomersResponse> pageInfo = null;
         try {
             PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
             String sort = SatoSort.getSort(pageable, "CREATED_DATE");
@@ -198,20 +199,20 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (Exception e) {
             throw CrmException.newException(e.getMessage());
         }
-        return new PageImpl<Customer>(pageInfo.getList(), pageable, pageInfo.getTotal());
+        return new PageImpl<CustomersResponse>(pageInfo.getList(), pageable, pageInfo.getTotal());
     }
 
     @Override
-    public Page<Customer> getMyselfCustomers(Pageable pageable, Customer customer) throws Exception {
-        PageInfo<Customer> pageInfo = null;
+    public Page<CustomersResponse> getMyselfCustomers(Pageable pageable, Customer customer) throws Exception {
+        PageInfo<CustomersResponse> pageInfo = null;
         try {
             PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
             String sort = SatoSort.getSort(pageable, "CREATED_DATE");
-            pageInfo = new PageInfo<>(customerMapper.getMyselfCustomers(sort, customer));
+            pageInfo = new PageInfo<CustomersResponse>(customerMapper.getMyselfCustomers(sort, customer));
         } catch (Exception e) {
             throw CrmException.newException(e.getMessage());
         }
-        return new PageImpl<Customer>(pageInfo.getList(), pageable, pageInfo.getTotal());
+        return new PageImpl<CustomersResponse>(pageInfo.getList(), pageable, pageInfo.getTotal());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.xuebaclass.sato.mapper.crm;
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.response.CustomersResponse;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
 import org.thymeleaf.util.StringUtils;
@@ -101,27 +102,49 @@ public interface CustomerMapper {
 
         public String getCustomers(Map<String, Object> parameters) {
             String sortField = (String) parameters.get("sortField");
-            return new SQL() {
-                {
-                    SELECT("*");
-                    FROM(TABLE_NAME);
-                    WHERE("1=1");
-                    ORDER_BY(sortField + " desc");
-                }
-            }.toString();
+            String sql = "SELECT \n" +
+                    "  c.*,\n" +
+                    "  t.TAG_NAMES \n" +
+                    "FROM\n" +
+                    "  CUSTOMER c \n" +
+                    "  LEFT JOIN \n" +
+                    "    (SELECT \n" +
+                    "      ct.CUSTOMER_ID,\n" +
+                    "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                    "    FROM\n" +
+                    "      TAG t,\n" +
+                    "      CUSTOMER_TAG ct \n" +
+                    "    WHERE t.ID = ct.TAG_ID \n" +
+                    "      AND t.FLAG = 0 \n" +
+                    "      AND ct.FLAG = 0 \n" +
+                    "    GROUP BY ct.CUSTOMER_ID) t \n" +
+                    "    ON c.ID = t.CUSTOMER_ID \n" +
+                    "ORDER BY c." + sortField + " DESC";
+            return sql;
         }
 
         public String getMyselfCustomers(Map<String, Object> parameters) {
             String sortField = (String) parameters.get("sortField");
-            return new SQL() {
-                {
-                    SELECT("*");
-                    FROM(TABLE_NAME);
-                    WHERE("1=1");
-                    WHERE("OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "'");
-                    ORDER_BY(sortField + " desc");
-                }
-            }.toString();
+            String sql = "SELECT \n" +
+                    "  c.*,\n" +
+                    "  t.TAG_NAMES \n" +
+                    "FROM\n" +
+                    "  CUSTOMER c \n" +
+                    "  LEFT JOIN \n" +
+                    "    (SELECT \n" +
+                    "      ct.CUSTOMER_ID,\n" +
+                    "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                    "    FROM\n" +
+                    "      TAG t,\n" +
+                    "      CUSTOMER_TAG ct \n" +
+                    "    WHERE t.ID = ct.TAG_ID \n" +
+                    "      AND t.FLAG = 0 \n" +
+                    "      AND ct.FLAG = 0 \n" +
+                    "    GROUP BY ct.CUSTOMER_ID) t \n" +
+                    "    ON c.ID = t.CUSTOMER_ID \n" +
+                    "WHERE c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n" +
+                    "ORDER BY c." + sortField + " DESC ";
+            return sql;
         }
 
         public String distribution(Map<String, Object> parameters) {
@@ -202,7 +225,7 @@ public interface CustomerMapper {
      * @return
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getCustomers")
-    List<Customer> getCustomers(@Param("sortField") String sortField, Customer customer);
+    List<CustomersResponse> getCustomers(@Param("sortField") String sortField, Customer customer);
 
     /**
      * @param sortField
@@ -210,7 +233,7 @@ public interface CustomerMapper {
      * @return
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getMyselfCustomers")
-    List<Customer> getMyselfCustomers(@Param("sortField") String sortField, Customer customer);
+    List<CustomersResponse> getMyselfCustomers(@Param("sortField") String sortField, Customer customer);
 
     /**
      * @param distributionRequest

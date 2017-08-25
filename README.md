@@ -88,6 +88,7 @@ RESP:
             "ownedSalesID": 1,
             "ownedSalesName": "林依然",
             "ownedSalesUserName": "linyiran",
+            "tagNames": "意向不确定,测试标签2",
             "links": []
         },
         {
@@ -125,6 +126,7 @@ RESP:
             "ownedSalesID": 1,
             "ownedSalesName": "林依然",
             "ownedSalesUserName": "linyiran",
+            "tagNames": null,
             "links": []
         }
     ],
@@ -198,6 +200,7 @@ RESP:
             "ownedSalesID": 2,
             "ownedSalesName": "孙昊",
             "ownedSalesUserName": "sales",
+            "tagNames": "意向不确定,测试标签2",
             "links": []
         },
         {
@@ -235,6 +238,7 @@ RESP:
             "ownedSalesID": 2,
             "ownedSalesName": "孙昊",
             "ownedSalesUserName": "sales",
+            "tagNames": null,
             "links": []
         }
     ],
