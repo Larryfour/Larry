@@ -1,6 +1,8 @@
 package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.Customer;
+import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
+import com.xuebaclass.sato.model.request.CustomersRequest;
 import com.xuebaclass.sato.model.request.DistributionRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
@@ -61,10 +63,10 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<PagedResources<Resource<CustomersResponse>>>
     getCustomers(@PageableDefault Pageable pageable,
-                 PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, Customer customer) throws Exception {
+                 PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, CustomersRequest request) throws Exception {
         logger.info("################### get page customer #######################");
 
-        Page<CustomersResponse> customers = customerService.getCustomers(pageable, customer);
+        Page<CustomersResponse> customers = customerService.getCustomers(pageable, request);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
 
@@ -100,10 +102,10 @@ public class CustomerController {
     @GetMapping(value = "/myself")
     public ResponseEntity<PagedResources<Resource<CustomersResponse>>>
     getMyselfCustomers(@PageableDefault Pageable pageable,
-                       PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, Customer customer) throws Exception {
+                       PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, CustomersMyselfRequest request) throws Exception {
         logger.info("################### get customers for myself  #######################");
 
-        Page<CustomersResponse> customers = customerService.getMyselfCustomers(pageable, customer);
+        Page<CustomersResponse> customers = customerService.getMyselfCustomers(pageable, request);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
 

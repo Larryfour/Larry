@@ -210,4 +210,21 @@ public class Utils {
     public static boolean isMobile(String mobile) {
         return Pattern.matches(REGEX_MOBILE, mobile);
     }
+
+    /**
+     * yyyy-MM-dd to utc
+     *
+     * @param str
+     * @return
+     */
+    public static String str2utc(String str) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = dateFormat.parse(str);
+
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateTimeFormat.setTimeZone(TimeZone.getTimeZone("GMT +00:00"));
+        String utcTime = dateTimeFormat.format(date.getTime());
+
+        return utcTime;
+    }
 }

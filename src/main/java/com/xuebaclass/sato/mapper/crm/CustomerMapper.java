@@ -2,6 +2,8 @@ package com.xuebaclass.sato.mapper.crm;
 
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.Customer;
+import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
+import com.xuebaclass.sato.model.request.CustomersRequest;
 import com.xuebaclass.sato.model.request.DistributionRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import org.apache.ibatis.annotations.*;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public interface CustomerMapper {
 
     class CustomerSqlProvider extends SpringSecurityKeycloakAutditorAware {
+
         private final static String TABLE_NAME = "CUSTOMER";
 
         public String create() {
@@ -102,48 +105,162 @@ public interface CustomerMapper {
 
         public String getCustomers(Map<String, Object> parameters) {
             String sortField = (String) parameters.get("sortField");
+            CustomersRequest request = (CustomersRequest) parameters.get("request");
+
+            String nameSql = "";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                nameSql = "SELECT \n" +
+                        "      ct.CUSTOMER_ID,\n" +
+                        "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "    FROM\n" +
+                        "      TAG t,\n" +
+                        "      CUSTOMER_TAG ct,\n" +
+                        "      (SELECT DISTINCT \n" +
+                        "        CUSTOMER_ID \n" +
+                        "      FROM\n" +
+                        "        CUSTOMER_TAG \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) temp \n" +
+                        "    WHERE t.ID = ct.TAG_ID \n" +
+                        "      AND t.FLAG = 0 \n" +
+                        "      AND ct.FLAG = 0 \n" +
+                        "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
+                        "    GROUP BY ct.CUSTOMER_ID";
+            } else {
+                nameSql = "SELECT \n" +
+                        "   ct.CUSTOMER_ID,\n" +
+                        "   GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "  FROM\n" +
+                        "   TAG t,\n" +
+                        "   CUSTOMER_TAG ct\n" +
+                        "  WHERE t.ID = ct.TAG_ID \n" +
+                        "   AND t.FLAG = 0 \n" +
+                        "   AND ct.FLAG = 0 \n" +
+                        "  GROUP BY ct.CUSTOMER_ID";
+            }
+
+
             String sql = "SELECT \n" +
                     "  c.*,\n" +
-                    "  t.TAG_NAMES \n" +
+                    "  n.TAG_NAMES\n" +
                     "FROM\n" +
                     "  CUSTOMER c \n" +
                     "  LEFT JOIN \n" +
-                    "    (SELECT \n" +
-                    "      ct.CUSTOMER_ID,\n" +
-                    "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
-                    "    FROM\n" +
-                    "      TAG t,\n" +
-                    "      CUSTOMER_TAG ct \n" +
-                    "    WHERE t.ID = ct.TAG_ID \n" +
-                    "      AND t.FLAG = 0 \n" +
-                    "      AND ct.FLAG = 0 \n" +
-                    "    GROUP BY ct.CUSTOMER_ID) t \n" +
-                    "    ON c.ID = t.CUSTOMER_ID \n" +
-                    "ORDER BY c." + sortField + " DESC";
+                    "    (" + nameSql + ") n \n" +
+                    "    ON n.CUSTOMER_ID = c.ID\n" +
+                    "WHERE 1 = 1 \n";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                sql += "  AND EXISTS \n" +
+                        "  (SELECT DISTINCT \n" +
+                        "    CUSTOMER_ID \n" +
+                        "  FROM\n" +
+                        "    CUSTOMER_TAG \n" +
+                        "  WHERE CUSTOMER_ID = c.ID \n" +
+                        "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getName())) {
+                sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getMobile())) {
+                sql += " AND c.mobile LIKE '" + request.getMobile() + "%' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getGrade())) {
+                sql += " AND c.grade = '" + request.getGrade() + "' \n";
+            }
+
+            if (request.getOwnedSalesID() != null) {
+                sql += " AND c.OWNED_SALES_ID = " + request.getOwnedSalesID() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {
+                sql += " AND c.CREATED_DATE BETWEEN '" + request.getFrom() + "' AND '" + request.getTo() + "' \n";
+            }
+
+            sql += " ORDER BY c." + sortField + " DESC ";
+
             return sql;
         }
 
         public String getMyselfCustomers(Map<String, Object> parameters) {
             String sortField = (String) parameters.get("sortField");
+            CustomersMyselfRequest request = (CustomersMyselfRequest) parameters.get("request");
+
+            String nameSql = "";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                nameSql = "SELECT \n" +
+                        "      ct.CUSTOMER_ID,\n" +
+                        "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "    FROM\n" +
+                        "      TAG t,\n" +
+                        "      CUSTOMER_TAG ct,\n" +
+                        "      (SELECT DISTINCT \n" +
+                        "        CUSTOMER_ID \n" +
+                        "      FROM\n" +
+                        "        CUSTOMER_TAG \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) temp \n" +
+                        "    WHERE t.ID = ct.TAG_ID \n" +
+                        "      AND t.FLAG = 0 \n" +
+                        "      AND ct.FLAG = 0 \n" +
+                        "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
+                        "    GROUP BY ct.CUSTOMER_ID";
+            } else {
+                nameSql = "SELECT \n" +
+                        "   ct.CUSTOMER_ID,\n" +
+                        "   GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "  FROM\n" +
+                        "   TAG t,\n" +
+                        "   CUSTOMER_TAG ct\n" +
+                        "  WHERE t.ID = ct.TAG_ID \n" +
+                        "   AND t.FLAG = 0 \n" +
+                        "   AND ct.FLAG = 0 \n" +
+                        "  GROUP BY ct.CUSTOMER_ID";
+            }
+
+
             String sql = "SELECT \n" +
                     "  c.*,\n" +
-                    "  t.TAG_NAMES \n" +
+                    "  n.TAG_NAMES\n" +
                     "FROM\n" +
                     "  CUSTOMER c \n" +
                     "  LEFT JOIN \n" +
-                    "    (SELECT \n" +
-                    "      ct.CUSTOMER_ID,\n" +
-                    "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
-                    "    FROM\n" +
-                    "      TAG t,\n" +
-                    "      CUSTOMER_TAG ct \n" +
-                    "    WHERE t.ID = ct.TAG_ID \n" +
-                    "      AND t.FLAG = 0 \n" +
-                    "      AND ct.FLAG = 0 \n" +
-                    "    GROUP BY ct.CUSTOMER_ID) t \n" +
-                    "    ON c.ID = t.CUSTOMER_ID \n" +
-                    "WHERE c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n" +
-                    "ORDER BY c." + sortField + " DESC ";
+                    "    (" + nameSql + ") n \n" +
+                    "    ON n.CUSTOMER_ID = c.ID\n" +
+                    "WHERE 1 = 1 \n" +
+                    "   AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                sql += "  AND EXISTS \n" +
+                        "  (SELECT DISTINCT \n" +
+                        "    CUSTOMER_ID \n" +
+                        "  FROM\n" +
+                        "    CUSTOMER_TAG \n" +
+                        "  WHERE CUSTOMER_ID = c.ID \n" +
+                        "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getName())) {
+                sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getMobile())) {
+                sql += " AND c.mobile LIKE '" + request.getMobile() + "%' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getGrade())) {
+                sql += " AND c.grade = '" + request.getGrade() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {
+                sql += " AND c.CREATED_DATE BETWEEN '" + request.getFrom() + "' AND '" + request.getTo() + "' \n";
+            }
+
+            sql += " ORDER BY c." + sortField + " DESC ";
+
             return sql;
         }
 
@@ -221,19 +338,19 @@ public interface CustomerMapper {
 
     /**
      * @param sortField
-     * @param customer
+     * @param request
      * @return
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getCustomers")
-    List<CustomersResponse> getCustomers(@Param("sortField") String sortField, Customer customer);
+    List<CustomersResponse> getCustomers(@Param("sortField") String sortField, @Param("request") CustomersRequest request);
 
     /**
      * @param sortField
-     * @param customer
+     * @param request
      * @return
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getMyselfCustomers")
-    List<CustomersResponse> getMyselfCustomers(@Param("sortField") String sortField, Customer customer);
+    List<CustomersResponse> getMyselfCustomers(@Param("sortField") String sortField, @Param("request") CustomersMyselfRequest request);
 
     /**
      * @param distributionRequest

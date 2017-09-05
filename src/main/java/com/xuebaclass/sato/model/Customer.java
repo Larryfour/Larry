@@ -34,6 +34,7 @@ public class Customer extends AbstractPersistable{
     private Integer ownedSalesID;
     private String ownedSalesName;
     private String ownedSalesUserName;
+    private Integer source;
 
     public String getContactName() {
         return contactName;
@@ -257,5 +258,13 @@ public class Customer extends AbstractPersistable{
 
     public void setOwnedSalesUserName(String ownedSalesUserName) {
         this.ownedSalesUserName = ownedSalesUserName;
+    }
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
     }
 }
