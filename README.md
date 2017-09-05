@@ -30,7 +30,7 @@ Sales CRM系统相关协议
 ### 获取客户管理客户列表
 REQ:  
 
-GET /sales-crm/customers?page=0&size=2
+GET /sales-crm/customers?page=0&size=2&name=昊&tagIds=1&tagIds=4&tagIds=7&mobile=186&grade=初二&from=2017-03-05T16:00:00.000Z&to=2017-11-11T16:00:00.000Z&ownedSalesID=17
 ```json
 RESP:
 {
@@ -142,7 +142,7 @@ RESP:
 ### 获取我的客户客户列表
 REQ:  
 
-GET /sales-crm/customers/myself?page=0&size=2
+GET /sales-crm/customers/myself?page=0&size=2&name=昊&tagIds=1&tagIds=4&tagIds=7&mobile=186&grade=初二&from=2017-03-05T16:00:00.000Z&to=2017-11-11T16:00:00.000Z
 ```json
 RESP:
 {
