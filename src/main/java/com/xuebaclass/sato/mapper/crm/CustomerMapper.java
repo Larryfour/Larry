@@ -120,7 +120,8 @@ public interface CustomerMapper {
                         "        CUSTOMER_ID \n" +
                         "      FROM\n" +
                         "        CUSTOMER_TAG \n" +
-                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) temp \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ") \n" +
+                        "        AND FLAG = 0 ) temp \n" +
                         "    WHERE t.ID = ct.TAG_ID \n" +
                         "      AND t.FLAG = 0 \n" +
                         "      AND ct.FLAG = 0 \n" +
@@ -157,6 +158,7 @@ public interface CustomerMapper {
                         "  FROM\n" +
                         "    CUSTOMER_TAG \n" +
                         "  WHERE CUSTOMER_ID = c.ID \n" +
+                        "    AND FLAG = 0 \n" +
                         "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
             }
 
@@ -202,7 +204,8 @@ public interface CustomerMapper {
                         "        CUSTOMER_ID \n" +
                         "      FROM\n" +
                         "        CUSTOMER_TAG \n" +
-                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) temp \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ") \n" +
+                        "        AND FLAG = 0 ) temp \n" +
                         "    WHERE t.ID = ct.TAG_ID \n" +
                         "      AND t.FLAG = 0 \n" +
                         "      AND ct.FLAG = 0 \n" +
@@ -240,6 +243,7 @@ public interface CustomerMapper {
                         "  FROM\n" +
                         "    CUSTOMER_TAG \n" +
                         "  WHERE CUSTOMER_ID = c.ID \n" +
+                        "    AND FLAG = 0 \n" +
                         "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
             }
 
