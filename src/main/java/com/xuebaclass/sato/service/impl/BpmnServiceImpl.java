@@ -80,54 +80,55 @@ public class BpmnServiceImpl implements BpmnService {
             throw CrmException.newException("父母电话不能为空!");
         }
 
-        Student student = new Student();
         // 创建学生
         try {
             String uid = Utils.xuebaNo2Uid(customer.getXuebaNo().toString());
-            student.setUid(uid);
-            student.setName(customer.getName());
-            student.setMobile(customer.getMobile());
-            student.setQq(customer.getQq());
-            student.setGender(customer.getGender());
-            student.setProvince(customer.getProvince());
-            student.setCity(customer.getCity());
-            student.setSchool(customer.getSchool());
-            student.setRelation("父亲".equals(customer.getParents()) ? "man" : "woman");
-            student.setParentName(customer.getParents());
-            student.setParentMobile(customer.getParentsMobile());
-            student.setAnswerTime(customer.getAnswerInterval());
-            student.setNimAccountId(getNimAccountId(uid));
-
-            Map extensions = new HashMap();
-            if (!StringUtils.isEmpty(customer.getLearningProcess())) {
-                extensions.put("学习进度", customer.getLearningProcess());
-            }
-            if (nonNull(customer.getScores())) {
-                extensions.put("成绩", customer.getScores().toString());
-            }
-            if (!StringUtils.isEmpty(customer.getTeachingAterial())) {
-                extensions.put("使用教材", customer.getTeachingAterial());
-            }
-            if (!StringUtils.isEmpty(customer.getGrade())) {
-                extensions.put("年级", customer.getGrade());
-            }
-            if (nonNull(customer.getFullMarks())) {
-                extensions.put("满分", customer.getFullMarks().toString());
-            }
-            if (!StringUtils.isEmpty(customer.getNextTest())) {
-                extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
-            }
-            if (nonNull(customer.getNextTestDate())) {
-                extensions.put("下次大考名称", customer.getNextTest());
-            }
-            if (nonNull(customer.getNextTestDate())) {
-                extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
-            }
-            student.setExtensions(extensions);
-
 
             Student existStudent = studentMapper.getStudentByUid(uid);
             if (existStudent == null) {
+
+                Student student = new Student();
+
+                student.setUid(uid);
+                student.setName(customer.getName());
+                student.setMobile(customer.getMobile());
+                student.setQq(customer.getQq());
+                student.setGender(customer.getGender());
+                student.setProvince(customer.getProvince());
+                student.setCity(customer.getCity());
+                student.setSchool(customer.getSchool());
+                student.setRelation("父亲".equals(customer.getParents()) ? "man" : "woman");
+                student.setParentName(customer.getParents());
+                student.setParentMobile(customer.getParentsMobile());
+                student.setAnswerTime(customer.getAnswerInterval());
+                student.setNimAccountId(getNimAccountId(uid));
+
+                Map extensions = new HashMap();
+                if (!StringUtils.isEmpty(customer.getLearningProcess())) {
+                    extensions.put("学习进度", customer.getLearningProcess());
+                }
+                if (nonNull(customer.getScores())) {
+                    extensions.put("成绩", customer.getScores().toString());
+                }
+                if (!StringUtils.isEmpty(customer.getTeachingAterial())) {
+                    extensions.put("使用教材", customer.getTeachingAterial());
+                }
+                if (!StringUtils.isEmpty(customer.getGrade())) {
+                    extensions.put("年级", customer.getGrade());
+                }
+                if (nonNull(customer.getFullMarks())) {
+                    extensions.put("满分", customer.getFullMarks().toString());
+                }
+                if (!StringUtils.isEmpty(customer.getNextTest())) {
+                    extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
+                }
+                if (nonNull(customer.getNextTestDate())) {
+                    extensions.put("下次大考名称", customer.getNextTest());
+                }
+                if (nonNull(customer.getNextTestDate())) {
+                    extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
+                }
+                student.setExtensions(extensions);
 
                 studentMapper.create(student);
 
