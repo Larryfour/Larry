@@ -1,7 +1,6 @@
 package com.xuebaclass.sato.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xuebaclass.sato.common.SatoSort;
@@ -31,7 +30,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -78,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             Customer existCustomer = customerMapper.getByContactMobile(customer.getContactMobile());
-            if (existCustomer != null) {
+            if (!nonNull(existCustomer)) {
                 throw CrmException.newException("客户联络电话已存在!");
             }
 
@@ -87,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
             if (Customer.Source.APP_POPUP.getCode().equals(customer.getSource())) {
 
                 existCustomer = customerMapper.getCustomerByXuebaNo(customer.getXuebaNo());
-                if (existCustomer != null) {
+                if (!nonNull(existCustomer)) {
                     throw CrmException.newException("学吧号已存在!");
                 }
 
@@ -150,16 +148,16 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             Customer existCustomer = customerMapper.getById(customer.getId());
-            if (existCustomer == null) {
+            if (!nonNull(existCustomer)) {
                 throw CrmException.newException("客户不存在!");
             }
 
             existCustomer = customerMapper.checkMobileExist(customer.getMobile(), customer.getId());
-            if (existCustomer != null) {
+            if (!nonNull(existCustomer)) {
                 throw CrmException.newException("学生电话已存在!");
             }
 
-            if (customer.getXuebaNo() != null) {
+            if (nonNull(customer.getXuebaNo())) {
                 existCustomer = customerMapper.getCustomerByXuebaNo(customer.getXuebaNo());
                 if (existCustomer != null && !existCustomer.getId().equals(id)) {
                     throw CrmException.newException("学吧号已存在!");
@@ -168,7 +166,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             String userName = CurrentUser.getInstance().getCurrentAuditorName();
             Sales sales = salesMapper.getSalesByUserName(userName);
-            if (sales == null) {
+            if (!nonNull(sales)) {
                 throw CrmException.newException("修改账户不存在！");
             }
 
@@ -180,9 +178,11 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             try {
-                Student student = null;
-                if (!StringUtils.isEmpty(customer.getMobile())) {
-                    student = studentMapper.getStudentByMobile(customer.getMobile());
+                if (nonNull(customer.getXuebaNo())) {
+
+                    String uid = Utils.xuebaNo2Uid(String.valueOf(customer.getXuebaNo()));
+
+                    Student student = studentMapper.getStudentByUid(uid);
                     if (nonNull(student)) {
                         student.setName(customer.getName());
                         student.setMobile(customer.getMobile());
@@ -197,14 +197,30 @@ public class CustomerServiceImpl implements CustomerService {
                         student.setAnswerTime(customer.getAnswerInterval());
 
                         Map extensions = new HashMap();
-                        extensions.put("学习进度", customer.getLearningProcess());
-                        extensions.put("成绩", customer.getScores().toString());
-                        extensions.put("使用教材", customer.getTeachingAterial());
-                        extensions.put("年级", customer.getGrade());
-                        extensions.put("满分", customer.getFullMarks().toString());
-                        extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
-                        extensions.put("下次大考名称", customer.getNextTest());
-                        extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
+                        if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getLearningProcess())) {
+                            extensions.put("学习进度", customer.getLearningProcess());
+                        }
+                        if (nonNull(customer.getScores())) {
+                            extensions.put("成绩", customer.getScores().toString());
+                        }
+                        if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getTeachingAterial())) {
+                            extensions.put("使用教材", customer.getTeachingAterial());
+                        }
+                        if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getGrade())) {
+                            extensions.put("年级", customer.getGrade());
+                        }
+                        if (nonNull(customer.getFullMarks())) {
+                            extensions.put("满分", customer.getFullMarks().toString());
+                        }
+                        if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getNextTest())) {
+                            extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
+                        }
+                        if (nonNull(customer.getNextTestDate())) {
+                            extensions.put("下次大考名称", customer.getNextTest());
+                        }
+                        if (nonNull(customer.getNextTestDate())) {
+                            extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
+                        }
                         student.setExtensions(extensions);
 
                         studentMapper.update(student.getId(), student);
@@ -213,7 +229,6 @@ public class CustomerServiceImpl implements CustomerService {
                             Student finalStudent = student;
                             student.getExtensions().forEach((k, v) -> studentMapper.createStudentExtension(finalStudent.getId(), k, v));
                         }
-
                     }
                 }
             } catch (Exception e) {
