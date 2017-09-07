@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,12 +60,24 @@ public class BpmnServiceImpl implements BpmnService {
         logger.info("book customer id[" + customerId + "]");
 
         Customer customer = customerMapper.getById(customerId);
-        if (customer == null) {
+        if (!nonNull(customer)) {
             throw CrmException.newException("客户不存在!");
         }
 
-        if (customer.getXuebaNo() == null) {
+        if (!nonNull(customer.getXuebaNo())) {
             throw CrmException.newException("学吧号不能为空!");
+        }
+
+        if (StringUtils.isEmpty(customer.getName())) {
+            throw CrmException.newException("客户姓名不能为空!");
+        }
+
+        if (StringUtils.isEmpty(customer.getMobile())) {
+            throw CrmException.newException("客户电话不能为空!");
+        }
+
+        if (StringUtils.isEmpty(customer.getParentsMobile())) {
+            throw CrmException.newException("父母电话不能为空!");
         }
 
         Student student = new Student();
@@ -86,14 +99,30 @@ public class BpmnServiceImpl implements BpmnService {
             student.setNimAccountId(getNimAccountId(uid));
 
             Map extensions = new HashMap();
-            extensions.put("学习进度", customer.getLearningProcess());
-            extensions.put("成绩", customer.getScores().toString());
-            extensions.put("使用教材", customer.getTeachingAterial());
-            extensions.put("年级", customer.getGrade());
-            extensions.put("满分", customer.getFullMarks().toString());
-            extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
-            extensions.put("下次大考名称", customer.getNextTest());
-            extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
+            if (!StringUtils.isEmpty(customer.getLearningProcess())) {
+                extensions.put("学习进度", customer.getLearningProcess());
+            }
+            if (nonNull(customer.getScores())) {
+                extensions.put("成绩", customer.getScores().toString());
+            }
+            if (!StringUtils.isEmpty(customer.getTeachingAterial())) {
+                extensions.put("使用教材", customer.getTeachingAterial());
+            }
+            if (!StringUtils.isEmpty(customer.getGrade())) {
+                extensions.put("年级", customer.getGrade());
+            }
+            if (nonNull(customer.getFullMarks())) {
+                extensions.put("满分", customer.getFullMarks().toString());
+            }
+            if (!StringUtils.isEmpty(customer.getNextTest())) {
+                extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
+            }
+            if (nonNull(customer.getNextTestDate())) {
+                extensions.put("下次大考名称", customer.getNextTest());
+            }
+            if (nonNull(customer.getNextTestDate())) {
+                extensions.put("下次大考时间", Utils.parseDate(customer.getNextTestDate()));
+            }
             student.setExtensions(extensions);
 
 
