@@ -186,10 +186,14 @@ public class BpmnServiceImpl implements BpmnService {
         req.getVariables().add(textVariable("studentName", customer.getName()));
         req.getVariables().add(textVariable("studentMobile", customer.getMobile()));
         req.getVariables().add(textVariable("parentMobile", customer.getParentsMobile()));
-        req.getVariables().add(textVariable("parent", "父亲".equals(customer.getParents()) ? "man" : "woman"));
+        if (!StringUtils.isEmpty(customer.getParents())) {
+            req.getVariables().add(textVariable("parent", "父亲".equals(customer.getParents()) ? "man" : "woman"));
+        }
         req.getVariables().add(textVariable("call_period", customer.getAnswerInterval()));
         req.getVariables().add(textVariable("title", customer.getTeachingAterialNote()));
-        req.getVariables().add(textVariable("attend_training", customer.getTutorialFlag() == false ? "否" : "是"));
+        if (nonNull(customer.getTutorialFlag())) {
+            req.getVariables().add(textVariable("attend_training", customer.getTutorialFlag() == false ? "否" : "是"));
+        }
 
         try {
             JsonNode resp = restTemplate.postForEntity(url, req, JsonNode.class).getBody();
