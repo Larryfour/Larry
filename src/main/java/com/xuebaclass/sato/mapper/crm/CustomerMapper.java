@@ -56,6 +56,7 @@ public interface CustomerMapper {
                 VALUES("OWNED_SALES_ID", "#{ownedSalesID}");
                 VALUES("OWNED_SALES_USERNAME", "#{ownedSalesUserName}");
                 VALUES("OWNED_SALES_NAME", "#{ownedSalesName}");
+                VALUES("SOURCE", "#{source}");
 
                 VALUES("CREATED_BY", "'" + getCurrentAuditor() + "'");
                 VALUES("CREATED_DATE", "utc_timestamp()");
@@ -362,4 +363,11 @@ public interface CustomerMapper {
      */
     @UpdateProvider(type = CustomerSqlProvider.class, method = "distribution")
     void distribution(@Param("distributionRequest") DistributionRequest distributionRequest);
+
+    /**
+     * @param xuebaNo
+     * @return
+     */
+    @Select("SELECT * FROM CUSTOMER WHERE XUEBA_NO = #{xuebaNo}")
+    Customer getCustomerByXuebaNo(@Param("xuebaNo") Integer xuebaNo);
 }

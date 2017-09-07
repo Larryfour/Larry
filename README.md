@@ -282,9 +282,7 @@ POST /sales-crm/customers
     "nextTest":"期中考试",
     "nextTestDate":"2017-10-10",
     "answerInterval":"14:00-15:00",
-    "ownedSalesID":"1"
-    "ownedSalesName":"销售主管名称"
-    "ownedSalesUserName":"销售主管账户名称"
+    "source":"1" //1.app弹出 2.app入口 3.官网 4.ec历史数据 5.后台添加
 }
 ```
 
@@ -293,7 +291,7 @@ RESP:
 {   
     "id":"81d32b61-83bd-11e7-964c-c81f66c50f7d",
     "contactName": "孙昊",
-    "contactMobile": "18612172112"
+    "contactMobile": "18612172112",
     "xuebaNo":"16517014",
     "name":"孙昊",
     "mobile":"18612172117",
@@ -317,8 +315,8 @@ RESP:
     "nextTest":"期中考试",
     "nextTestDate":"2017-10-10",
     "answerInterval":"14:00-15:00",
-    "ownedSalesID":"1"
-    "ownedSalesName":"销售主管名称"
+    "ownedSalesID":"1",
+    "ownedSalesName":"销售主管名称",
     "ownedSalesUserName":"销售主管账户名称"
 }
 ```
@@ -823,6 +821,56 @@ RESP:
         "tagName": "明确拒绝"
     }
 ]
+```
+
+### 启动约课
+REQ:
+  
+POST /sales-crm/bpmn/experience/book-course/21d6ef54-9234-11e7-a2ef-c81f66c50f7d
+```json
+{
+}
+```
+
+RESP:
+```json
+{
+    "id": "21d6ef54-9234-11e7-a2ef-c81f66c50f7d",
+    "createdDate": "2017-09-05T12:17:06Z",
+    "createdBy": "sato:user:keycloak:service-account-sales-leads-http",
+    "lastModifiedDate": "2017-09-05T12:17:06Z",
+    "lastModifiedBy": "sato:user:keycloak:service-account-sales-leads-http",
+    "version": 0,
+    "contactName": "党梦鸽",
+    "contactMobile": "18632146587",
+    "xuebaNo": 14,
+    "name": "党梦鸽",
+    "mobile": "18632146587",
+    "gender": "Female",
+    "qq": "2524912818",
+    "parents": "父亲",
+    "parentsMobile": "18536549853",
+    "province": "黑龙江",
+    "city": "双鸭山",
+    "district": null,
+    "school": "双鸭山市第十八中学",
+    "grade": "初二",
+    "gradeNote": null,
+    "teachingAterial": "初二",
+    "teachingAterialNote": "八年级第十二章 全等三角形",
+    "scores": 66,
+    "fullMarks": 100,
+    "comment": "刚及格",
+    "tutorialFlag": true,
+    "learningProcess": "无理数",
+    "nextTest": "期中考试",
+    "nextTestDate": "2017-10-09T16:00:00.000+0000",
+    "answerInterval": "2017-9-6 15:00-16:00",
+    "ownedSalesID": null,
+    "ownedSalesName": null,
+    "ownedSalesUserName": null,
+    "source": "3"
+}
 ```
 
 

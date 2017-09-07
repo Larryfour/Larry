@@ -2,9 +2,9 @@
   "realm": "sato",
   "auth-server-url": "https://dev.xuebastudy.com/auth",
   "ssl-required": "external",
-  "resource": "sales-leads-http",
+  "resource": "sales-crm",
   "credentials": {
-    "secret": "d46c9e78-303f-4dcd-bd13-b9c769389bb6"
+    "secret": "a6f05fb3-c8fe-4bd0-a08c-49b873711068"
   },
   "use-resource-role-mappings": true,
   "principal-attribute": "preferred_username",

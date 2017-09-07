@@ -144,12 +144,23 @@ public class Utils {
     /**
      * Date to String
      *
-     * @param utcTime
+     * @param dateTime
      * @return
      */
-    public static String getDateStr(Date utcTime) {
+    public static String parseDateTime(Date dateTime) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(utcTime);
+        return format.format(dateTime);
+    }
+
+    /**
+     * Date to String
+     *
+     * @param date
+     * @return
+     */
+    public static String parseDate(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
     }
 
     public static String utc2Local(String utcTime) {

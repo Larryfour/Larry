@@ -6,6 +6,32 @@ import java.util.Date;
  * Created by sunhao on 2017-08-17.
  */
 public class Customer extends AbstractPersistable{
+
+
+    public enum Source {
+        //APP弹出框
+        APP_POPUP("1"),
+        //app入口
+        APP_ENTRANCE("2"),
+        //官网
+        WEBSITE("3"),
+        //ec历史数据
+        EC("4"),
+        //后台添加
+        BACKEND("5");
+
+        private String code;
+
+        private Source(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+    }
+
+
     private String contactName;
     private String contactMobile;
     private Integer xuebaNo;
@@ -34,7 +60,7 @@ public class Customer extends AbstractPersistable{
     private Integer ownedSalesID;
     private String ownedSalesName;
     private String ownedSalesUserName;
-    private Integer source;
+    private String source;
 
     public String getContactName() {
         return contactName;
@@ -260,11 +286,11 @@ public class Customer extends AbstractPersistable{
         this.ownedSalesUserName = ownedSalesUserName;
     }
 
-    public Integer getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(Integer source) {
+    public void setSource(String source) {
         this.source = source;
     }
 }

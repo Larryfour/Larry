@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by sunhao on 2017-08-21.
@@ -30,7 +27,7 @@ public class BpmnController {
      *
      * @return
      */
-    @RequestMapping(value = "/experience/book-course/{customerId}", method = RequestMethod.POST)
+    @PostMapping(value = "/experience/book-course/{customerId}")
     public ResponseEntity bookExperienceCourse(@PathVariable String customerId) throws Exception {
         logger.info("################### book experience course #######################");
 

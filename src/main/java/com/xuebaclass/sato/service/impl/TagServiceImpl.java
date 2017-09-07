@@ -159,7 +159,7 @@ public class TagServiceImpl implements TagService {
             DynamicRecord record = new DynamicRecord();
             record.setCustomerId(customerId);
             record.setComment(recordComment.toString());
-            record.setType(RecordType.ARTIFICIAL.getCode());
+            record.setType(DynamicRecord.RecordType.ARTIFICIAL.getCode());
             record.setName(sales.getName());
             record.setUserName(sales.getUserName());
 
