@@ -153,13 +153,13 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             existCustomer = customerMapper.checkMobileExist(customer.getMobile(), customer.getId());
-            if (!nonNull(existCustomer)) {
+            if (nonNull(existCustomer)) {
                 throw CrmException.newException("学生电话已存在!");
             }
 
             if (nonNull(customer.getXuebaNo())) {
                 existCustomer = customerMapper.getCustomerByXuebaNo(customer.getXuebaNo());
-                if (existCustomer != null && !existCustomer.getId().equals(id)) {
+                if (nonNull(existCustomer) && !existCustomer.getId().equals(id)) {
                     throw CrmException.newException("学吧号已存在!");
                 }
             }
