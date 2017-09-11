@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Transactional
 @Service
 public class DynamicRecordServiceImpl implements DynamicRecordService {
@@ -88,7 +90,7 @@ public class DynamicRecordServiceImpl implements DynamicRecordService {
             }
 
             Customer customer = customerMapper.getById(customerId);
-            if (customer == null) {
+            if (!nonNull(customer)) {
                 throw CrmException.newException("客户不存在！");
             }
 

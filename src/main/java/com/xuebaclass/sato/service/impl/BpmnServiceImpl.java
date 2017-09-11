@@ -85,7 +85,7 @@ public class BpmnServiceImpl implements BpmnService {
             String uid = Utils.xuebaNo2Uid(customer.getXuebaNo().toString());
 
             Student existStudent = studentMapper.getStudentByUid(uid);
-            if (existStudent == null) {
+            if (!nonNull(existStudent)) {
 
                 Student student = new Student();
 

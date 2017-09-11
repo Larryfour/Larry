@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 @Transactional
 @Service
 public class TagServiceImpl implements TagService {
@@ -135,7 +137,7 @@ public class TagServiceImpl implements TagService {
 
             String userName = CurrentUser.getInstance().getCurrentAuditorName();
             Sales sales = salesMapper.getSalesByUserName(userName);
-            if (sales == null) {
+            if (!nonNull(sales)) {
                 throw CrmException.newException("修改账户不存在！");
             }
 
@@ -184,7 +186,7 @@ public class TagServiceImpl implements TagService {
         try {
 
             Customer customer = customerMapper.getById(customerId);
-            if (customer == null) {
+            if (!nonNull(customer)) {
                 throw CrmException.newException("客户不存在!");
             }
 
