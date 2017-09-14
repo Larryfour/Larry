@@ -119,10 +119,10 @@ public class BpmnServiceImpl implements BpmnService {
                 if (nonNull(customer.getFullMarks())) {
                     extensions.put("满分", customer.getFullMarks().toString());
                 }
-                if (!StringUtils.isEmpty(customer.getNextTest())) {
+                if (nonNull(customer.getTutorialFlag())) {
                     extensions.put("是否补习", customer.getTutorialFlag() == false ? "否" : "是");
                 }
-                if (nonNull(customer.getNextTestDate())) {
+                if (!StringUtils.isEmpty((customer.getNextTest()))) {
                     extensions.put("下次大考名称", customer.getNextTest());
                 }
                 if (nonNull(customer.getNextTestDate())) {
@@ -233,18 +233,15 @@ public class BpmnServiceImpl implements BpmnService {
 
     private String getNimAccountId(String uid) {
         String url = salesLeadsUrl + "im/student/" + uid;
-//        String url = "http://localhost:9090/sales-leads/im/student/1";
 
-        return "xbim0000088674";
+        try {
+            JsonNode resp = restTemplate.getForEntity(url, JsonNode.class).getBody();
 
-//        try {
-//            JsonNode resp = restTemplate.getForEntity(url, JsonNode.class).getBody();
-//
-//            return resp.get("accid").textValue();
-//        } catch (HttpClientErrorException e) {
-//            logger.info("get nim account error:[" + e.getResponseBodyAsString() + "]");
-//            throw new CrmException(e.getResponseBodyAsString());
-//        }
+            return resp.get("accid").textValue();
+        } catch (HttpClientErrorException e) {
+            logger.info("get nim account error:[" + e.getResponseBodyAsString() + "]");
+            throw new CrmException(e.getResponseBodyAsString());
+        }
 
     }
 
