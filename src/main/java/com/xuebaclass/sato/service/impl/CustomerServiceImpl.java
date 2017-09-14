@@ -76,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             Customer existCustomer = customerMapper.getByContactMobile(customer.getContactMobile());
-            if (!nonNull(existCustomer)) {
+            if (nonNull(existCustomer)) {
                 throw CrmException.newException("客户联络电话已存在!");
             }
 
@@ -85,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
             if (Customer.Source.APP_POPUP.getCode().equals(customer.getSource())) {
 
                 existCustomer = customerMapper.getCustomerByXuebaNo(customer.getXuebaNo());
-                if (!nonNull(existCustomer)) {
+                if (nonNull(existCustomer)) {
                     throw CrmException.newException("学吧号已存在!");
                 }
 
@@ -93,7 +93,14 @@ public class CustomerServiceImpl implements CustomerService {
                 record.setName("APP弹出导入");
                 record.setUserName(Customer.Source.APP_POPUP.toString());
             } else if (Customer.Source.APP_ENTRANCE.getCode().equals(customer.getSource())) {
-                //TODO: to develop
+                existCustomer = customerMapper.getCustomerByXuebaNo(customer.getXuebaNo());
+                if (nonNull(existCustomer)) {
+                    throw CrmException.newException("学吧号已存在!");
+                }
+
+                record.setType(DynamicRecord.RecordType.SYSTEM.getCode());
+                record.setName("APP入口导入");
+                record.setUserName(Customer.Source.APP_ENTRANCE.toString());
 
             } else if (Customer.Source.WEBSITE.getCode().equals(customer.getSource())) {
                 record.setType(DynamicRecord.RecordType.SYSTEM.getCode());
@@ -105,7 +112,7 @@ public class CustomerServiceImpl implements CustomerService {
             } else if (Customer.Source.BACKEND.getCode().equals(customer.getSource())) {
                 String userName = CurrentUser.getInstance().getCurrentAuditorName();
                 Sales sales = salesMapper.getSalesByUserName(userName);
-                if (sales == null) {
+                if (!nonNull(sales)) {
                     throw CrmException.newException("创建销售不存在！");
                 }
 

@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
+
 /**
  * Created by sunhao on 2017-08-17.
  */
@@ -175,8 +177,12 @@ public interface CustomerMapper {
                 sql += " AND c.grade = '" + request.getGrade() + "' \n";
             }
 
-            if (request.getOwnedSalesID() != null) {
+            if (nonNull(request.getOwnedSalesID())) {
                 sql += " AND c.OWNED_SALES_ID = " + request.getOwnedSalesID() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getSource())) {
+                sql += " AND c.SOURCE = '" + request.getSource() + "' \n";
             }
 
             if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {
@@ -258,6 +264,10 @@ public interface CustomerMapper {
 
             if (!StringUtils.isEmpty(request.getGrade())) {
                 sql += " AND c.grade = '" + request.getGrade() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getSource())) {
+                sql += " AND c.SOURCE = '" + request.getSource() + "' \n";
             }
 
             if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {

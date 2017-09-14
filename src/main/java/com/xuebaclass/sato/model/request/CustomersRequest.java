@@ -12,6 +12,7 @@ public class CustomersRequest {
     private String from;
     private String to;
     private Integer ownedSalesID;
+    private String source;
     private List<String> tagIds;
 
     public String getName() {
@@ -60,6 +61,14 @@ public class CustomersRequest {
 
     public void setOwnedSalesID(Integer ownedSalesID) {
         this.ownedSalesID = ownedSalesID;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public List<String> getTagIds() {

@@ -11,6 +11,7 @@ public class CustomersMyselfRequest {
     private String grade;
     private String from;
     private String to;
+    private String source;
     private List<String> tagIds;
 
     public String getName() {
@@ -51,6 +52,14 @@ public class CustomersMyselfRequest {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public List<String> getTagIds() {
