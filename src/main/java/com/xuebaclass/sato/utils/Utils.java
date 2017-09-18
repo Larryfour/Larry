@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Utils {
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
     private static final String ORDERUUID_FORMAT_STRING = "yyyyMMddHHmmsssss";
-    private static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    private static final String REGEX_MOBILE = "^1(3|4|5|7|8)\\d{9}$";
 
     /**
      * 获取系统当前日期
