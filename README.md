@@ -637,7 +637,8 @@ RESP:
 [
     {
         "tagGroupId": 1,
-        "tagGroupName": "客户状态",
+        "tagGroupName": "客户分类",
+        "multiSelect": true,
         "tags": [
             {
                 "id": "1",
@@ -674,71 +675,98 @@ RESP:
                 "comment": "很有意向",
                 "tagGroupId": 1,
                 "flag": false
-            },
-            {
-                "id": "4",
-                "createdDate": "2017-08-23T09:11:38Z",
-                "createdBy": "sato:user:no-user",
-                "lastModifiedDate": "2017-08-23T09:11:38Z",
-                "lastModifiedBy": "sato:user:no-user",
-                "version": 0,
-                "name": "意向不确定",
-                "comment": "意向不确定",
-                "tagGroupId": 1,
-                "flag": false
-            },
-            {
-                "id": "5",
-                "createdDate": "2017-08-23T09:11:38Z",
-                "createdBy": "sato:user:no-user",
-                "lastModifiedDate": "2017-08-23T09:11:38Z",
-                "lastModifiedBy": "sato:user:no-user",
-                "version": 0,
-                "name": "明确拒绝",
-                "comment": "明确拒绝",
-                "tagGroupId": 1,
-                "flag": false
-            },
-            {
-                "id": "8",
-                "createdDate": "2017-08-23T09:11:38Z",
-                "createdBy": "sato:user:no-user",
-                "lastModifiedDate": "2017-08-23T09:11:38Z",
-                "lastModifiedBy": "sato:user:no-user",
-                "version": 0,
-                "name": "测试标签3",
-                "comment": "测试标签3",
-                "tagGroupId": 1,
-                "flag": false
             }
         ]
     },
     {
         "tagGroupId": 2,
-        "tagGroupName": "测试组",
+        "tagGroupName": "年级",
+        "multiSelect": false,
         "tags": [
             {
-                "id": "6",
-                "createdDate": "2017-08-23T09:11:38Z",
+                "id": "21",
+                "createdDate": "2017-09-28T14:36:30Z",
                 "createdBy": "sato:user:no-user",
-                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedDate": "2017-09-28T14:36:30Z",
                 "lastModifiedBy": "sato:user:no-user",
                 "version": 0,
-                "name": "测试标签1",
-                "comment": "测试标签1",
+                "name": "小学",
+                "comment": "小学",
                 "tagGroupId": 2,
                 "flag": false
             },
             {
-                "id": "7",
-                "createdDate": "2017-08-23T09:11:38Z",
+                "id": "22",
+                "createdDate": "2017-09-28T14:36:30Z",
                 "createdBy": "sato:user:no-user",
-                "lastModifiedDate": "2017-08-23T09:11:38Z",
+                "lastModifiedDate": "2017-09-28T14:36:30Z",
                 "lastModifiedBy": "sato:user:no-user",
                 "version": 0,
-                "name": "测试标签2",
-                "comment": "测试标签2",
+                "name": "初一",
+                "comment": "初一",
                 "tagGroupId": 2,
+                "flag": false
+            }
+        ]
+    },
+    {
+        "tagGroupId": 3,
+        "tagGroupName": "阶段",
+        "multiSelect": false,
+        "tags": [
+            {
+                "id": "29",
+                "createdDate": "2017-09-28T14:38:46Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-09-28T14:38:46Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "课前联系学生",
+                "comment": "课前联系学生",
+                "tagGroupId": 3,
+                "flag": false
+            },
+            {
+                "id": "30",
+                "createdDate": "2017-09-28T14:38:46Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-09-28T14:38:46Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "课前家访",
+                "comment": "课前家访",
+                "tagGroupId": 3,
+                "flag": false
+            }
+        ]
+    },
+    {
+        "tagGroupId": 4,
+        "tagGroupName": "性质",
+        "multiSelect": false,
+        "tags": [
+            {
+                "id": "37",
+                "createdDate": "2017-09-28T14:38:46Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-09-28T14:38:46Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "走读",
+                "comment": "走读",
+                "tagGroupId": 4,
+                "flag": false
+            },
+            {
+                "id": "38",
+                "createdDate": "2017-09-28T14:38:46Z",
+                "createdBy": "sato:user:no-user",
+                "lastModifiedDate": "2017-09-28T14:38:46Z",
+                "lastModifiedBy": "sato:user:no-user",
+                "version": 0,
+                "name": "住宿",
+                "comment": "住宿",
+                "tagGroupId": 4,
                 "flag": false
             }
         ]

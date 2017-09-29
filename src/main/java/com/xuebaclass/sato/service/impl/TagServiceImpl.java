@@ -91,6 +91,7 @@ public class TagServiceImpl implements TagService {
                 ManagementTagsResponse response = new ManagementTagsResponse();
                 response.setTagGroupId(Integer.valueOf(tagGroup.getId()));
                 response.setTagGroupName(tagGroup.getName());
+                response.setMultiSelect(tagGroup.getMultiSelect());
                 response.setTags(map.get(StringUtils.stringToInteger(tagGroup.getId())));
                 responses.add(response);
             });

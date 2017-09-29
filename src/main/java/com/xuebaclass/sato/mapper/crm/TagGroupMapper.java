@@ -24,6 +24,7 @@ public interface TagGroupMapper {
                 VALUES("NAME", "#{name}");
                 VALUES("COMMENT", "#{comment}");
                 VALUES("FLAG", "#{flag}");
+                VALUES("MULTI_SELECT", "#{multiSelect}");
 
                 VALUES("CREATED_BY", "'" + getCurrentAuditor() + "'");
                 VALUES("CREATED_DATE", "utc_timestamp()");

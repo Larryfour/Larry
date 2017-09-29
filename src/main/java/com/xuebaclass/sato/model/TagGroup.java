@@ -7,6 +7,7 @@ public class TagGroup extends AbstractPersistable {
     private String name;
     private String comment;
     private Boolean flag = false;
+    private Boolean multiSelect = false;
 
     public String getName() {
         return name;
@@ -30,5 +31,13 @@ public class TagGroup extends AbstractPersistable {
 
     public void setFlag(Boolean flag) {
         this.flag = flag;
+    }
+
+    public Boolean getMultiSelect() {
+        return multiSelect;
+    }
+
+    public void setMultiSelect(Boolean multiSelect) {
+        this.multiSelect = multiSelect;
     }
 }

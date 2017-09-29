@@ -10,6 +10,7 @@ import java.util.List;
 public class ManagementTagsResponse {
     private Integer tagGroupId;
     private String tagGroupName;
+    private Boolean multiSelect;
     private List<Tag> tags;
 
     public Integer getTagGroupId() {
@@ -34,5 +35,13 @@ public class ManagementTagsResponse {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public Boolean getMultiSelect() {
+        return multiSelect;
+    }
+
+    public void setMultiSelect(Boolean multiSelect) {
+        this.multiSelect = multiSelect;
     }
 }
