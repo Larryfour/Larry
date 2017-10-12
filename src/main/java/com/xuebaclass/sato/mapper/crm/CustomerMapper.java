@@ -145,28 +145,46 @@ public interface CustomerMapper {
                         "  GROUP BY ct.CUSTOMER_ID";
             }
 
+            String part1 = "";
+            String part2 = "";
+
+            if (nonNull(request.getTagIds()) && !request.getTagIds().isEmpty()) {
+
+                part1 = "  INNER JOIN \n" +
+                        "    (SELECT DISTINCT \n" +
+                        "      CUSTOMER_ID \n" +
+                        "    FROM\n" +
+                        "      CUSTOMER_TAG \n" +
+                        "    WHERE FLAG = 0 \n" +
+                        "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) uniq_table \n" +
+                        "    ON c.ID = uniq_table.CUSTOMER_ID \n";
+            } else {
+                part2 = "WHERE 1 = 1 \n";
+            }
+
+
+            if (!"".equals(part1)) {
+                part1 = parseCondition(part1, request);
+            } else {
+                part2 = parseCondition(part2, request);
+            }
 
             String sql = "SELECT \n" +
                     "  c.*,\n" +
-                    "  n.TAG_NAMES\n" +
+                    "  n.TAG_NAMES \n" +
                     "FROM\n" +
                     "  CUSTOMER c \n" +
-                    "  LEFT JOIN \n" +
-                    "    (" + nameSql + ") n \n" +
-                    "    ON n.CUSTOMER_ID = c.ID\n" +
-                    "WHERE 1 = 1 \n";
+                    part1 +
+                    "  LEFT JOIN (" + nameSql + ") n \n" +
+                    "    ON n.CUSTOMER_ID = c.ID \n" +
+                    part2;
 
-            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
-                sql += "  AND EXISTS \n" +
-                        "  (SELECT DISTINCT \n" +
-                        "    CUSTOMER_ID \n" +
-                        "  FROM\n" +
-                        "    CUSTOMER_TAG \n" +
-                        "  WHERE CUSTOMER_ID = c.ID \n" +
-                        "    AND FLAG = 0 \n" +
-                        "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
-            }
+            sql += " ORDER BY c." + sortField + " DESC ";
 
+            return sql;
+        }
+
+        private String parseCondition(String sql, CustomersRequest request) {
             if (!StringUtils.isEmpty(request.getName())) {
                 sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
             }
@@ -190,9 +208,6 @@ public interface CustomerMapper {
             if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {
                 sql += " AND c.CREATED_DATE BETWEEN '" + request.getFrom() + "' AND '" + request.getTo() + "' \n";
             }
-
-            sql += " ORDER BY c." + sortField + " DESC ";
-
             return sql;
         }
 
@@ -234,28 +249,47 @@ public interface CustomerMapper {
             }
 
 
-            String sql = "SELECT \n" +
-                    "  c.*,\n" +
-                    "  n.TAG_NAMES\n" +
-                    "FROM\n" +
-                    "  CUSTOMER c \n" +
-                    "  LEFT JOIN \n" +
-                    "    (" + nameSql + ") n \n" +
-                    "    ON n.CUSTOMER_ID = c.ID\n" +
-                    "WHERE 1 = 1 \n" +
-                    "   AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
+            String part1 = "";
+            String part2 = "";
 
-            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
-                sql += "  AND EXISTS \n" +
-                        "  (SELECT DISTINCT \n" +
-                        "    CUSTOMER_ID \n" +
-                        "  FROM\n" +
-                        "    CUSTOMER_TAG \n" +
-                        "  WHERE CUSTOMER_ID = c.ID \n" +
-                        "    AND FLAG = 0 \n" +
-                        "    AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) \n";
+            if (nonNull(request.getTagIds()) && !request.getTagIds().isEmpty()) {
+
+                part1 = "  INNER JOIN \n" +
+                        "    (SELECT DISTINCT \n" +
+                        "      CUSTOMER_ID \n" +
+                        "    FROM\n" +
+                        "      CUSTOMER_TAG \n" +
+                        "    WHERE FLAG = 0 \n" +
+                        "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) uniq_table \n" +
+                        "    ON c.ID = uniq_table.CUSTOMER_ID \n";
+            } else {
+                part2 = "WHERE 1 = 1 \n";
             }
 
+
+            if (!"".equals(part1)) {
+                part1 = parseCondition(part1, request);
+            } else {
+                part2 = parseCondition(part2, request);
+            }
+
+            String sql = "SELECT \n" +
+                    "  c.*,\n" +
+                    "  n.TAG_NAMES \n" +
+                    "FROM\n" +
+                    "  CUSTOMER c \n" +
+                    part1 +
+                    "  LEFT JOIN (" + nameSql + ") n \n" +
+                    "    ON n.CUSTOMER_ID = c.ID \n" +
+                    part2;
+
+            sql += " ORDER BY c." + sortField + " DESC ";
+
+            return sql;
+        }
+
+        private String parseCondition(String sql, CustomersMyselfRequest request) {
+            sql += " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
             if (!StringUtils.isEmpty(request.getName())) {
                 sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
             }
@@ -275,8 +309,6 @@ public interface CustomerMapper {
             if (!StringUtils.isEmpty(request.getFrom()) && !StringUtils.isEmpty(request.getTo())) {
                 sql += " AND c.CREATED_DATE BETWEEN '" + request.getFrom() + "' AND '" + request.getTo() + "' \n";
             }
-
-            sql += " ORDER BY c." + sortField + " DESC ";
 
             return sql;
         }
