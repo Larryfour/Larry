@@ -1,5 +1,6 @@
 package com.xuebaclass.sato.model;
 
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -60,6 +61,8 @@ public class Customer extends AbstractPersistable{
     private Integer ownedSalesID;
     private String ownedSalesName;
     private String ownedSalesUserName;
+    private Instant distributedDate;
+    private String distributedBy;
     private String source;
 
     public String getContactName() {
@@ -292,5 +295,21 @@ public class Customer extends AbstractPersistable{
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public Instant getDistributedDate() {
+        return distributedDate;
+    }
+
+    public void setDistributedDate(Instant distributedDate) {
+        this.distributedDate = distributedDate;
+    }
+
+    public String getDistributedBy() {
+        return distributedBy;
+    }
+
+    public void setDistributedBy(String distributedBy) {
+        this.distributedBy = distributedBy;
     }
 }

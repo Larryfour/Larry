@@ -58,6 +58,8 @@ public interface CustomerMapper {
                 VALUES("OWNED_SALES_ID", "#{ownedSalesID}");
                 VALUES("OWNED_SALES_USERNAME", "#{ownedSalesUserName}");
                 VALUES("OWNED_SALES_NAME", "#{ownedSalesName}");
+                VALUES("DISTRIBUTED_BY", "#{distributedBy}");
+                VALUES("DISTRIBUTED_DATE", "#{distributedDate}");
                 VALUES("SOURCE", "#{source}");
 
                 VALUES("CREATED_BY", "'" + getCurrentAuditor() + "'");
@@ -296,6 +298,8 @@ public interface CustomerMapper {
                 SET("OWNED_SALES_ID=#{distributionRequest.ownedSalesID}");
                 SET("OWNED_SALES_NAME=#{distributionRequest.ownedSalesName}");
                 SET("OWNED_SALES_USERNAME=#{distributionRequest.ownedSalesUserName}");
+                SET("DISTRIBUTED_BY='" + getCurrentAuditorName() + "'");
+                SET("DISTRIBUTED_DATE=utc_timestamp");
 
                 SET("LAST_MODIFIED_BY='" + getCurrentAuditor() + "'");
                 SET("LAST_MODIFIED_DATE=utc_timestamp()");
