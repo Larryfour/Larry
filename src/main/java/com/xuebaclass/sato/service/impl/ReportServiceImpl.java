@@ -1,5 +1,7 @@
 package com.xuebaclass.sato.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.ReportMapper;
 import com.xuebaclass.sato.mapper.sato.CourseMapper;
 import com.xuebaclass.sato.mapper.sato.OrderMapper;
@@ -9,12 +11,13 @@ import com.xuebaclass.sato.model.request.SalesDailyMyselfRequest;
 import com.xuebaclass.sato.model.response.SalesDailyResponse;
 import com.xuebaclass.sato.service.ReportService;
 import com.xuebaclass.sato.utils.CurrentUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -27,6 +30,9 @@ import static java.util.Objects.nonNull;
 @Transactional
 @Service
 public class ReportServiceImpl implements ReportService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
+
     @Autowired
     SalesMapper salesMapper;
 
@@ -40,10 +46,16 @@ public class ReportServiceImpl implements ReportService {
     OrderMapper orderMapper;
 
     @Override
-    public SalesDailyResponse salesDaily(SalesDailyMyselfRequest request) throws ParseException {
+    public SalesDailyResponse salesDaily(SalesDailyMyselfRequest request) throws Exception {
+
+        if (StringUtils.isEmpty(request.getFrom()) || StringUtils.isEmpty(request.getTo())) {
+            throw CrmException.newException("查询区间不能为空!");
+        }
 
         Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(parseUtc2Local(request.getFrom()));
         Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(parseUtc2Local(request.getTo()));
+
+        logger.info("startDate:" + startDate + "endDate:" + endDate);
 
         Sales sales = salesMapper.getSalesByUserName(CurrentUser.getInstance().getCurrentAuditorName());
         request.setSalesId(sales.getId());
@@ -106,6 +118,8 @@ public class ReportServiceImpl implements ReportService {
         while (calendar.getTime().compareTo(endDate) < 0) {
 
             String dailyDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+
+            logger.info("dailyDate:" + dailyDate);
 
             SalesDailyResponse.SalesDailyData dailyData = new SalesDailyResponse.SalesDailyData();
 
