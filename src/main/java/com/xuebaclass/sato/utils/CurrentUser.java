@@ -14,6 +14,7 @@ public class CurrentUser extends SpringSecurityKeycloakAutditorAware {
     }
 
     private static enum Singleton {
+        //单例实例
         INSTANCE;
 
         private CurrentUser singleton;

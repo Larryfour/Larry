@@ -17,18 +17,18 @@ public class MyBatisMapperScannerConfig {
 
 	@Bean
 	public MapperScannerConfigurer satoDBMapperScannerConfigurer() {
-		MapperScannerConfigurer M = new MapperScannerConfigurer();
-		M.setBasePackage("com.xuebaclass.sato.mapper.sato");
-		M.setSqlSessionFactoryBeanName("satoDBSqlSessionFactoryBean");
-		return M;
+		MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+		mapperScannerConfigurer.setBasePackage("com.xuebaclass.sato.mapper.sato");
+		mapperScannerConfigurer.setSqlSessionFactoryBeanName("satoDBSqlSessionFactoryBean");
+		return mapperScannerConfigurer;
 	}
 
 	@Bean
 	public MapperScannerConfigurer crmDBMapperScannerConfigurer() {
-		MapperScannerConfigurer M = new MapperScannerConfigurer();
-		M.setBasePackage("com.xuebaclass.sato.mapper.crm");
-		M.setSqlSessionFactoryBeanName("crmDBSqlSessionFactoryBean");
-		return M;
+		MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+		mapperScannerConfigurer.setBasePackage("com.xuebaclass.sato.mapper.crm");
+		mapperScannerConfigurer.setSqlSessionFactoryBeanName("crmDBSqlSessionFactoryBean");
+		return mapperScannerConfigurer;
 	}
 
 }

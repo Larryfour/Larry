@@ -238,4 +238,22 @@ public class Utils {
 
         return utcTime;
     }
+
+    /**
+     * yyyy-MM-dd to utc
+     *
+     * @param 2017-10-16T106:00:00.000Z -> 2017-10-17
+     * @return
+     */
+    public static String parseUtc2Local(String utcDateStr) throws ParseException {
+        utcDateStr = utcDateStr.replace("Z", " UTC");
+        SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        Date utcDate = utcFormat.parse(utcDateStr);
+
+//        TimeZone gmtTime = TimeZone.getTimeZone("GMT");
+        SimpleDateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        localFormat.setTimeZone(gmtTime);
+
+        return localFormat.format(utcDate);
+    }
 }

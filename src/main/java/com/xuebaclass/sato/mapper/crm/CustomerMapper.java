@@ -145,12 +145,12 @@ public interface CustomerMapper {
                         "  GROUP BY ct.CUSTOMER_ID";
             }
 
-            String part1 = "";
-            String part2 = "";
+            String innerSql = "";
+            String whereCondition = "";
 
             if (nonNull(request.getTagIds()) && !request.getTagIds().isEmpty()) {
 
-                part1 = "  INNER JOIN \n" +
+                innerSql = "  INNER JOIN \n" +
                         "    (SELECT DISTINCT \n" +
                         "      CUSTOMER_ID \n" +
                         "    FROM\n" +
@@ -159,14 +159,14 @@ public interface CustomerMapper {
                         "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) uniq_table \n" +
                         "    ON c.ID = uniq_table.CUSTOMER_ID \n";
             } else {
-                part2 = "WHERE 1 = 1 \n";
+                whereCondition = "WHERE 1 = 1 \n";
             }
 
 
-            if (!"".equals(part1)) {
-                part1 = parseCondition(part1, request);
+            if (!"".equals(innerSql)) {
+                innerSql = parseCondition(innerSql, request);
             } else {
-                part2 = parseCondition(part2, request);
+                whereCondition = parseCondition(whereCondition, request);
             }
 
             String sql = "SELECT \n" +
@@ -174,10 +174,10 @@ public interface CustomerMapper {
                     "  n.TAG_NAMES \n" +
                     "FROM\n" +
                     "  CUSTOMER c \n" +
-                    part1 +
+                    innerSql +
                     "  LEFT JOIN (" + nameSql + ") n \n" +
                     "    ON n.CUSTOMER_ID = c.ID \n" +
-                    part2;
+                    whereCondition;
 
             sql += " ORDER BY c." + sortField + " DESC ";
 
@@ -249,12 +249,12 @@ public interface CustomerMapper {
             }
 
 
-            String part1 = "";
-            String part2 = "";
+            String innerSql = "";
+            String whereCondition = "";
 
             if (nonNull(request.getTagIds()) && !request.getTagIds().isEmpty()) {
 
-                part1 = "  INNER JOIN \n" +
+                innerSql = "  INNER JOIN \n" +
                         "    (SELECT DISTINCT \n" +
                         "      CUSTOMER_ID \n" +
                         "    FROM\n" +
@@ -263,14 +263,14 @@ public interface CustomerMapper {
                         "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) uniq_table \n" +
                         "    ON c.ID = uniq_table.CUSTOMER_ID \n";
             } else {
-                part2 = "WHERE 1 = 1 \n";
+                whereCondition = "WHERE 1 = 1 \n";
             }
 
 
-            if (!"".equals(part1)) {
-                part1 = parseCondition(part1, request);
+            if (!"".equals(innerSql)) {
+                innerSql = parseCondition(innerSql, request);
             } else {
-                part2 = parseCondition(part2, request);
+                whereCondition = parseCondition(whereCondition, request);
             }
 
             String sql = "SELECT \n" +
@@ -278,10 +278,10 @@ public interface CustomerMapper {
                     "  n.TAG_NAMES \n" +
                     "FROM\n" +
                     "  CUSTOMER c \n" +
-                    part1 +
+                    innerSql +
                     "  LEFT JOIN (" + nameSql + ") n \n" +
                     "    ON n.CUSTOMER_ID = c.ID \n" +
-                    part2;
+                    whereCondition;
 
             sql += " ORDER BY c." + sortField + " DESC ";
 

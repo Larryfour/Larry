@@ -907,5 +907,49 @@ RESP:
 }
 ```
 
+### 获取个人销售日报
+REQ:
+  
+GET /sales-crm/report/sales/daily/myself?from=2017-10-15T16:00:00.000Z&to=2017-10-17T16:00:00.000Z
+```json
+
+```
+
+RESP:
+```json
+{
+    "data": [
+        {
+            "date": "2017-10-16",
+            "distributedNumber": 0,
+            "bridgeDuration": 95,
+            "offset": 0,
+            "rewards": 0,
+            "offsetAfter": 0,
+            "reservedCount": 1,
+            "completedCount": 1,
+            "firstOrderCount": 0,
+            "firstOrderAmount": 0,
+            "repeatOrderCount": 0,
+            "repeatOrderAmount": 0
+        },
+        {
+            "date": "2017-10-17",
+            "distributedNumber": 1,
+            "bridgeDuration": 133,
+            "offset": 17,
+            "rewards": 0,
+            "offsetAfter": -17,
+            "reservedCount": 1,
+            "completedCount": 1,
+            "firstOrderCount": 1,
+            "firstOrderAmount": 312,
+            "repeatOrderCount": 1,
+            "repeatOrderAmount": 312
+        }
+    ]
+}
+```
+
 
 

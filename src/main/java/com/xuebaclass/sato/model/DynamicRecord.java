@@ -5,8 +5,10 @@ package com.xuebaclass.sato.model;
  */
 public class DynamicRecord extends AbstractPersistable {
     public enum RecordType {
-
-        SYSTEM("1"), ARTIFICIAL("2");
+        //系统
+        SYSTEM("1"),
+        //人工
+        ARTIFICIAL("2");
 
         private String code;
 
