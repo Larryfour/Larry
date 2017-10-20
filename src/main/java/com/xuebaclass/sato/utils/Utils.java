@@ -248,6 +248,7 @@ public class Utils {
     public static String parseUtc2Local(String utcDateStr) throws ParseException {
         utcDateStr = utcDateStr.replace("Z", " UTC");
         SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        utcFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         Date utcDate = utcFormat.parse(utcDateStr);
 
 //        TimeZone gmtTime = TimeZone.getTimeZone("GMT");
