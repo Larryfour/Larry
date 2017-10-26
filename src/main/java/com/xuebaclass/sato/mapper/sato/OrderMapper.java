@@ -29,7 +29,7 @@ public interface OrderMapper {
                     "    ON o.ID = t.ORDERID \n" +
                     "WHERE o.OTYPE = 2 \n" +
                     "  AND o.STATUS = 0 \n" +
-                    "  AND SUBSTRING_INDEX(o.CREATEBY, ':', - 1) = '" + getCurrentAuditorName() + "' \n" +
+                    "  AND SUBSTRING_INDEX(o.CREATEBY, ':', - 1) = '" + request.getUserName() + "' \n" +
                     "  AND IFNULL(t.PAYTIME, o.CREATETIME) BETWEEN '" + request.getFrom() + "' \n" +
                     "  AND '" + request.getTo() + "' \n" +
                     "GROUP BY PAY_DATE ";
@@ -55,7 +55,7 @@ public interface OrderMapper {
                     "    ON o.ID = t.ORDERID \n" +
                     "WHERE o.OTYPE = 3 \n" +
                     "  AND o.STATUS = 0 \n" +
-                    "  AND SUBSTRING_INDEX(o.CREATEBY, ':', - 1) = '" + getCurrentAuditorName() + "' \n" +
+                    "  AND SUBSTRING_INDEX(o.CREATEBY, ':', - 1) = '" + request.getUserName() + "' \n" +
                     "  AND IFNULL(t.PAYTIME, o.CREATETIME) BETWEEN '" + request.getFrom() + "' \n" +
                     "  AND '" + request.getTo() + "' \n" +
                     "GROUP BY PAY_DATE ";

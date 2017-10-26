@@ -1,6 +1,7 @@
 package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.request.SalesDailyMyselfRequest;
+import com.xuebaclass.sato.model.request.SalesDailyRequest;
 import com.xuebaclass.sato.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,14 @@ public class ReportController {
     ReportService reportService;
 
     @GetMapping(value = "/sales/daily/myself")
-    public ResponseEntity salesDaily(SalesDailyMyselfRequest request) throws Exception {
+    public ResponseEntity salesDailyMyself(SalesDailyMyselfRequest request) throws Exception {
+        logger.info("################### sales daily report #######################");
+
+        return ResponseEntity.ok(reportService.salesMyselfDaily(request));
+    }
+
+    @GetMapping(value = "/sales/daily")
+    public ResponseEntity salesDaily(SalesDailyRequest request) throws Exception {
         logger.info("################### sales daily report #######################");
 
         return ResponseEntity.ok(reportService.salesDaily(request));

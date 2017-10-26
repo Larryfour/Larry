@@ -7,6 +7,7 @@ public class Sales extends AbstractPersistable{
     private String name;
     private String userName;
     private String mobile;
+    private Integer groupId;
 
     public String getName() {
         return name;
@@ -30,5 +31,13 @@ public class Sales extends AbstractPersistable{
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 }

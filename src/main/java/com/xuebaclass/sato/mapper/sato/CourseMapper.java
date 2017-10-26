@@ -20,7 +20,7 @@ public interface CourseMapper {
                     "FROM\n" +
                     "  COURSE \n" +
                     "WHERE CATEGORY = 'Experiences' \n" +
-                    "  AND SUBSTRING_INDEX(CREATED_BY, ':', - 1) = '" + getCurrentAuditorName() + "'\n" +
+                    "  AND SUBSTRING_INDEX(CREATED_BY, ':', - 1) = '" + request.getUserName() + "'\n" +
                     "  AND CREATED_DATE BETWEEN '" + request.getFrom() + "' \n" +
                     "  AND '" + request.getTo() + "'\n" +
                     "  AND STATE <> 'Cancelled' \n" +
@@ -38,7 +38,7 @@ public interface CourseMapper {
                     "FROM\n" +
                     "  COURSE \n" +
                     "WHERE CATEGORY = 'Experiences' \n" +
-                    "  AND SUBSTRING_INDEX(CREATED_BY, ':', - 1) = '" + getCurrentAuditorName() + "'\n" +
+                    "  AND SUBSTRING_INDEX(CREATED_BY, ':', - 1) = '" + request.getUserName() + "'\n" +
                     "  AND START BETWEEN '" + request.getFrom() + "' \n" +
                     "  AND '" + request.getTo() + "'\n" +
                     "  AND STATE = 'Completed'   \n" +

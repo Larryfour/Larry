@@ -5,6 +5,7 @@ package com.xuebaclass.sato.model.request;
  */
 public class SalesDailyMyselfRequest {
     private String salesId;
+    private String userName;
     private String from;
     private String to;
 
@@ -30,5 +31,13 @@ public class SalesDailyMyselfRequest {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
