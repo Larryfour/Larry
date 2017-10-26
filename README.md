@@ -952,4 +952,135 @@ RESP:
 ```
 
 
+### 获取销售管理报表
+REQ:
+  
+GET /sales-crm/report/sales/daily?dailyDate=2017-10-17
+```json
+
+```
+
+RESP:
+```json
+{
+    "daily": {
+        "dailyNew": {
+            "callerCount": 2,
+            "distributionCount": 1,
+            "completedCount": 1,
+            "orderCount": 2,
+            "orderAmount": 624
+        },
+        "dailyReNew": {
+            "callerCount": 1,
+            "orderCount": 0,
+            "orderAmount": 0
+        }
+    },
+    "personalDaily": [
+        {
+            "distributedNumber": 0,
+            "bridgeDuration": 0,
+            "offset": 0,
+            "rewards": 0,
+            "offsetAfter": 0,
+            "reservedCount": 0,
+            "completedCount": 0,
+            "firstOrderCount": 0,
+            "firstOrderAmount": 0,
+            "repeatOrderCount": 0,
+            "repeatOrderAmount": 0,
+            "salesId": "6",
+            "salesName": "巩学枝",
+            "groupId": 2
+        },
+        {
+            "distributedNumber": 0,
+            "bridgeDuration": 0,
+            "offset": 0,
+            "rewards": 0,
+            "offsetAfter": 0,
+            "reservedCount": 0,
+            "completedCount": 0,
+            "firstOrderCount": 0,
+            "firstOrderAmount": 0,
+            "repeatOrderCount": 0,
+            "repeatOrderAmount": 0,
+            "salesId": "14",
+            "salesName": "许世伟",
+            "groupId": 1
+        },
+        {
+            "distributedNumber": 1,
+            "bridgeDuration": 16,
+            "offset": 17,
+            "rewards": 0,
+            "offsetAfter": -17,
+            "reservedCount": 1,
+            "completedCount": 1,
+            "firstOrderCount": 1,
+            "firstOrderAmount": 312,
+            "repeatOrderCount": 1,
+            "repeatOrderAmount": 312,
+            "salesId": "17",
+            "salesName": "测试",
+            "groupId": 1
+        }
+    ],
+    "month": {
+        "monthNews": {
+            "targetOrderCount": 15,
+            "completedOrderCount": 2,
+            "orderCompletedPercent": "13.33",
+            "targetAmount": 1500,
+            "completedAmount": 624,
+            "amountCompletedPercent": "41.60"
+        },
+        "monthReNews": {
+            "targetOrderCount": 6,
+            "completedOrderCount": 0,
+            "orderCompletedPercent": "0.00",
+            "targetAmount": 600,
+            "completedAmount": 0,
+            "amountCompletedPercent": "0.00"
+        }
+    },
+    "personalMonth": [
+        {
+            "salesId": "6",
+            "groupId": 2,
+            "name": "巩学枝",
+            "targetAmount": 600,
+            "completedAmount": 0,
+            "amountCompletedPercent": "0.00",
+            "targetOrderCount": 6,
+            "completedOrderCount": 0,
+            "orderCompletedPercent": "0.00"
+        },
+        {
+            "salesId": "14",
+            "groupId": 1,
+            "name": "许世伟",
+            "targetAmount": 500,
+            "completedAmount": 0,
+            "amountCompletedPercent": "0.00",
+            "targetOrderCount": 5,
+            "completedOrderCount": 0,
+            "orderCompletedPercent": "0.00"
+        },
+        {
+            "salesId": "17",
+            "groupId": 1,
+            "name": "测试",
+            "targetAmount": 1000,
+            "completedAmount": 624,
+            "amountCompletedPercent": "62.40",
+            "targetOrderCount": 10,
+            "completedOrderCount": 2,
+            "orderCompletedPercent": "20.00"
+        }
+    ]
+}
+```
+
 
