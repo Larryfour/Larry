@@ -131,19 +131,26 @@ public class ReportServiceImpl implements ReportService {
 
             List<Map> firstOrdersCounts = orderMapper.getFirstOrdersCount(salesDailyMyselfRequest);
 
-            for (Map f : firstOrdersCounts) {
-                firstOrdersCountsMap.put(f.get("PAY_DATE").toString(), f);
 
-                totalOrders = totalOrders + ((Long) f.get("TOTAL_NUMBER")).intValue();
-                totalAmount = totalAmount + ((Double) f.get("TOTAL_TRADEAMOUNT")).intValue();
+            if (NEW_GROUP.equals(s.getGroupId())) {
+                for (Map f : firstOrdersCounts) {
+                    firstOrdersCountsMap.put(f.get("PAY_DATE").toString(), f);
+
+                    totalOrders = totalOrders + ((Long) f.get("TOTAL_NUMBER")).intValue();
+                    totalAmount = totalAmount + ((Double) f.get("TOTAL_TRADEAMOUNT")).intValue();
+                }
             }
 
-            List<Map> repeatOrdersCounts = orderMapper.getRepeatOrdersCount(salesDailyMyselfRequest);
-            for (Map r : repeatOrdersCounts) {
-                repeatOrdersCountsMap.put(r.get("PAY_DATE").toString(), r);
 
-                totalOrders = totalOrders + ((Long) r.get("TOTAL_NUMBER")).intValue();
-                totalAmount = totalAmount + ((Double) r.get("TOTAL_TRADEAMOUNT")).intValue();
+            List<Map> repeatOrdersCounts = orderMapper.getRepeatOrdersCount(salesDailyMyselfRequest);
+
+            if (RENEW_GROUP.equals(s.getGroupId())) {
+                for (Map r : repeatOrdersCounts) {
+                    repeatOrdersCountsMap.put(r.get("PAY_DATE").toString(), r);
+
+                    totalOrders = totalOrders + ((Long) r.get("TOTAL_NUMBER")).intValue();
+                    totalAmount = totalAmount + ((Double) r.get("TOTAL_TRADEAMOUNT")).intValue();
+                }
             }
 
             Map options = new HashMap();
