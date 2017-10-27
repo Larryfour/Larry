@@ -11,6 +11,7 @@ public class CustomersRequest {
     private String grade;
     private String from;
     private String to;
+    private String xuebaNo;
     private Integer ownedSalesID;
     private String source;
     private List<String> tagIds;
@@ -77,5 +78,13 @@ public class CustomersRequest {
 
     public void setTagIds(List<String> tagIds) {
         this.tagIds = tagIds;
+    }
+
+    public String getXuebaNo() {
+        return xuebaNo;
+    }
+
+    public void setXuebaNo(String xuebaNo) {
+        this.xuebaNo = xuebaNo;
     }
 }

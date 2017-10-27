@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tabel</title>
+	<style type="text/css">
+		table{
+			border-collapse:collapse;
+			margin-left: 24px;
+		}
+		th,tr,td{
+			text-align: center;
+			font-size: 14;
+			border: 1px solid #ddd;
+			border-collapse:collapse;
+		}
+		tr,tbody{
+			&:hover{
+				background: rgb(245,245,245);
+			}
+		}
+		td,th{
+			padding: 7px 10px;
+			width: auto;
+			max-width: 200px;
+			word-wrap:break-word;
+		}
+		th{
+			background: #ff9712;
+			color: #fff;
+		}
+		.blue{
+			cursor: pointer;
+			color:#0404ff;
+		}
+		.green{
+			cursor: pointer;
+			color:#018101;
+		}
+		.red{
+			cursor: pointer;
+			color:#d7632b;
+		}
+		.yellow{
+			background:#ffff90;
+			color:#646464;
+		}
+		.lightgreen{
+			background:lightgreen;
+			color:#646464;
+		}
+		.renew{
+			background:#018101;
+		}
+		.emptycolor{
+			background: #fff;
+		}
+		.markred{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<div class="salesallreport">
+		<p>一、当日销售情况：</p>
+		<table>
+			<tr>
+				<th>外呼新签</th>
+				<th>分配名单</th>
+				<th>上课成功</th>
+				<th>成单数量</th>
+				<th>成单金额</th>
+			</tr>
+			#{dailyNew}
+			<tr>
+				<th class="renew">外呼续签</th>
+				<th class="renew">成单数量</th>
+				<th class="renew">成单金额</th>
+				<th class="emptycolor"></th>
+				<th class="emptycolor"></th>
+			</tr>
+			#{dailyReNew}
+		</table>
+		<p>二、当日个人业务完成情况：</p>
+		<table>
+			<tr>
+				<th>姓名</th>
+				<th>分配名单</th>
+				<th class="yellow">通话时长</th>
+				<th class="yellow">今日减免通时</th>
+				<th class="yellow">新增减免通时</th>
+				<th class="yellow">剩余减免通时</th>
+				<th>约课成功</th>
+				<th>上课成功</th>
+				<th class="lightgreen">新单</th>
+				<th class="lightgreen">成交金额</th>
+				<th class="lightgreen">续单</th>
+				<th class="lightgreen">成交金额</th>
+			</tr>
+			#{personalDaily}
+		</table>
+		<p>三、当月业绩完成情况：</p>
+		<table>
+			<tr>
+				<th>新签目标</th>
+				<th>实际完成数</th>
+				<th>完成比例</th>
+				<th>目标金额</th>
+				<th>成交金额</th>
+				<th>完成比例</th>
+			</tr>
+			#{monthNews}
+			<tr>
+				<th class="renew">续签目标</th>
+				<th class="renew">实际完成数</th>
+				<th class="renew">完成比例</th>
+				<th class="renew">目标金额</th>
+				<th class="renew">成交金额</th>
+				<th class="renew">完成比例</th>
+			</tr>
+			#{monthReNews}
+		</table>
+		<p>四、当月个人业务完成情况：</p>
+		<table>
+			<tr>
+				<th>姓名</th>
+				<th>本月目标金额</th>
+				<th>实际完成金额</th>
+				<th>完成比例</th>
+				<th>本月目标单数</th>
+				<th>实际完成单数</th>
+				<th>完成比例</th>
+			</tr>
+			#{personalMonth}
+		</table>
+	</div>
+</body>
+</html>

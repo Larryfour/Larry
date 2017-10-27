@@ -9,6 +9,7 @@ public class CustomersMyselfRequest {
     private String name;
     private String mobile;
     private String grade;
+    private String xuebaNo;
     private String from;
     private String to;
     private String source;
@@ -70,4 +71,11 @@ public class CustomersMyselfRequest {
         this.tagIds = tagIds;
     }
 
+    public String getXuebaNo() {
+        return xuebaNo;
+    }
+
+    public void setXuebaNo(String xuebaNo) {
+        this.xuebaNo = xuebaNo;
+    }
 }

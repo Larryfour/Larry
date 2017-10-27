@@ -186,15 +186,19 @@ public interface CustomerMapper {
 
         private String parseCondition(String sql, CustomersRequest request) {
             if (!StringUtils.isEmpty(request.getName())) {
-                sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
+                sql += " AND c.NAME LIKE '%" + request.getName() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getMobile())) {
-                sql += " AND c.mobile LIKE '" + request.getMobile() + "%' \n";
+                sql += " AND c.MOBILE LIKE '" + request.getMobile() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
-                sql += " AND c.grade = '" + request.getGrade() + "' \n";
+                sql += " AND c.GRADE = '" + request.getGrade() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getXuebaNo())) {
+                sql += " AND c.XUEBA_NO = " + request.getXuebaNo() + " \n";
             }
 
             if (nonNull(request.getOwnedSalesID())) {
@@ -291,15 +295,19 @@ public interface CustomerMapper {
         private String parseCondition(String sql, CustomersMyselfRequest request) {
             sql += " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
             if (!StringUtils.isEmpty(request.getName())) {
-                sql += " AND c.name LIKE '%" + request.getName() + "%' \n";
+                sql += " AND c.NAME LIKE '%" + request.getName() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getMobile())) {
-                sql += " AND c.mobile LIKE '" + request.getMobile() + "%' \n";
+                sql += " AND c.MOBILE LIKE '" + request.getMobile() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
-                sql += " AND c.grade = '" + request.getGrade() + "' \n";
+                sql += " AND c.GRADE = '" + request.getGrade() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getXuebaNo())) {
+                sql += " AND c.XUEBA_NO = " + request.getXuebaNo() + " \n";
             }
 
             if (!StringUtils.isEmpty(request.getSource())) {
