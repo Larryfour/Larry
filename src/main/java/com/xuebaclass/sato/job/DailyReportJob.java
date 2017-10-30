@@ -26,8 +26,8 @@ public class DailyReportJob implements Job {
     @Autowired
     ReportService reportService;
 
-    //每天早晨八点发日报
-    @Scheduled(cron = "0 0 8 * * ? ")
+    //每天早晨9点发日报 cron配置时间为utc时间，北京时间要+8小时
+    @Scheduled(cron = "0 0 1 * * ? ")
     @Override
     public void apply() {
 
@@ -70,11 +70,11 @@ public class DailyReportJob implements Job {
 
             StringBuffer dailyReNewBuffer = new StringBuffer();
             dailyReNewBuffer.append("<tr><td>");
-            dailyReNewBuffer.append(response.getDaily().getDailyNew().getCallerCount());
+            dailyReNewBuffer.append(response.getDaily().getDailyReNew().getCallerCount());
             dailyReNewBuffer.append("人</td><td>");
-            dailyReNewBuffer.append(response.getDaily().getDailyNew().getOrderCount());
+            dailyReNewBuffer.append(response.getDaily().getDailyReNew().getOrderCount());
             dailyReNewBuffer.append("</td><td>");
-            dailyReNewBuffer.append(response.getDaily().getDailyNew().getOrderAmount());
+            dailyReNewBuffer.append(response.getDaily().getDailyReNew().getOrderAmount());
             dailyReNewBuffer.append("</td><td></td><td></td></tr>");
             String dailyReNew = dailyReNewBuffer.toString();
             logger.info("dailyReNew:[" + dailyReNew + "]");

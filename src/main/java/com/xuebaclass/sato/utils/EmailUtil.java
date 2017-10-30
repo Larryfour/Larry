@@ -30,9 +30,10 @@ public class EmailUtil {
         MimeMessage message = new MimeMessage(session);
         InternetAddress[] toArray = new InternetAddress[]{
                 new InternetAddress("sunhao@xuebaedu.com"),
-//                new InternetAddress("yangwenwen@xuebaedu.com"),
+                new InternetAddress("yangwenwen@xuebaedu.com"),
 //                new InternetAddress("qimingxin@xuebaedu.com"),
-                new InternetAddress("120644874@qq.com")};
+                new InternetAddress("120644874@qq.com")
+        };
         try {
             message.setSubject(date+"销售日报");
             message.setSentDate(new Date());
