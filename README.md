@@ -1091,12 +1091,13 @@ RESP:
 ### 增加抵消时长
 REQ:
   
-GET /sales-crm/offset
+Post /sales-crm/offset
 ```json
 {
     "salesId": 99,
     "offset": 10,
-    "offsetDate":"2017-12-02"
+    "offsetDate":"2017-12-02",
+    "comment":"测试Comment"
 }
 ```
 
@@ -1110,7 +1111,32 @@ RESP:
     "rewards": 0,
     "offset": 10,
     "offsetDate": "2017-12-02T00:00:00.000+0000",
-    "status": false
+    "status": false,
+    "comment":"测试Comment"
+}
+```
+
+
+### 获取指定销售指定日子的抵消明细
+REQ:
+  
+GET /sales-crm/offset/sales/99/date/2017-12-01
+```json
+
+```
+
+RESP:
+```json
+{
+    "id": 1,
+    "salesId": 99,
+    "offsetBefore": 0,
+    "offsetAfter": 20,
+    "rewards": 0,
+    "offset": 30,
+    "offsetDate": "2017-11-30T16:00:00.000+0000",
+    "status": false,
+    "comment": null
 }
 ```
 

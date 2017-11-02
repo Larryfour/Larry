@@ -26,6 +26,7 @@ public interface OffsetMapper {
                 VALUES("OFFSET", "#{offset}");
                 VALUES("OFFSET_DATE", "#{offsetDate}");
                 VALUES("STATUS", "#{status}");
+                VALUES("COMMENT", "#{comment}");
             }}.toString();
         }
 

@@ -14,6 +14,7 @@ public class Offset {
     Integer offset;
     Date offsetDate;
     Boolean status;
+    String comment;
 
     public Offset() {
         this.offsetBefore = 0;
@@ -84,5 +85,13 @@ public class Offset {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

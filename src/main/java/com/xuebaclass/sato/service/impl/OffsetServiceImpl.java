@@ -54,4 +54,18 @@ public class OffsetServiceImpl implements OffsetService {
         }
     }
 
+    @Override
+    public Offset getByDate(Integer salesId, String offsetDate) {
+        logger.info("sales id:[" + salesId + "], offset date[" + offsetDate + "]");
+
+        Offset offset = null;
+        try {
+            offset = offsetMapper.getByDate(salesId, offsetDate);
+        } catch (Exception e) {
+            throw CrmException.newException(e.getMessage());
+        }
+
+        return offset;
+    }
+
 }
