@@ -62,6 +62,27 @@ public interface OrderMapper {
 
             return sql;
         }
+
+        public String getRepeatOrderForTeacher(Map<String, Object> parameters) {
+            String from = (String) parameters.get("from");
+            String to = (String) parameters.get("to");
+
+            String sql = "SELECT \n" +
+                    "  o.* \n" +
+                    "FROM\n" +
+                    "  ORDERS o \n" +
+                    "  LEFT JOIN TRANSACTION t \n" +
+                    "    ON o.id = t.ORDERID \n" +
+                    "  INNER JOIN TEACHER tc \n" +
+                    "    ON SUBSTRING_INDEX(o.CREATEBY, ':', - 1) = tc.USERNAME \n" +
+                    "    AND tc.USER_TYPE <> 100 \n" +
+                    "WHERE o.OTYPE = 3 \n" +
+                    "  AND o.STATUS = 0 \n" +
+                    "  AND IFNULL(t.PAYTIME, o.CREATETIME) BETWEEN '" + from + "' \n" +
+                    "  AND '" + to + "'  ";
+
+            return sql;
+        }
     }
 
     /**
@@ -77,4 +98,12 @@ public interface OrderMapper {
      */
     @SelectProvider(type = OrderSqlProvider.class, method = "getRepeatOrdersCount")
     List<Map> getRepeatOrdersCount(@Param("salesDailyMyselfRequest") SalesDailyMyselfRequest salesDailyMyselfRequest);
+
+    /**
+     * @param from
+     * @param to
+     * @return
+     */
+    @SelectProvider(type = OrderSqlProvider.class, method = "getRepeatOrderForTeacher")
+    List<Map> getRepeatOrderForTeacher(@Param("from") String from, @Param("to") String to);
 }

@@ -382,9 +382,16 @@ public class ReportServiceImpl implements ReportService {
             reNewMonth.setAmountCompletedPercent(df.format(((float) reNewMonth.getCompletedAmount() / reNewMonth.getTargetAmount()) * 100));
         }
 
+        List<Map> orders = orderMapper.getRepeatOrderForTeacher(from,to);
+        SalesDailyResponse.TeacherRepeatOrder teacherRepeatOrder = new SalesDailyResponse.TeacherRepeatOrder();
+        teacherRepeatOrder.setOrderCount(orders.size());
+        teacherRepeatOrder.setOrderAmount(new Double(orders.stream().mapToDouble(o->(Double) o.get("TRADEAMOUNT")).sum()).intValue());
+        teacherRepeatOrder.setTotalAmount(reNewMonth.getCompletedAmount()+teacherRepeatOrder.getOrderAmount());
+
         SalesDailyResponse.Month month = new SalesDailyResponse.Month();
         month.setMonthNews(newMonth);
         month.setMonthReNews(reNewMonth);
+        month.setTeacherRepeatOrder(teacherRepeatOrder);
 
         SalesDailyResponse response = new SalesDailyResponse();
         response.setPersonalDaily(dailyDatas);

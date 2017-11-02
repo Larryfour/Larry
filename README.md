@@ -1043,6 +1043,11 @@ RESP:
             "targetAmount": 600,
             "completedAmount": 0,
             "amountCompletedPercent": "0.00"
+        },
+        "teacherRepeatOrder":{
+            "orderCount": 1,
+            "orderAmount": 312,
+            "totalAmount": 312
         }
     },
     "personalMonth": [
@@ -1080,6 +1085,32 @@ RESP:
             "orderCompletedPercent": "20.00"
         }
     ]
+}
+```
+
+### 增加抵消时长
+REQ:
+  
+GET /sales-crm/offset
+```json
+{
+    "salesId": 99,
+    "offset": 10,
+    "offsetDate":"2017-12-02"
+}
+```
+
+RESP:
+```json
+{
+    "id": null,
+    "salesId": 99,
+    "offsetBefore": 0,
+    "offsetAfter": 0,
+    "rewards": 0,
+    "offset": 10,
+    "offsetDate": "2017-12-02T00:00:00.000+0000",
+    "status": false
 }
 ```
 

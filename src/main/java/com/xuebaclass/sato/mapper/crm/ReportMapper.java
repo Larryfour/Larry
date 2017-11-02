@@ -65,12 +65,11 @@ public interface ReportMapper {
                     "  OFFSET_RECORD \n" +
                     "WHERE SALES_ID = '" + options.get("salesId") + "'" +
                     "  AND OFFSET_DATE BETWEEN '" + options.get("startDate") + "' \n" +
-                    "  AND '" + options.get("endDate") + "' ";
+                    "  AND '" + options.get("endDate") + "' " +
+                    "  AND STATUS = false";
 
             return sql;
         }
-
-
     }
 
     /**

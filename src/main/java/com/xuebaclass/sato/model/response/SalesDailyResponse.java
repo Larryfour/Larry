@@ -355,6 +355,36 @@ public class SalesDailyResponse {
         }
     }
 
+    public static class TeacherRepeatOrder{
+        Integer orderCount;
+        Integer orderAmount;
+        Integer totalAmount;
+
+        public Integer getOrderCount() {
+            return orderCount;
+        }
+
+        public void setOrderCount(Integer orderCount) {
+            this.orderCount = orderCount;
+        }
+
+        public Integer getOrderAmount() {
+            return orderAmount;
+        }
+
+        public void setOrderAmount(Integer orderAmount) {
+            this.orderAmount = orderAmount;
+        }
+
+        public Integer getTotalAmount() {
+            return totalAmount;
+        }
+
+        public void setTotalAmount(Integer totalAmount) {
+            this.totalAmount = totalAmount;
+        }
+    }
+
     public static class Daily {
         private DailyNew dailyNew;
         private DailyReNew dailyReNew;
@@ -379,6 +409,7 @@ public class SalesDailyResponse {
     public static class Month {
         private MonthData monthNews;
         private MonthData monthReNews;
+        private TeacherRepeatOrder teacherRepeatOrder;
 
         public MonthData getMonthNews() {
             return monthNews;
@@ -394,6 +425,14 @@ public class SalesDailyResponse {
 
         public void setMonthReNews(MonthData monthReNews) {
             this.monthReNews = monthReNews;
+        }
+
+        public TeacherRepeatOrder getTeacherRepeatOrder() {
+            return teacherRepeatOrder;
+        }
+
+        public void setTeacherRepeatOrder(TeacherRepeatOrder teacherRepeatOrder) {
+            this.teacherRepeatOrder = teacherRepeatOrder;
         }
     }
 

@@ -13,6 +13,6 @@ public interface SalesTargetMapper {
      * @param
      * @return
      */
-    @Select("SELECT * FROM SALES_TARGET WHERE TARGET_MONTH = #{targetMonth}")
+    @Select("SELECT * FROM SALES_TARGET WHERE TARGET_MONTH = #{targetMonth} AND STATUS = false")
     List<SalesTarget> getTargets(String targetMonth);
 }
