@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.jdbc.SQL;
 
+import java.text.SimpleDateFormat;
+import java.util.Map;
+
 /**
  * Created by sunhao on 2017-08-17.
  */
@@ -30,6 +33,25 @@ public interface OffsetMapper {
             }}.toString();
         }
 
+        public String update(Map<String, Object> parameters) {
+            Offset offset = (Offset) parameters.get("offset");
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            return new SQL() {{
+                UPDATE(TABLE_NAME);
+
+                SET("SALES_ID=" + offset.getSalesId());
+                SET("OFFSET_BEFORE=" + offset.getOffsetBefore());
+                SET("OFFSET_AFTER=" + offset.getOffsetAfter());
+                SET("REWARDS=" + offset.getRewards());
+                SET("OFFSET=" + offset.getOffset());
+                SET("OFFSET_DATE='" + format.format(offset.getOffsetDate()) + "'");
+                SET("STATUS=" + offset.getStatus());
+                SET("COMMENT='" + offset.getComment() + "'");
+                WHERE("ID=" + offset.getId());
+            }}.toString();
+        }
     }
 
     /**
@@ -40,11 +62,18 @@ public interface OffsetMapper {
     void create(Offset offset);
 
     /**
+     * @param offset
+     * @return
+     */
+    @InsertProvider(type = OffsetSqlProvider.class, method = "update")
+    void update(@Param("offset") Offset offset);
+
+    /**
      * @param salesId
      * @param offsetDate
      * @return
      */
-    @Select("SELECT * FROM OFFSET_RECORD WHERE SALES_ID = #{salesId} AND OFFSET_DATE = #{offsetDate} AND STATUS = false")
+    @Select("SELECT * FROM OFFSET_RECORD WHERE SALES_ID = #{salesId} AND OFFSET_DATE = #{offsetDate} AND STATUS = false LIMIT 1")
     Offset getByDate(@Param("salesId") Integer salesId, @Param("offsetDate") String offsetDate);
 
 }

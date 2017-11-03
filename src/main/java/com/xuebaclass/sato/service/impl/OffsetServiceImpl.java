@@ -17,10 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Transactional
 @Service
 public class OffsetServiceImpl implements OffsetService {
     private static final Logger logger = LoggerFactory.getLogger(OffsetServiceImpl.class);
+    private static final Integer MAX_OFFSET = 30;
 
     @Autowired
     private OffsetMapper offsetMapper;
@@ -39,6 +42,10 @@ public class OffsetServiceImpl implements OffsetService {
             Optional.ofNullable(sales).orElseThrow(() -> CrmException.newException("登录销售不存在！"));
             offset.setSalesId(Integer.parseInt(sales.getId()));
 
+            if (offset.getOffset() > MAX_OFFSET) {
+                throw new CrmException("超出最大抵消时长！");
+            }
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
             Calendar calendar = Calendar.getInstance();
@@ -55,7 +62,15 @@ public class OffsetServiceImpl implements OffsetService {
                 throw new CrmException("剩余时长不足！");
             }
 
-            offsetMapper.create(offset);
+            Offset todayOffset = offsetMapper.getByDate(offset.getSalesId(), format.format(offset.getOffsetDate()));
+
+            if (isNull(todayOffset)) {
+                offsetMapper.create(offset);
+            } else {
+                todayOffset.setOffset(offset.getOffset());
+                todayOffset.setComment(offset.getComment());
+                offsetMapper.update(todayOffset);
+            }
 
         } catch (Exception e) {
             throw new CrmException(e.getMessage());

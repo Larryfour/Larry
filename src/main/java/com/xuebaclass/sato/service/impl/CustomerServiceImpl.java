@@ -353,20 +353,4 @@ public class CustomerServiceImpl implements CustomerService {
             dynamicRecordMapper.create(record);
         }
     }
-
-    private String getNimAccountId(String uid) {
-        String url = salesLeadsUrl + "im/student/" + uid;
-//        String url = "http://localhost:9090/sales-leads/im/student/1";
-        return "xbim0000088674";
-
-//        try {
-//            JsonNode resp = restTemplate.getForEntity(url, JsonNode.class).getBody();
-//
-//            return resp.get("accid").textValue();
-//        } catch (HttpClientErrorException e) {
-//            logger.info("get nim account error:[" + e.getResponseBodyAsString() + "]");
-//            throw new CrmException(e.getResponseBodyAsString());
-//        }
-
-    }
 }
