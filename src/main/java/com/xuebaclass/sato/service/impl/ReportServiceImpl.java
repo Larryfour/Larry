@@ -206,7 +206,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(request.getDailyDate()).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET_AFTER");
-                comment = (String) Optional.ofNullable(offsetsMap.get(dailyDate).get("COMMENT")).orElse("");
+                comment = (String) Optional.ofNullable(offsetsMap.get(request.getDailyDate()).get("COMMENT")).orElse("");
             }
             if (nonNull(firstOrdersCountsMap.get(request.getDailyDate()))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(request.getDailyDate()).get("TOTAL_NUMBER")).intValue();
