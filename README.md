@@ -1094,7 +1094,6 @@ REQ:
 Post /sales-crm/offset
 ```json
 {
-    "salesId": 99,
     "offset": 10,
     "offsetDate":"2017-12-02",
     "comment":"测试Comment"
@@ -1120,7 +1119,7 @@ RESP:
 ### 获取指定销售指定日子的抵消明细
 REQ:
   
-GET /sales-crm/offset/sales/99/date/2017-12-01
+GET /sales-crm/offset/date/2017-12-01
 ```json
 
 ```

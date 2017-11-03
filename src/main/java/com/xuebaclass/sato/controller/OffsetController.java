@@ -1,6 +1,5 @@
 package com.xuebaclass.sato.controller;
 
-import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.Offset;
 import com.xuebaclass.sato.service.OffsetService;
 import org.slf4j.Logger;
@@ -38,10 +37,10 @@ public class OffsetController {
      *
      * @return
      */
-    @GetMapping(value = "sales/{salesId}/date/{offsetDate}")
-    public ResponseEntity getById(@PathVariable Integer salesId, @PathVariable String offsetDate) throws Exception {
-        logger.info("################### get offset info by id and date #######################");
+    @GetMapping(value = "/date/{offsetDate}")
+    public ResponseEntity getById(@PathVariable String offsetDate) throws Exception {
+        logger.info("################### get offset info by date #######################");
 
-        return ResponseEntity.ok(offsetService.getByDate(salesId, offsetDate));
+        return ResponseEntity.ok(offsetService.getByDate(offsetDate));
     }
 }

@@ -2,8 +2,11 @@ package com.xuebaclass.sato.service.impl;
 
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.OffsetMapper;
+import com.xuebaclass.sato.mapper.sato.SalesMapper;
 import com.xuebaclass.sato.model.Offset;
+import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.service.OffsetService;
+import com.xuebaclass.sato.utils.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +22,22 @@ import java.util.Optional;
 public class OffsetServiceImpl implements OffsetService {
     private static final Logger logger = LoggerFactory.getLogger(OffsetServiceImpl.class);
 
-
     @Autowired
     private OffsetMapper offsetMapper;
 
+    @Autowired
+    private SalesMapper salesMapper;
 
     @Override
     public void create(Offset offset) throws Exception {
         try {
-            Optional.ofNullable(offset.getSalesId()).orElseThrow(() -> CrmException.newException("销售id为必须参数，不能为空！"));
+
             Optional.ofNullable(offset.getOffset()).orElseThrow(() -> CrmException.newException("抵消时长为必须参数，不能为空！"));
             Optional.ofNullable(offset.getOffsetDate()).orElseThrow(() -> CrmException.newException("抵消日期为必须参数，不能为空！"));
+
+            Sales sales = salesMapper.getSalesByUserName(CurrentUser.getInstance().getCurrentAuditorName());
+            Optional.ofNullable(sales).orElseThrow(() -> CrmException.newException("登录销售不存在！"));
+            offset.setSalesId(Integer.parseInt(sales.getId()));
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -55,12 +63,15 @@ public class OffsetServiceImpl implements OffsetService {
     }
 
     @Override
-    public Offset getByDate(Integer salesId, String offsetDate) {
-        logger.info("sales id:[" + salesId + "], offset date[" + offsetDate + "]");
+    public Offset getByDate(String offsetDate) {
+        logger.info("offset date[" + offsetDate + "]");
+
+        Sales sales = salesMapper.getSalesByUserName(CurrentUser.getInstance().getCurrentAuditorName());
+        Optional.ofNullable(sales).orElseThrow(() -> CrmException.newException("登录销售不存在！"));
 
         Offset offset = null;
         try {
-            offset = offsetMapper.getByDate(salesId, offsetDate);
+            offset = offsetMapper.getByDate(Integer.parseInt(sales.getId()), offsetDate);
         } catch (Exception e) {
             throw CrmException.newException(e.getMessage());
         }

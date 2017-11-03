@@ -8,5 +8,5 @@ import com.xuebaclass.sato.model.Offset;
 public interface OffsetService {
     void create(Offset offset) throws Exception;
 
-    Offset getByDate(Integer salesId, String offsetDate) throws Exception;
+    Offset getByDate(String offsetDate) throws Exception;
 }
