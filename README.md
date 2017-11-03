@@ -931,7 +931,8 @@ RESP:
             "firstOrderCount": 0,
             "firstOrderAmount": 0,
             "repeatOrderCount": 0,
-            "repeatOrderAmount": 0
+            "repeatOrderAmount": 0,
+            "comment": null
         },
         {
             "date": "2017-10-17",
@@ -945,7 +946,8 @@ RESP:
             "firstOrderCount": 1,
             "firstOrderAmount": 312,
             "repeatOrderCount": 1,
-            "repeatOrderAmount": 312
+            "repeatOrderAmount": 312,
+            "comment": null
         }
     ]
 }
@@ -992,7 +994,8 @@ RESP:
             "repeatOrderAmount": 0,
             "salesId": "6",
             "salesName": "巩学枝",
-            "groupId": 2
+            "groupId": 2,
+            "comment": null
         },
         {
             "distributedNumber": 0,
@@ -1008,7 +1011,8 @@ RESP:
             "repeatOrderAmount": 0,
             "salesId": "14",
             "salesName": "许世伟",
-            "groupId": 1
+            "groupId": 1,
+            "comment": null
         },
         {
             "distributedNumber": 1,
@@ -1024,7 +1028,8 @@ RESP:
             "repeatOrderAmount": 312,
             "salesId": "17",
             "salesName": "测试",
-            "groupId": 1
+            "groupId": 1,
+            "comment": null
         }
     ],
     "month": {

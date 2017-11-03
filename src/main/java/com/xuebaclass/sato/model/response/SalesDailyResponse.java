@@ -22,6 +22,7 @@ public class SalesDailyResponse {
         private String salesId;
         private String salesName;
         private Integer groupId;
+        private String comment;
 
         public Integer getDistributedNumber() {
             return distributedNumber;
@@ -133,6 +134,14 @@ public class SalesDailyResponse {
 
         public void setSalesName(String salesName) {
             this.salesName = salesName;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
         }
     }
 

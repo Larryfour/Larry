@@ -20,6 +20,7 @@ public class SalesDailyMyselfResponse {
         private Integer firstOrderAmount;
         private Integer repeatOrderCount;
         private Integer repeatOrderAmount;
+        private String comment;
 
         public String getDate() {
             return date;
@@ -115,6 +116,14 @@ public class SalesDailyMyselfResponse {
 
         public void setRepeatOrderAmount(Integer repeatOrderAmount) {
             this.repeatOrderAmount = repeatOrderAmount;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
         }
     }
 

@@ -188,6 +188,7 @@ public class ReportServiceImpl implements ReportService {
             Integer firstOrderAmount = 0;
             Integer repeatOrderCount = 0;
             Integer repeatOrderAmount = 0;
+            String comment = null;
 
             if (nonNull(distributedCountsMap.get(request.getDailyDate()))) {
                 distributedTotalNumber = ((Long) distributedCountsMap.get(request.getDailyDate()).get("TOTAL_NUMBER")).intValue();
@@ -205,6 +206,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(request.getDailyDate()).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET_AFTER");
+                comment = (String) offsetsMap.get(dailyDate).get("COMMENT");
             }
             if (nonNull(firstOrdersCountsMap.get(request.getDailyDate()))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(request.getDailyDate()).get("TOTAL_NUMBER")).intValue();
@@ -227,6 +229,7 @@ public class ReportServiceImpl implements ReportService {
             dailyData.setFirstOrderAmount(firstOrderAmount);
             dailyData.setRepeatOrderCount(repeatOrderCount);
             dailyData.setRepeatOrderAmount(repeatOrderAmount);
+            dailyData.setComment(comment);
             dailyDatas.add(dailyData);
 
             // 当月个人完成情况
@@ -382,11 +385,11 @@ public class ReportServiceImpl implements ReportService {
             reNewMonth.setAmountCompletedPercent(df.format(((float) reNewMonth.getCompletedAmount() / reNewMonth.getTargetAmount()) * 100));
         }
 
-        List<Map> orders = orderMapper.getRepeatOrderForTeacher(from,to);
+        List<Map> orders = orderMapper.getRepeatOrderForTeacher(from, to);
         SalesDailyResponse.TeacherRepeatOrder teacherRepeatOrder = new SalesDailyResponse.TeacherRepeatOrder();
         teacherRepeatOrder.setOrderCount(orders.size());
-        teacherRepeatOrder.setOrderAmount(new Double(orders.stream().mapToDouble(o->(Double) o.get("TRADEAMOUNT")).sum()).intValue());
-        teacherRepeatOrder.setTotalAmount(reNewMonth.getCompletedAmount()+teacherRepeatOrder.getOrderAmount());
+        teacherRepeatOrder.setOrderAmount(new Double(orders.stream().mapToDouble(o -> (Double) o.get("TRADEAMOUNT")).sum()).intValue());
+        teacherRepeatOrder.setTotalAmount(reNewMonth.getCompletedAmount() + teacherRepeatOrder.getOrderAmount());
 
         SalesDailyResponse.Month month = new SalesDailyResponse.Month();
         month.setMonthNews(newMonth);
@@ -495,6 +498,7 @@ public class ReportServiceImpl implements ReportService {
             Integer firstOrderAmount = 0;
             Integer repeatOrderCount = 0;
             Integer repeatOrderAmount = 0;
+            String comment = null;
 
             if (nonNull(distributedCountsMap.get(dailyDate))) {
                 distributedTotalNumber = ((Long) distributedCountsMap.get(dailyDate).get("TOTAL_NUMBER")).intValue();
@@ -512,6 +516,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(dailyDate).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(dailyDate).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(dailyDate).get("OFFSET_AFTER");
+                comment = (String) offsetsMap.get(dailyDate).get("COMMENT");
             }
             if (nonNull(firstOrdersCountsMap.get(dailyDate))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(dailyDate).get("TOTAL_NUMBER")).intValue();
@@ -533,6 +538,7 @@ public class ReportServiceImpl implements ReportService {
             dailyData.setFirstOrderAmount(firstOrderAmount);
             dailyData.setRepeatOrderCount(repeatOrderCount);
             dailyData.setRepeatOrderAmount(repeatOrderAmount);
+            dailyData.setComment(comment);
 
             data.add(dailyData);
 
