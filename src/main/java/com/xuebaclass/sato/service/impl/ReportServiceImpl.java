@@ -206,7 +206,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(request.getDailyDate()).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(request.getDailyDate()).get("OFFSET_AFTER");
-                comment = (String) offsetsMap.get(dailyDate).get("COMMENT");
+                comment = (String) Optional.ofNullable(offsetsMap.get(dailyDate).get("COMMENT")).orElse("");
             }
             if (nonNull(firstOrdersCountsMap.get(request.getDailyDate()))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(request.getDailyDate()).get("TOTAL_NUMBER")).intValue();
@@ -516,7 +516,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(dailyDate).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(dailyDate).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(dailyDate).get("OFFSET_AFTER");
-                comment = (String) offsetsMap.get(dailyDate).get("COMMENT");
+                comment =  (String) Optional.ofNullable(offsetsMap.get(dailyDate).get("COMMENT")).orElse("");
             }
             if (nonNull(firstOrdersCountsMap.get(dailyDate))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(dailyDate).get("TOTAL_NUMBER")).intValue();
