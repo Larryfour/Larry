@@ -4,7 +4,7 @@
 
     <groupId>com.xuebaclass.sato</groupId>
     <artifactId>sales-crm</artifactId>
-    <version>0.0.38</version>
+    <version>0.0.39-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>sales-crm</name>
@@ -38,7 +38,7 @@
         <connection>scm:git:ssh://git@gitlab.xuebastudy.com:10022/sato/sales-crm.git</connection>
         <developerConnection>scm:git:ssh://git@gitlab.xuebastudy.com:10022/sato/sales-crm.git</developerConnection>
         <url>scm:git:ssh://git@gitlab.xuebastudy.com:10022/sato/sales-crm.git</url>
-        <tag>v0.0.38</tag>
+        <tag>v0.0.0</tag>
     </scm>
     <profiles>
         <profile>
