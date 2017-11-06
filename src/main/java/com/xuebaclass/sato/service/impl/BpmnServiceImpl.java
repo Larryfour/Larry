@@ -2,6 +2,7 @@ package com.xuebaclass.sato.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.pagehelper.util.StringUtil;
+import com.xuebaclass.sato.common.Grade;
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.CustomerMapper;
 import com.xuebaclass.sato.mapper.sato.StudentMapper;
@@ -115,6 +116,7 @@ public class BpmnServiceImpl implements BpmnService {
                 }
                 if (!StringUtils.isEmpty(customer.getGrade())) {
                     extensions.put("年级", customer.getGrade());
+                    extensions.put(Grade.NCEETIME_F_NAME, Grade.getNCEETimeFromGradeName(customer.getGrade()));
                 }
                 if (nonNull(customer.getFullMarks())) {
                     extensions.put("满分", customer.getFullMarks().toString());

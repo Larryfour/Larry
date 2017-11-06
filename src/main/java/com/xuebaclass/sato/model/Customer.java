@@ -1,5 +1,7 @@
 package com.xuebaclass.sato.model;
 
+import com.xuebaclass.sato.common.Grade;
+
 import java.time.Instant;
 import java.util.Date;
 
@@ -7,7 +9,6 @@ import java.util.Date;
  * Created by sunhao on 2017-08-17.
  */
 public class Customer extends AbstractPersistable{
-
 
     public enum Source {
         //APP弹出框
@@ -46,7 +47,8 @@ public class Customer extends AbstractPersistable{
     private String city;
     private String district;
     private String school;
-    private String grade;
+    //private String grade;
+    private Integer NCEETime;
     private String gradeNote;
     private String teachingAterial;
     private String teachingAterialNote;
@@ -64,6 +66,14 @@ public class Customer extends AbstractPersistable{
     private Instant distributedDate;
     private String distributedBy;
     private String source;
+
+    public Integer getNCEETime() {
+        return NCEETime;
+    }
+
+    public void setNCEETime(Integer NCEETime) {
+        this.NCEETime = NCEETime;
+    }
 
     public String getContactName() {
         return contactName;
@@ -170,11 +180,11 @@ public class Customer extends AbstractPersistable{
     }
 
     public String getGrade() {
-        return grade;
+        return Grade.getGradeFromNCEETime(this.NCEETime).getName();
     }
 
     public void setGrade(String grade) {
-        this.grade = grade;
+        this.NCEETime = Grade.getNCEETimeFromGradeName(grade);
     }
 
     public String getGradeNote() {
