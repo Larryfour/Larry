@@ -101,8 +101,8 @@ public enum Grade {
         return grade;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getNCEETimeFromGradeName(JUNIOR_TWO.getName()));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(getNCEETimeFromGradeName(JUNIOR_TWO.getName()));
+//    }
 
 }
