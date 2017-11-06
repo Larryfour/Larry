@@ -3,6 +3,7 @@ package com.xuebaclass.sato.service.impl;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xuebaclass.sato.common.Grade;
 import com.xuebaclass.sato.common.SatoSort;
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.CustomerMapper;
@@ -215,7 +216,11 @@ public class CustomerServiceImpl implements CustomerService {
                         }
                         if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getGrade())) {
                             extensions.put("年级", customer.getGrade());
+                            extensions.put(Grade.NCEETIME_F_NAME, Grade.getNCEETimeFromGradeName(customer.getGrade()));
                         }
+
+                        // 加个高考时间
+
                         if (nonNull(customer.getFullMarks())) {
                             extensions.put("满分", customer.getFullMarks().toString());
                         }

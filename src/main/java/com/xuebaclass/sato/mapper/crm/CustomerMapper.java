@@ -1,5 +1,6 @@
 package com.xuebaclass.sato.mapper.crm;
 
+import com.xuebaclass.sato.common.Grade;
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.Customer;
 import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
@@ -43,7 +44,8 @@ public interface CustomerMapper {
                 VALUES("CITY", "#{city}");
                 VALUES("DISTRICT", "#{district}");
                 VALUES("SCHOOL", "#{school}");
-                VALUES("GRADE", "#{grade}");
+                //VALUES("GRADE", "#{grade}");
+                VALUES("NCEE_TIME", "#{NCEETime}");
                 VALUES("GRADE_NOTE", "#{gradeNote}");
                 VALUES("TEACHING_ATERIAL", "#{teachingAterial}");
                 VALUES("TEACHING_ATERIAL_NOTE", "#{teachingAterialNote}");
@@ -87,7 +89,8 @@ public interface CustomerMapper {
                 SET("CITY=#{customer.city}");
                 SET("DISTRICT=#{customer.district}");
                 SET("SCHOOL=#{customer.school}");
-                SET("GRADE=#{customer.grade}");
+                //SET("GRADE=#{customer.grade}");
+                SET("NCEE_TIME=#{customer.NCEETime}");
                 SET("GRADE_NOTE=#{customer.gradeNote}");
                 SET("TEACHING_ATERIAL=#{customer.teachingAterial}");
                 SET("TEACHING_ATERIAL_NOTE=#{customer.teachingAterialNote}");
@@ -194,7 +197,8 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
-                sql += " AND c.GRADE = '" + request.getGrade() + "' \n";
+                int nceetime = Grade.getNCEETimeFromGradeName(request.getGrade());
+                sql += " AND c.NCEE_TIME = " + nceetime + " \n";
             }
 
             if (!StringUtils.isEmpty(request.getXuebaNo())) {
@@ -303,7 +307,8 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
-                sql += " AND c.GRADE = '" + request.getGrade() + "' \n";
+                int nceetime = Grade.getNCEETimeFromGradeName(request.getGrade());
+                sql += " AND c.NCEE_TIME = " + nceetime + " \n";
             }
 
             if (!StringUtils.isEmpty(request.getXuebaNo())) {
