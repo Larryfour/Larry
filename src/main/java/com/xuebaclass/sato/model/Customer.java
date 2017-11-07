@@ -47,7 +47,7 @@ public class Customer extends AbstractPersistable{
     private String city;
     private String district;
     private String school;
-    //private String grade;
+    private String grade;
     private Integer NCEETime;
     private String gradeNote;
     private String teachingAterial;
@@ -66,14 +66,6 @@ public class Customer extends AbstractPersistable{
     private Instant distributedDate;
     private String distributedBy;
     private String source;
-
-    public Integer getNCEETime() {
-        return NCEETime;
-    }
-
-    public void setNCEETime(Integer NCEETime) {
-        this.NCEETime = NCEETime;
-    }
 
     public String getContactName() {
         return contactName;
@@ -180,11 +172,25 @@ public class Customer extends AbstractPersistable{
     }
 
     public String getGrade() {
-        return Grade.getGradeFromNCEETime(this.NCEETime).getName();
+        if (this.grade == null && this.NCEETime != null) {
+            this.grade = Grade.getGradeFromNCEETime(this.NCEETime).getName();
+        }
+        return this.grade;
     }
 
     public void setGrade(String grade) {
-        this.NCEETime = Grade.getNCEETimeFromGradeName(grade);
+        this.grade = grade;
+    }
+
+    public Integer getNCEETime() {
+        if (this.NCEETime == null && this.grade != null) {
+            this.NCEETime = Grade.getNCEETimeFromGradeName(this.grade);
+        }
+        return NCEETime;
+    }
+
+    public void setNCEETime(Integer NCEETime) {
+        this.NCEETime = NCEETime;
     }
 
     public String getGradeNote() {
