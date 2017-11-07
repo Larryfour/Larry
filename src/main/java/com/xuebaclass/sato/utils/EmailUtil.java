@@ -17,35 +17,37 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EmailUtil {
-    private static final String smtphost = "smtp.exmail.qq.com";
-    private static final String username = "itadmin@xuebaedu.com";
-    private static final String password = "xue8jiaoyu";
+    private static final String SMTP_HOST = "smtp.exmail.qq.com";
+    private static final String USER_NAME = "itadmin@xuebaedu.com";
+    private static final String PASSWORD = "xue8jiaoyu";
 
-    static final Logger LOG = Logger.getLogger(EmailUtil.class);
+    static final Logger logger = Logger.getLogger(EmailUtil.class);
 
     public static void sendSalesDailyReport(String date,String html) throws Exception {
-        LOG.info("sendSalesDailyReport by sunhao@xuebaedu.com");
+        logger.info("send report start.");
 
         Session session = EmailUtil.getSession();
         MimeMessage message = new MimeMessage(session);
         InternetAddress[] toArray = new InternetAddress[]{
-                new InternetAddress("sunhao@xuebaedu.com"),
-                new InternetAddress("yangwenwen@xuebaedu.com"),
+//                new InternetAddress("sunhao@xuebaedu.com"),
+//                new InternetAddress("yangwenwen@xuebaedu.com"),
 //                new InternetAddress("qimingxin@xuebaedu.com"),
                 new InternetAddress("120644874@qq.com")
         };
         try {
             message.setSubject(date+"销售日报");
             message.setSentDate(new Date());
-            message.setFrom(new InternetAddress(username));
+            message.setFrom(new InternetAddress(USER_NAME));
             message.addRecipients(RecipientType.TO, toArray);
 
 
 
             message.setContent(html, "text/html;charset=utf-8");
             Transport.send(message);
+
+            logger.info("send report successful.");
         } catch (Exception e) {
-            LOG.error(e, e);
+            logger.error(e, e);
         }
     }
 
@@ -64,15 +66,14 @@ public class EmailUtil {
     public static Session getSession() {
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.smtp.host", smtphost);
+        props.setProperty("mail.smtp.host", SMTP_HOST);
         props.setProperty("mail.smtp.port", "25");
         props.setProperty("mail.smtp.auth", "true");
-        //props.setProperty("mail.debug", "true");
         Session session = Session.getDefaultInstance(props,
                 new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(USER_NAME, PASSWORD);
                     }
                 });
 
