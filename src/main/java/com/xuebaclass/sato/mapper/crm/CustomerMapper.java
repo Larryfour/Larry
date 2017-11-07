@@ -3,10 +3,13 @@ package com.xuebaclass.sato.mapper.crm;
 import com.xuebaclass.sato.common.Grade;
 import com.xuebaclass.sato.config.SpringSecurityKeycloakAutditorAware;
 import com.xuebaclass.sato.model.Customer;
+import com.xuebaclass.sato.model.PayingCustomer;
 import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
 import com.xuebaclass.sato.model.request.CustomersRequest;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
+import com.xuebaclass.sato.model.response.PayingCustomersResponse;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
 import org.thymeleaf.util.StringUtils;
@@ -326,6 +329,42 @@ public interface CustomerMapper {
             return sql;
         }
 
+        public String getPayingCustomers(Map<String, Object> parameters) {
+            String sortField = (String) parameters.get("sortField");
+            PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
+
+            String sql = "SELECT \n" +
+                    "  c.*,\n" +
+                    "  s.TOTAL TOTAL_HOURS,\n" +
+                    "  s.REMAIN RESET_HOURS \n" +
+                    "FROM\n" +
+                    "  STAT_COURSE_HOURS s \n" +
+                    "  LEFT JOIN CUSTOMER c \n" +
+                    "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
+                    "WHERE c.ID IS NOT NULL \n" +
+                    "ORDER BY c." + sortField + " DESC ";
+            return sql;
+        }
+
+        public String getMyselfPayingCustomers(Map<String, Object> parameters) {
+            String sortField = (String) parameters.get("sortField");
+            PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
+
+            String sql = "SELECT \n" +
+                    "  c.*,\n" +
+                    "  s.TOTAL TOTAL_HOURS,\n" +
+                    "  s.REMAIN RESET_HOURS \n" +
+                    "FROM\n" +
+                    "  STAT_COURSE_HOURS s \n" +
+                    "  LEFT JOIN CUSTOMER c \n" +
+                    "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
+                    "WHERE c.ID IS NOT NULL \n" +
+                    " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n" +
+                    "ORDER BY c." + sortField + " DESC ";
+
+            return sql;
+        }
+
         public String distribution(Map<String, Object> parameters) {
             DistributionRequest distributionRequest = (DistributionRequest) parameters.get("distributionRequest");
 
@@ -415,6 +454,22 @@ public interface CustomerMapper {
      */
     @SelectProvider(type = CustomerSqlProvider.class, method = "getMyselfCustomers")
     List<CustomersResponse> getMyselfCustomers(@Param("sortField") String sortField, @Param("request") CustomersMyselfRequest request);
+
+    /**
+     * @param sortField
+     * @param request
+     * @return
+     */
+    @SelectProvider(type = CustomerSqlProvider.class, method = "getMyselfPayingCustomers")
+    List<PayingCustomersResponse> getMyselfPayingCustomers(@Param("sortField") String sortField, @Param("request") PayingCustomersRequest request);
+
+    /**
+     * @param sortField
+     * @param request
+     * @return
+     */
+    @SelectProvider(type = CustomerSqlProvider.class, method = "getPayingCustomers")
+    List<PayingCustomersResponse> getPayingCustomers(@Param("sortField") String sortField, @Param("request") PayingCustomersRequest request);
 
     /**
      * @param distributionRequest

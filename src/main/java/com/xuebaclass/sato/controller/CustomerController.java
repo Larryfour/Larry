@@ -1,10 +1,13 @@
 package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.Customer;
+import com.xuebaclass.sato.model.PayingCustomer;
 import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
 import com.xuebaclass.sato.model.request.CustomersRequest;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
+import com.xuebaclass.sato.model.response.PayingCustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +109,36 @@ public class CustomerController {
         logger.info("################### get customers for myself  #######################");
 
         Page<CustomersResponse> customers = customerService.getMyselfCustomers(pageable, request);
+        return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
+    }
+
+    /**
+     * 获取个人付费客户信息
+     *
+     * @return
+     */
+    @GetMapping(value = "/paying/myself")
+    public ResponseEntity<PagedResources<Resource<PayingCustomersResponse>>>
+    getMyselfPayingCustomers(@PageableDefault Pageable pageable,
+                       PagedResourcesAssembler<PayingCustomersResponse> pagedResourcesAssembler, PayingCustomersRequest request) throws Exception {
+        logger.info("################### get paying customers for myself  #######################");
+
+        Page<PayingCustomersResponse> customers = customerService.getMyselfPayingCustomers(pageable, request);
+        return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
+    }
+
+    /**
+     * 获取付费客户信息
+     *
+     * @return
+     */
+    @GetMapping(value = "/paying")
+    public ResponseEntity<PagedResources<Resource<PayingCustomersResponse>>>
+    getPayingCustomers(@PageableDefault Pageable pageable,
+                       PagedResourcesAssembler<PayingCustomersResponse> pagedResourcesAssembler, PayingCustomersRequest request) throws Exception {
+        logger.info("################### get paying customers  #######################");
+
+        Page<PayingCustomersResponse> customers = customerService.getPayingCustomers(pageable, request);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
 

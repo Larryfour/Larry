@@ -10,15 +10,14 @@ import com.xuebaclass.sato.mapper.crm.CustomerMapper;
 import com.xuebaclass.sato.mapper.crm.DynamicRecordMapper;
 import com.xuebaclass.sato.mapper.sato.SalesMapper;
 import com.xuebaclass.sato.mapper.sato.StudentMapper;
-import com.xuebaclass.sato.model.Customer;
-import com.xuebaclass.sato.model.DynamicRecord;
-import com.xuebaclass.sato.model.Sales;
-import com.xuebaclass.sato.model.Student;
+import com.xuebaclass.sato.model.*;
 import com.xuebaclass.sato.model.request.CustomersMyselfRequest;
 import com.xuebaclass.sato.model.request.CustomersRequest;
 import com.xuebaclass.sato.model.request.DistributionRequest;
+import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.model.response.DistributionResponse;
+import com.xuebaclass.sato.model.response.PayingCustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import com.xuebaclass.sato.utils.CurrentUser;
 import com.xuebaclass.sato.utils.Utils;
@@ -313,6 +312,32 @@ public class CustomerServiceImpl implements CustomerService {
             throw CrmException.newException(e.getMessage());
         }
         return new PageImpl<CustomersResponse>(pageInfo.getList(), pageable, pageInfo.getTotal());
+    }
+
+    @Override
+    public Page<PayingCustomersResponse> getPayingCustomers(Pageable pageable, PayingCustomersRequest request) throws Exception {
+        PageInfo<PayingCustomersResponse> pageInfo = null;
+        try {
+            PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
+            String sort = SatoSort.getSort(pageable, "CREATED_DATE");
+            pageInfo = new PageInfo<>(customerMapper.getPayingCustomers(sort, request));
+        } catch (Exception e) {
+            throw CrmException.newException(e.getMessage());
+        }
+        return new PageImpl<PayingCustomersResponse>(pageInfo.getList(), pageable, pageInfo.getTotal());
+    }
+
+    @Override
+    public Page<PayingCustomersResponse> getMyselfPayingCustomers(Pageable pageable, PayingCustomersRequest request) throws Exception {
+        PageInfo<PayingCustomersResponse> pageInfo = null;
+        try {
+            PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
+            String sort = SatoSort.getSort(pageable, "CREATED_DATE");
+            pageInfo = new PageInfo<PayingCustomersResponse>(customerMapper.getMyselfPayingCustomers(sort, request));
+        } catch (Exception e) {
+            throw CrmException.newException(e.getMessage());
+        }
+        return new PageImpl<PayingCustomersResponse>(pageInfo.getList(), pageable, pageInfo.getTotal());
     }
 
     @Override
