@@ -1147,7 +1147,7 @@ RESP:
 ### 获取付费客户信息
 REQ:
   
-GET /sales-crm/customers/paying
+GET /sales-crm/customers/paying?xuebaNo=22834921&mobile=18612172117&grade=初二&name=张三&parentMobile=18611112222&resetHours=3&tagIds=1&tagIds=2
 ```json
 
 ```
@@ -1627,7 +1627,7 @@ RESP:
 ### 获取个人付费客户信息
 REQ:
   
-GET /sales-crm/customers/paying/myself
+GET /sales-crm/customers/paying/myself?xuebaNo=22834921&mobile=18612172117&grade=初二&name=张三&parentMobile=18611112222&resetHours=3&tagIds=1&tagIds=2
 ```json
 
 ```

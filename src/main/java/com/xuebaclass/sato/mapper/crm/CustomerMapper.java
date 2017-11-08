@@ -333,16 +333,81 @@ public interface CustomerMapper {
             String sortField = (String) parameters.get("sortField");
             PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
 
+
+            String nameSql = "";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                nameSql = "SELECT \n" +
+                        "      ct.CUSTOMER_ID,\n" +
+                        "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "    FROM\n" +
+                        "      TAG t,\n" +
+                        "      CUSTOMER_TAG ct,\n" +
+                        "      (SELECT DISTINCT \n" +
+                        "        CUSTOMER_ID \n" +
+                        "      FROM\n" +
+                        "        CUSTOMER_TAG \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ") \n" +
+                        "        AND FLAG = 0 ) temp \n" +
+                        "    WHERE t.ID = ct.TAG_ID \n" +
+                        "      AND t.FLAG = 0 \n" +
+                        "      AND ct.FLAG = 0 \n" +
+                        "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
+                        "    GROUP BY ct.CUSTOMER_ID";
+            } else {
+                nameSql = "SELECT \n" +
+                        "   ct.CUSTOMER_ID,\n" +
+                        "   GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "  FROM\n" +
+                        "   TAG t,\n" +
+                        "   CUSTOMER_TAG ct\n" +
+                        "  WHERE t.ID = ct.TAG_ID \n" +
+                        "   AND t.FLAG = 0 \n" +
+                        "   AND ct.FLAG = 0 \n" +
+                        "  GROUP BY ct.CUSTOMER_ID";
+            }
+
             String sql = "SELECT \n" +
                     "  c.*,\n" +
                     "  s.TOTAL TOTAL_HOURS,\n" +
-                    "  s.REMAIN RESET_HOURS \n" +
+                    "  s.REMAIN RESET_HOURS,\n" +
+                    "  t_t_n.TAG_NAMES \n" +
                     "FROM\n" +
                     "  STAT_COURSE_HOURS s \n" +
                     "  LEFT JOIN CUSTOMER c \n" +
                     "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
-                    "WHERE c.ID IS NOT NULL \n" +
-                    "ORDER BY c." + sortField + " DESC ";
+                    "  LEFT JOIN \n" +
+                    "    (" + nameSql + ") t_t_n \n" +
+                    "    ON t_t_n.CUSTOMER_ID = c.ID \n" +
+                    "WHERE c.ID IS NOT NULL \n";
+
+            if (!StringUtils.isEmpty(request.getXuebaNo())) {
+                sql += " AND c.XUEBA_NO = " + request.getXuebaNo() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getMobile())) {
+                sql += " AND c.MOBILE = '" + request.getMobile() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getName())) {
+                sql += " AND c.NAME LIKE '%" + request.getName() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getParentMobile())) {
+                sql += " AND c.PARENTS_MOBILE = '" + request.getParentMobile() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getResetHours())) {
+                sql += " AND c.REMAIN = " + request.getXuebaNo() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getGrade())) {
+                int nceetime = Grade.getNCEETimeFromGradeName(request.getGrade());
+                sql += " AND c.NCEE_TIME = " + nceetime + " \n";
+            }
+
+            sql += " ORDER BY c." + sortField + " DESC ";
+
             return sql;
         }
 
@@ -350,17 +415,82 @@ public interface CustomerMapper {
             String sortField = (String) parameters.get("sortField");
             PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
 
+
+            String nameSql = "";
+
+            if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+                nameSql = "SELECT \n" +
+                        "      ct.CUSTOMER_ID,\n" +
+                        "      GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "    FROM\n" +
+                        "      TAG t,\n" +
+                        "      CUSTOMER_TAG ct,\n" +
+                        "      (SELECT DISTINCT \n" +
+                        "        CUSTOMER_ID \n" +
+                        "      FROM\n" +
+                        "        CUSTOMER_TAG \n" +
+                        "      WHERE TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ") \n" +
+                        "        AND FLAG = 0 ) temp \n" +
+                        "    WHERE t.ID = ct.TAG_ID \n" +
+                        "      AND t.FLAG = 0 \n" +
+                        "      AND ct.FLAG = 0 \n" +
+                        "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
+                        "    GROUP BY ct.CUSTOMER_ID";
+            } else {
+                nameSql = "SELECT \n" +
+                        "   ct.CUSTOMER_ID,\n" +
+                        "   GROUP_CONCAT(NAME SEPARATOR ',') TAG_NAMES \n" +
+                        "  FROM\n" +
+                        "   TAG t,\n" +
+                        "   CUSTOMER_TAG ct\n" +
+                        "  WHERE t.ID = ct.TAG_ID \n" +
+                        "   AND t.FLAG = 0 \n" +
+                        "   AND ct.FLAG = 0 \n" +
+                        "  GROUP BY ct.CUSTOMER_ID";
+            }
+
             String sql = "SELECT \n" +
                     "  c.*,\n" +
                     "  s.TOTAL TOTAL_HOURS,\n" +
-                    "  s.REMAIN RESET_HOURS \n" +
+                    "  s.REMAIN RESET_HOURS,\n" +
+                    "  t_t_n.TAG_NAMES \n" +
                     "FROM\n" +
                     "  STAT_COURSE_HOURS s \n" +
                     "  LEFT JOIN CUSTOMER c \n" +
                     "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
-                    "WHERE c.ID IS NOT NULL \n" +
-                    " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n" +
-                    "ORDER BY c." + sortField + " DESC ";
+                    "  LEFT JOIN \n" +
+                    "    (" + nameSql + ") t_t_n \n" +
+                    "    ON t_t_n.CUSTOMER_ID = c.ID \n" +
+                    "WHERE c.ID IS NOT NULL \n";
+
+            sql += " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
+
+            if (!StringUtils.isEmpty(request.getXuebaNo())) {
+                sql += " AND c.XUEBA_NO = " + request.getXuebaNo() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getMobile())) {
+                sql += " AND c.MOBILE = '" + request.getMobile() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getName())) {
+                sql += " AND c.NAME LIKE '%" + request.getName() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getParentMobile())) {
+                sql += " AND c.PARENTS_MOBILE = '" + request.getParentMobile() + "' \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getResetHours())) {
+                sql += " AND c.REMAIN = " + request.getXuebaNo() + " \n";
+            }
+
+            if (!StringUtils.isEmpty(request.getGrade())) {
+                int nceetime = Grade.getNCEETimeFromGradeName(request.getGrade());
+                sql += " AND c.NCEE_TIME = " + nceetime + " \n";
+            }
+
+            sql += " ORDER BY c." + sortField + " DESC ";
 
             return sql;
         }
