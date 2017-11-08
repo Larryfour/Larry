@@ -397,11 +397,11 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getMobile())) {
-                sql += " AND c.MOBILE = '" + request.getMobile() + "' \n";
+                sql += " AND c.MOBILE LIKE '" + request.getMobile() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getName())) {
-                sql += " AND c.NAME LIKE '%" + request.getName() + "' \n";
+                sql += " AND c.NAME LIKE '%" + request.getName() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getParentMobile())) {
@@ -492,11 +492,11 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getMobile())) {
-                sql += " AND c.MOBILE = '" + request.getMobile() + "' \n";
+                sql += " AND c.MOBILE LIKE '" + request.getMobile() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getName())) {
-                sql += " AND c.NAME LIKE '%" + request.getName() + "' \n";
+                sql += " AND c.NAME LIKE '%" + request.getName() + "%' \n";
             }
 
             if (!StringUtils.isEmpty(request.getParentMobile())) {
