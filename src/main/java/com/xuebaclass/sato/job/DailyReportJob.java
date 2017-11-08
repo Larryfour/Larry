@@ -100,6 +100,8 @@ public class DailyReportJob implements Job {
                 dailyDataBuffer.append("min</td><td>");
                 dailyDataBuffer.append(dailyData.getOffsetAfter());
                 dailyDataBuffer.append("min</td><td>");
+                dailyDataBuffer.append(dailyData.getComment());
+                dailyDataBuffer.append("</td><td>");
                 dailyDataBuffer.append(dailyData.getReservedCount());
                 dailyDataBuffer.append("</td><td>");
                 dailyDataBuffer.append(dailyData.getCompletedCount());
@@ -156,6 +158,19 @@ public class DailyReportJob implements Job {
             String monthReNews = monthReNewsBuffer.toString();
             logger.info("monthReNews:[" + monthReNews + "]");
             htmlTemplate = htmlTemplate.replace("#{monthReNews}", monthReNews);
+
+            StringBuffer teacherRepeatOrderBuffer = new StringBuffer();
+            teacherRepeatOrderBuffer.append("<tr><td>");
+            teacherRepeatOrderBuffer.append(response.getMonth().getTeacherRepeatOrder().getOrderCount());
+            teacherRepeatOrderBuffer.append("</td><td>");
+            teacherRepeatOrderBuffer.append(response.getMonth().getTeacherRepeatOrder().getOrderAmount());
+            teacherRepeatOrderBuffer.append("</td><td>");
+            teacherRepeatOrderBuffer.append(response.getMonth().getTeacherRepeatOrder().getTotalAmount());
+            teacherRepeatOrderBuffer.append("</td><td></td><td></td><td></td></tr>");
+
+            String teacherRepeatOrder = teacherRepeatOrderBuffer.toString();
+            logger.info("teacherRepeatOrder:[" + teacherRepeatOrder + "]");
+            htmlTemplate = htmlTemplate.replace("#{teacherRepeatOrder}", teacherRepeatOrder);
 
 
             StringBuffer personalMonthBuffer = new StringBuffer();

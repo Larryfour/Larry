@@ -188,7 +188,7 @@ public class ReportServiceImpl implements ReportService {
             Integer firstOrderAmount = 0;
             Integer repeatOrderCount = 0;
             Integer repeatOrderAmount = 0;
-            String comment = null;
+            String comment = "";
 
             if (nonNull(distributedCountsMap.get(request.getDailyDate()))) {
                 distributedTotalNumber = ((Long) distributedCountsMap.get(request.getDailyDate()).get("TOTAL_NUMBER")).intValue();
@@ -296,7 +296,8 @@ public class ReportServiceImpl implements ReportService {
             targetsMap.put(t.getSalesId(), t);
         });
 
-        DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+        //格式化小数
+        DecimalFormat df = new DecimalFormat("0.00");
         personalMonthDatas.forEach(p -> {
             SalesTarget target = (SalesTarget) targetsMap.get(p.getSalesId());
             if (nonNull(target)) {
@@ -498,7 +499,7 @@ public class ReportServiceImpl implements ReportService {
             Integer firstOrderAmount = 0;
             Integer repeatOrderCount = 0;
             Integer repeatOrderAmount = 0;
-            String comment = null;
+            String comment = "";
 
             if (nonNull(distributedCountsMap.get(dailyDate))) {
                 distributedTotalNumber = ((Long) distributedCountsMap.get(dailyDate).get("TOTAL_NUMBER")).intValue();
