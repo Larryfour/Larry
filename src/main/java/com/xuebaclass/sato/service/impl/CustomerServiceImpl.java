@@ -216,7 +216,7 @@ public class CustomerServiceImpl implements CustomerService {
                         }
                         if (!org.thymeleaf.util.StringUtils.isEmpty(customer.getGrade())) {
                             extensions.put("年级", customer.getGrade());
-                            extensions.put(Grade.NCEETIME_F_NAME, Grade.getNCEETimeFromGradeName(customer.getGrade()));
+                            extensions.put(Grade.NCEETIME_F_NAME, String.valueOf(Grade.getNCEETimeFromGradeName(customer.getGrade())));
                         }
 
                         // 加个高考时间

@@ -116,7 +116,7 @@ public class BpmnServiceImpl implements BpmnService {
                 }
                 if (!StringUtils.isEmpty(customer.getGrade())) {
                     extensions.put("年级", customer.getGrade());
-                    extensions.put(Grade.NCEETIME_F_NAME, Grade.getNCEETimeFromGradeName(customer.getGrade()));
+                    extensions.put(Grade.NCEETIME_F_NAME, String.valueOf(Grade.getNCEETimeFromGradeName(customer.getGrade())));
                 }
                 if (nonNull(customer.getFullMarks())) {
                     extensions.put("满分", customer.getFullMarks().toString());
