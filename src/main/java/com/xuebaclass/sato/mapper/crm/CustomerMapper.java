@@ -334,7 +334,7 @@ public interface CustomerMapper {
             PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
 
 
-            String nameSql = "";
+            String nameSql, innerSql = "";
 
             if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
                 nameSql = "SELECT \n" +
@@ -354,6 +354,16 @@ public interface CustomerMapper {
                         "      AND ct.FLAG = 0 \n" +
                         "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
                         "    GROUP BY ct.CUSTOMER_ID";
+
+                innerSql = "INNER JOIN \n" +
+                        "    (SELECT DISTINCT \n" +
+                        "      CUSTOMER_ID \n" +
+                        "    FROM\n" +
+                        "      CUSTOMER_TAG \n" +
+                        "    WHERE FLAG = 0 \n" +
+                        "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) u_t \n" +
+                        "    ON c.ID = u_t.CUSTOMER_ID ";
+
             } else {
                 nameSql = "SELECT \n" +
                         "   ct.CUSTOMER_ID,\n" +
@@ -378,7 +388,8 @@ public interface CustomerMapper {
                     "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
                     "  LEFT JOIN \n" +
                     "    (" + nameSql + ") t_t_n \n" +
-                    "    ON t_t_n.CUSTOMER_ID = c.ID \n" +
+                    "    ON t_t_n.CUSTOMER_ID = c.ID \n"
+                    + innerSql +
                     "WHERE c.ID IS NOT NULL \n";
 
             if (!StringUtils.isEmpty(request.getXuebaNo())) {
@@ -416,7 +427,7 @@ public interface CustomerMapper {
             PayingCustomersRequest request = (PayingCustomersRequest) parameters.get("request");
 
 
-            String nameSql = "";
+            String nameSql, innerSql = "";
 
             if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
                 nameSql = "SELECT \n" +
@@ -436,6 +447,16 @@ public interface CustomerMapper {
                         "      AND ct.FLAG = 0 \n" +
                         "      AND ct.CUSTOMER_ID = temp.CUSTOMER_ID \n" +
                         "    GROUP BY ct.CUSTOMER_ID";
+
+                innerSql = "INNER JOIN \n" +
+                        "    (SELECT DISTINCT \n" +
+                        "      CUSTOMER_ID \n" +
+                        "    FROM\n" +
+                        "      CUSTOMER_TAG \n" +
+                        "    WHERE FLAG = 0 \n" +
+                        "      AND TAG_ID IN (" + StringUtils.join(request.getTagIds().toArray(), ",") + ")) u_t \n" +
+                        "    ON c.ID = u_t.CUSTOMER_ID ";
+
             } else {
                 nameSql = "SELECT \n" +
                         "   ct.CUSTOMER_ID,\n" +
@@ -460,7 +481,8 @@ public interface CustomerMapper {
                     "    ON c.XUEBA_NO = s.XUEBA_NO \n" +
                     "  LEFT JOIN \n" +
                     "    (" + nameSql + ") t_t_n \n" +
-                    "    ON t_t_n.CUSTOMER_ID = c.ID \n" +
+                    "    ON t_t_n.CUSTOMER_ID = c.ID \n"
+                    + innerSql +
                     "WHERE c.ID IS NOT NULL \n";
 
             sql += " AND c.OWNED_SALES_USERNAME = '" + getCurrentAuditorName() + "' \n";
