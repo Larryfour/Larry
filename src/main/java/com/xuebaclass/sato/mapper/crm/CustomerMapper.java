@@ -409,7 +409,7 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getResetHours())) {
-                sql += " AND c.REMAIN = " + request.getXuebaNo() + " \n";
+                sql += " AND s.REMAIN = " + request.getResetHours() + " \n";
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
@@ -504,7 +504,7 @@ public interface CustomerMapper {
             }
 
             if (!StringUtils.isEmpty(request.getResetHours())) {
-                sql += " AND c.REMAIN = " + request.getXuebaNo() + " \n";
+                sql += " AND s.REMAIN = " + request.getResetHours() + " \n";
             }
 
             if (!StringUtils.isEmpty(request.getGrade())) {
