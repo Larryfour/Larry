@@ -23,24 +23,26 @@ public class EmailUtil {
 
     static final Logger logger = Logger.getLogger(EmailUtil.class);
 
-    public static void sendSalesDailyReport(String date,String html) throws Exception {
+    public static void sendSalesDailyReport(String date, String html) throws Exception {
         logger.info("send report start.");
 
         Session session = EmailUtil.getSession();
         MimeMessage message = new MimeMessage(session);
         InternetAddress[] toArray = new InternetAddress[]{
-//                new InternetAddress("sunhao@xuebaedu.com"),
-//                new InternetAddress("yangwenwen@xuebaedu.com"),
-//                new InternetAddress("qimingxin@xuebaedu.com"),
-                new InternetAddress("120644874@qq.com")
+                new InternetAddress("qimingxin@xuebaedu.com"),
+                new InternetAddress("lixingwu@xuebaedu.com"),
+                new InternetAddress("liyang@xuebaedu.com"),
+                new InternetAddress("gongxuezhi@xuebaedu.com    "),
+                new InternetAddress("chuwenyong@xuebaedu.com"),
+                new InternetAddress("yangwenwen@xuebaedu.com"),
+                new InternetAddress("sunhao@xuebaedu.com")
         };
+
         try {
-            message.setSubject(date+"销售日报");
+            message.setSubject(date + "销售日报");
             message.setSentDate(new Date());
             message.setFrom(new InternetAddress(USER_NAME));
             message.addRecipients(RecipientType.TO, toArray);
-
-
 
             message.setContent(html, "text/html;charset=utf-8");
             Transport.send(message);
