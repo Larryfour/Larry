@@ -32,7 +32,7 @@ public class EmailUtil {
                 new InternetAddress("qimingxin@xuebaedu.com"),
                 new InternetAddress("lixingwu@xuebaedu.com"),
                 new InternetAddress("liyang@xuebaedu.com"),
-                new InternetAddress("gongxuezhi@xuebaedu.com    "),
+                new InternetAddress("gongxuezhi@xuebaedu.com"),
                 new InternetAddress("chuwenyong@xuebaedu.com"),
                 new InternetAddress("yangwenwen@xuebaedu.com"),
                 new InternetAddress("sunhao@xuebaedu.com")
