@@ -19,7 +19,7 @@ import java.util.Properties;
 public class EmailUtil {
     private static final String SMTP_HOST = "smtp.exmail.qq.com";
     private static final String USER_NAME = "itadmin@xuebaedu.com";
-    private static final String PASSWORD = "xue8jiaoyu";
+    private static final String PASSWORD = "qeAHYNj2P2nStsKk";
 
     static final Logger logger = Logger.getLogger(EmailUtil.class);
 
