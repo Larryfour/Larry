@@ -954,6 +954,56 @@ RESP:
 ```
 
 
+### 七天新生呼出率
+REQ:
+  
+GET /sales-crm/report/sales/daily/seven-day/call-rate?dailyDate=2017-12-13
+```json
+
+```
+
+RESP:
+```json
+{
+    "records": [
+        {
+            "name": "刘香媛",
+            "callOutNumber": 99,
+            "connectedNumber": 44,
+            "moreFiveMinutesNumber": 30,
+            "moreThreeMinutesNumber": 34,
+            "moreOneMinutesNumber": 37
+        },
+        {
+            "name": "许世伟",
+            "callOutNumber": 119,
+            "connectedNumber": 69,
+            "moreFiveMinutesNumber": 40,
+            "moreThreeMinutesNumber": 46,
+            "moreOneMinutesNumber": 53
+        },
+        {
+            "name": "康学辉",
+            "callOutNumber": 148,
+            "connectedNumber": 56,
+            "moreFiveMinutesNumber": 26,
+            "moreThreeMinutesNumber": 34,
+            "moreOneMinutesNumber": 41
+        },
+        {
+            "name": "陈富",
+            "callOutNumber": 223,
+            "connectedNumber": 87,
+            "moreFiveMinutesNumber": 30,
+            "moreThreeMinutesNumber": 38,
+            "moreOneMinutesNumber": 60
+        }
+    ]
+}
+```
+
+
+
 ### 获取销售管理报表
 REQ:
   

@@ -2,17 +2,21 @@ package com.xuebaclass.sato.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.xuebaclass.sato.exception.CrmException;
+import com.xuebaclass.sato.mapper.crm.CallRecordMapper;
 import com.xuebaclass.sato.mapper.crm.ReportMapper;
 import com.xuebaclass.sato.mapper.crm.SalesTargetMapper;
 import com.xuebaclass.sato.mapper.sato.CourseMapper;
 import com.xuebaclass.sato.mapper.sato.OrderMapper;
 import com.xuebaclass.sato.mapper.sato.SalesMapper;
+import com.xuebaclass.sato.model.CallRecord;
 import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.SalesTarget;
 import com.xuebaclass.sato.model.request.SalesDailyMyselfRequest;
 import com.xuebaclass.sato.model.request.SalesDailyRequest;
+import com.xuebaclass.sato.model.request.SevenDayCallRateRequest;
 import com.xuebaclass.sato.model.response.SalesDailyMyselfResponse;
 import com.xuebaclass.sato.model.response.SalesDailyResponse;
+import com.xuebaclass.sato.model.response.SevenDayCallRateResponse;
 import com.xuebaclass.sato.service.ReportService;
 import com.xuebaclass.sato.utils.CurrentUser;
 import com.xuebaclass.sato.utils.Utils;
@@ -59,6 +63,10 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     SalesTargetMapper salesTargetMapper;
+
+    @Autowired
+    CallRecordMapper callRecordMapper;
+
 
     @Override
     public SalesDailyResponse salesDaily(SalesDailyRequest request) throws Exception {
@@ -517,7 +525,7 @@ public class ReportServiceImpl implements ReportService {
                 offset = (Integer) offsetsMap.get(dailyDate).get("OFFSET");
                 rewards = (Integer) offsetsMap.get(dailyDate).get("REWARDS");
                 offsetAfter = (Integer) offsetsMap.get(dailyDate).get("OFFSET_AFTER");
-                comment =  (String) Optional.ofNullable(offsetsMap.get(dailyDate).get("COMMENT")).orElse("");
+                comment = (String) Optional.ofNullable(offsetsMap.get(dailyDate).get("COMMENT")).orElse("");
             }
             if (nonNull(firstOrdersCountsMap.get(dailyDate))) {
                 firstOrderCount = ((Long) firstOrdersCountsMap.get(dailyDate).get("TOTAL_NUMBER")).intValue();
@@ -548,6 +556,126 @@ public class ReportServiceImpl implements ReportService {
 
         SalesDailyMyselfResponse response = new SalesDailyMyselfResponse();
         response.setData(data);
+
+        return response;
+    }
+
+
+    @Override
+    public SevenDayCallRateResponse sevenDayCallRate(SevenDayCallRateRequest request) throws Exception {
+
+        if (StringUtils.isEmpty(request.getDailyDate())) {
+            throw CrmException.newException("查询日期不能为空!");
+        }
+
+        List<Sales> sales = salesMapper.getSales();
+        sales = sales.stream().filter(s -> s.getGroupId().equals(NEW_GROUP)).collect(Collectors.toList());
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dailyDate = simpleDateFormat.parse(request.getDailyDate());
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.setTime(dailyDate);
+        String end = simpleDateFormat.format(toCalendar.getTime());
+
+        Calendar fromCalendar = Calendar.getInstance();
+        fromCalendar.setTime(dailyDate);
+        fromCalendar.add(Calendar.DATE, -7);
+        String begin = simpleDateFormat.format(fromCalendar.getTime());
+
+        // 学生上课信息
+        List<Map> studentCourseTimes = courseMapper.getStudentCourseStartTime();
+
+        Map completedExperiencesMap = new HashMap();
+        for (Map s : studentCourseTimes) {
+            completedExperiencesMap.put(s.get("studentMobile"), s);
+        }
+
+        // 通话记录
+        List<CallRecord> callRecords = callRecordMapper.getStudentRecords(begin, end);
+        callRecords = callRecords.stream()
+                .filter(c -> {
+                    Map studentCourseTime = (Map) completedExperiencesMap.get(c.getCustomerNumber());
+                    return studentCourseTime == null ? true : c.getStartTime().compareTo((String) studentCourseTime.get("startTime")) <= 0;
+                })
+                .collect(Collectors.toList());
+
+
+        Map<String, List<CallRecord>> salesRecordMap = new HashMap();
+        for (Sales s : sales) {
+            salesRecordMap.put(s.getId(), callRecords.stream()
+                    .filter(c -> c.getSalesId().compareTo(Integer.valueOf(s.getId())) == 0)
+                    .collect(Collectors.toList()));
+        }
+
+
+        //外呼新生
+        Map<String, Long> callOutNumberMap = new HashMap<>();
+        for (String key : salesRecordMap.keySet()) {
+            List<CallRecord> salesCallRecords = salesRecordMap.get(key);
+            Long callOutNumber = salesCallRecords.stream()
+                    .map(CallRecord::getCustomerNumber)
+                    .distinct()
+                    .count();
+            callOutNumberMap.put(key, callOutNumber);
+        }
+
+        //新生接通
+        Map<String, Long> connectedNumberMap = new HashMap<>();
+        for (String key : salesRecordMap.keySet()) {
+            List<CallRecord> salesCallRecords = salesRecordMap.get(key);
+            Long connectedNumber = salesCallRecords.stream()
+                    .filter(c -> c.getCallDuration() > 0)
+                    .map(CallRecord::getCustomerNumber)
+                    .distinct()
+                    .count();
+            connectedNumberMap.put(key, connectedNumber);
+        }
+
+        //统计通话时长
+        Map recordMap = new HashMap();
+        for (String key : salesRecordMap.keySet()) {
+            List<CallRecord> salesCallRecords = salesRecordMap.get(key);
+            Map salesMaxDurationMap = salesCallRecords.stream()
+                    .collect(Collectors.groupingBy(CallRecord::getCustomerNumber,
+                            Collectors.maxBy(Comparator.comparingInt(CallRecord::getCallDuration))));
+
+            Integer moreFiveMinutesNumber = 0;
+            Integer moreThreeMinutesNumber = 0;
+            Integer moreOneMinutesNumber = 0;
+            for (Object mobile : salesMaxDurationMap.keySet()) {
+                Optional<CallRecord> callRecord = (Optional<CallRecord>) salesMaxDurationMap.get(mobile);
+                if (callRecord.get().getCallDuration() >= 300) {
+                    moreFiveMinutesNumber += 1;
+                }
+
+                if (callRecord.get().getCallDuration() >= 180) {
+                    moreThreeMinutesNumber += 1;
+                }
+
+                if (callRecord.get().getCallDuration() >= 60) {
+                    moreOneMinutesNumber += 1;
+                }
+            }
+
+            SevenDayCallRateResponse.Record record = new SevenDayCallRateResponse.Record();
+            record.setMoreFiveMinutesNumber(moreFiveMinutesNumber);
+            record.setMoreThreeMinutesNumber(moreThreeMinutesNumber);
+            record.setMoreOneMinutesNumber(moreOneMinutesNumber);
+            recordMap.put(key, record);
+        }
+
+        List records = new ArrayList();
+        for (Sales s : sales) {
+            SevenDayCallRateResponse.Record record = (SevenDayCallRateResponse.Record) recordMap.get(s.getId());
+            record.setName(s.getName());
+            record.setCallOutNumber(((Long) callOutNumberMap.get(s.getId())).intValue());
+            record.setConnectedNumber(((Long) connectedNumberMap.get(s.getId())).intValue());
+            records.add(record);
+        }
+
+        SevenDayCallRateResponse response = new SevenDayCallRateResponse();
+        response.setRecords(records);
 
         return response;
     }

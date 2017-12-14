@@ -1,7 +1,9 @@
 package com.xuebaclass.sato.job;
 
 import com.xuebaclass.sato.model.request.SalesDailyRequest;
+import com.xuebaclass.sato.model.request.SevenDayCallRateRequest;
 import com.xuebaclass.sato.model.response.SalesDailyResponse;
+import com.xuebaclass.sato.model.response.SevenDayCallRateResponse;
 import com.xuebaclass.sato.service.ReportService;
 import com.xuebaclass.sato.utils.EmailUtil;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -200,6 +203,45 @@ public class DailyReportJob implements Job {
             logger.info("personalMonth:[" + personalMonth + "]");
 
             htmlTemplate = htmlTemplate.replace("#{personalMonth}", personalMonth);
+
+            SevenDayCallRateRequest sevenDayCallRateRequest = new SevenDayCallRateRequest();
+            sevenDayCallRateRequest.setDailyDate(dailyDate);
+            SevenDayCallRateResponse sevenDayCallRateResponse = reportService.sevenDayCallRate(sevenDayCallRateRequest);
+            DecimalFormat df = new DecimalFormat("0.00");
+            StringBuffer sevenDayCallRecordBuffer = new StringBuffer();
+
+            for (SevenDayCallRateResponse.Record record : sevenDayCallRateResponse.getRecords()) {
+                StringBuffer sevenDayRecordBuffer = new StringBuffer();
+
+                sevenDayRecordBuffer.append("<tr><td>");
+                sevenDayRecordBuffer.append(record.getName());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(record.getCallOutNumber());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(record.getConnectedNumber());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(df.format(((float) record.getConnectedNumber() / record.getCallOutNumber()) * 100));
+                sevenDayRecordBuffer.append("%</td><td>");
+                sevenDayRecordBuffer.append(record.getMoreOneMinutesNumber());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(df.format(((float) record.getMoreOneMinutesNumber() / record.getCallOutNumber()) * 100));
+                sevenDayRecordBuffer.append("%</td><td>");
+                sevenDayRecordBuffer.append(record.getMoreThreeMinutesNumber());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(df.format(((float) record.getMoreThreeMinutesNumber() / record.getCallOutNumber()) * 100));
+                sevenDayRecordBuffer.append("%</td><td>");
+                sevenDayRecordBuffer.append(record.getMoreFiveMinutesNumber());
+                sevenDayRecordBuffer.append("</td><td>");
+                sevenDayRecordBuffer.append(df.format(((float) record.getMoreFiveMinutesNumber() / record.getCallOutNumber()) * 100));
+                sevenDayRecordBuffer.append("%</td></tr>");
+
+                sevenDayCallRecordBuffer.append(sevenDayRecordBuffer.toString());
+            }
+
+            String sevenDayCallRecord = sevenDayCallRecordBuffer.toString();
+            logger.info("sevenDayCallRecord:[" + sevenDayCallRecord + "]");
+
+            htmlTemplate = htmlTemplate.replace("#{sevenDayCallRecord}", sevenDayCallRecord);
 
             logger.info("report detail template:[" + htmlTemplate + "]");
 

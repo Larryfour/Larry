@@ -2,6 +2,7 @@ package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.request.SalesDailyMyselfRequest;
 import com.xuebaclass.sato.model.request.SalesDailyRequest;
+import com.xuebaclass.sato.model.request.SevenDayCallRateRequest;
 import com.xuebaclass.sato.service.OffsetService;
 import com.xuebaclass.sato.service.ReportService;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class ReportController {
 
     @GetMapping(value = "/sales/daily/myself")
     public ResponseEntity salesDailyMyself(SalesDailyMyselfRequest request) throws Exception {
-        logger.info("################### sales daily report #######################");
+        logger.info("################### sales daily myself report #######################");
 
         return ResponseEntity.ok(reportService.salesMyselfDaily(request));
     }
@@ -35,5 +36,12 @@ public class ReportController {
         logger.info("################### sales daily report #######################");
 
         return ResponseEntity.ok(reportService.salesDaily(request));
+    }
+
+    @GetMapping(value = "/sales/daily/seven-day/call-rate")
+    public ResponseEntity salesDaily(SevenDayCallRateRequest request) throws Exception {
+        logger.info("################### sales daily seven-day call rate #######################");
+
+        return ResponseEntity.ok(reportService.sevenDayCallRate(request));
     }
 }

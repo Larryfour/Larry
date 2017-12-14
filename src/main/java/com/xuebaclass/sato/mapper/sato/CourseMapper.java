@@ -46,6 +46,27 @@ public interface CourseMapper {
 
             return sql;
         }
+
+        public String getStudentCourseStartTime() {
+
+            String sql = "SELECT \n" +
+                    "  IFNULL(s.MOBILE, '') AS studentMobile,\n" +
+                    "  DATE_FORMAT(\n" +
+                    "    DATE_ADD(MIN(c.START), INTERVAL 8 DAY_HOUR),\n" +
+                    "    '%Y-%m-%d %H:%i:%S'\n" +
+                    "  ) AS startTime \n" +
+                    "FROM\n" +
+                    "  COURSE c,\n" +
+                    "  STUDENT s \n" +
+                    "WHERE c.CATEGORY = 'Experiences' \n" +
+                    "  AND c.STATE = 'Completed' \n" +
+                    "  AND c.STUDENT_ID = s.ID \n" +
+                    "GROUP BY s.MOBILE \n" +
+                    "ORDER BY s.MOBILE,\n" +
+                    "  c.START ";
+
+            return sql;
+        }
     }
 
     /**
@@ -61,4 +82,11 @@ public interface CourseMapper {
      */
     @SelectProvider(type = CourseSqlProvider.class, method = "getCompletedCoursesCount")
     List<Map> getCompletedCoursesCount(@Param("salesDailyMyselfRequest") SalesDailyMyselfRequest salesDailyMyselfRequest);
+
+    /**
+     * @param
+     * @return
+     */
+    @SelectProvider(type = CourseSqlProvider.class, method = "getStudentCourseStartTime")
+    List<Map> getStudentCourseStartTime();
 }
