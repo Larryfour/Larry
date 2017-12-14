@@ -61,9 +61,7 @@ public interface CourseMapper {
                     "WHERE c.CATEGORY = 'Experiences' \n" +
                     "  AND c.STATE = 'Completed' \n" +
                     "  AND c.STUDENT_ID = s.ID \n" +
-                    "GROUP BY s.MOBILE \n" +
-                    "ORDER BY s.MOBILE,\n" +
-                    "  c.START ";
+                    "GROUP BY s.MOBILE \n";
 
             return sql;
         }
