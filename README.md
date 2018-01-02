@@ -1746,4 +1746,117 @@ RESP:
 }
 ```
 
+### 获取月销售目标
+REQ:
+  
+GET /sales-crm/sales/2018-01/target
+```json
+
+```
+
+RESP:
+```json
+[
+    {
+        "id": 17,
+        "salesId": "4",
+        "groupId": null,
+        "targetAmount": 10040,
+        "targetOrders": 20,
+        "targetMonth": "2018-01"
+    },
+    {
+        "id": 18,
+        "salesId": "7",
+        "groupId": null,
+        "targetAmount": 5000,
+        "targetOrders": 8,
+        "targetMonth": "2018-01"
+    },
+    {
+        "id": 19,
+        "salesId": "12",
+        "groupId": null,
+        "targetAmount": 7028,
+        "targetOrders": 14,
+        "targetMonth": "2018-01"
+    },
+    {
+        "id": 20,
+        "salesId": "16",
+        "groupId": null,
+        "targetAmount": 6490,
+        "targetOrders": 7,
+        "targetMonth": "2018-01"
+    },
+    {
+        "id": 21,
+        "salesId": "21",
+        "groupId": null,
+        "targetAmount": 4000,
+        "targetOrders": 9,
+        "targetMonth": "2018-01"
+    },
+    {
+        "id": 22,
+        "salesId": "25",
+        "groupId": null,
+        "targetAmount": 3000,
+        "targetOrders": 4,
+        "targetMonth": "2018-01"
+    }
+]
+```
+
+
+### 设置销售目标
+REQ:
+  
+POST /sales-crm/sales/target
+```json
+{
+    "targetMonth": "2018-03",
+    "createTargets": [
+        {
+            "salesId": 12,
+            "targetAmount": 9000,
+            "targetOrders": 5
+        }
+    ],
+    "deleteTargetIds": [
+        23
+    ],
+    "updateTargets": [
+        {
+            "targetAmount": 900000,
+            "targetOrders": 1000,
+            "id": 24
+        }
+    ]
+}
+```
+
+RESP:
+```json
+[
+    {
+        "id": 24,
+        "salesId": "7",
+        "groupId": null,
+        "targetAmount": 900000,
+        "targetOrders": 1000,
+        "targetMonth": "2018-03"
+    },
+    {
+        "id": 27,
+        "salesId": "12",
+        "groupId": null,
+        "targetAmount": 9000,
+        "targetOrders": 5,
+        "targetMonth": "2018-03"
+    }
+]
+```
+
+
 

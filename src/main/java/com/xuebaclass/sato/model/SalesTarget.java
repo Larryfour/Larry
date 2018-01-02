@@ -9,7 +9,7 @@ public class SalesTarget {
     private Integer groupId;
     private Integer targetAmount;
     private Integer targetOrders;
-    private Integer targetMonth;
+    private String targetMonth;
 
     public Integer getId() {
         return id;
@@ -43,11 +43,11 @@ public class SalesTarget {
         this.targetOrders = targetOrders;
     }
 
-    public Integer getTargetMonth() {
+    public String getTargetMonth() {
         return targetMonth;
     }
 
-    public void setTargetMonth(Integer targetMonth) {
+    public void setTargetMonth(String targetMonth) {
         this.targetMonth = targetMonth;
     }
 
