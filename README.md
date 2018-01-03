@@ -1760,7 +1760,7 @@ RESP:
     {
         "id": 17,
         "salesId": "4",
-        "groupId": null,
+        "salesName": "张三",
         "targetAmount": 10040,
         "targetOrders": 20,
         "targetMonth": "2018-01"
@@ -1768,41 +1768,9 @@ RESP:
     {
         "id": 18,
         "salesId": "7",
-        "groupId": null,
+        "salesName": "李四",
         "targetAmount": 5000,
         "targetOrders": 8,
-        "targetMonth": "2018-01"
-    },
-    {
-        "id": 19,
-        "salesId": "12",
-        "groupId": null,
-        "targetAmount": 7028,
-        "targetOrders": 14,
-        "targetMonth": "2018-01"
-    },
-    {
-        "id": 20,
-        "salesId": "16",
-        "groupId": null,
-        "targetAmount": 6490,
-        "targetOrders": 7,
-        "targetMonth": "2018-01"
-    },
-    {
-        "id": 21,
-        "salesId": "21",
-        "groupId": null,
-        "targetAmount": 4000,
-        "targetOrders": 9,
-        "targetMonth": "2018-01"
-    },
-    {
-        "id": 22,
-        "salesId": "25",
-        "groupId": null,
-        "targetAmount": 3000,
-        "targetOrders": 4,
         "targetMonth": "2018-01"
     }
 ]
