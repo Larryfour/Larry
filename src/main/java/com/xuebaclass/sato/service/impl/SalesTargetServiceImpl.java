@@ -2,8 +2,10 @@ package com.xuebaclass.sato.service.impl;
 
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.SalesTargetMapper;
+import com.xuebaclass.sato.mapper.sato.SalesMapper;
 import com.xuebaclass.sato.model.SalesTarget;
 import com.xuebaclass.sato.model.request.SalesTargetRequest;
+import com.xuebaclass.sato.model.response.SalesTargetResponse;
 import com.xuebaclass.sato.service.SalesTargetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +29,29 @@ public class SalesTargetServiceImpl implements SalesTargetService {
     @Resource
     private SalesTargetMapper salesTargetMapper;
 
+    @Resource
+    private SalesMapper salesMapper;
+
     @Override
-    public List<SalesTarget> getSalesMonthTarget(String targetMonth) {
+    public List<SalesTargetResponse> getSalesMonthTarget(String targetMonth) {
         logger.info(String.format("get sales month[%s] target", targetMonth));
 
-        return salesTargetMapper.getTargets(targetMonth);
+        List<SalesTargetResponse> responses = new ArrayList<>();
+
+        List<SalesTarget> targets = salesTargetMapper.getTargets(targetMonth);
+
+        targets.forEach((t) -> {
+            SalesTargetResponse response = new SalesTargetResponse();
+            response.setId(t.getId());
+            response.setSalesId(t.getSalesId());
+            response.setTargetAmount(t.getTargetAmount());
+            response.setTargetOrders(t.getTargetOrders());
+            response.setTargetMonth(t.getTargetMonth());
+            response.setSalesName(salesMapper.get(t.getSalesId()).getName());
+            responses.add(response);
+        });
+
+        return responses;
     }
 
     @Override

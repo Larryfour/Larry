@@ -1,7 +1,7 @@
 package com.xuebaclass.sato.service;
 
-import com.xuebaclass.sato.model.SalesTarget;
 import com.xuebaclass.sato.model.request.SalesTargetRequest;
+import com.xuebaclass.sato.model.response.SalesTargetResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface SalesTargetService {
 
-    List<SalesTarget> getSalesMonthTarget(String targetMonth);
+    List<SalesTargetResponse> getSalesMonthTarget(String targetMonth);
 
     void setSalesMonthTarget(SalesTargetRequest request) throws Exception;
 }

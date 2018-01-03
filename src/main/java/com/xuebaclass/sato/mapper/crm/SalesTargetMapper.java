@@ -1,6 +1,5 @@
 package com.xuebaclass.sato.mapper.crm;
 
-import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.SalesTarget;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
