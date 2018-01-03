@@ -78,7 +78,7 @@ public class SalesTargetServiceImpl implements SalesTargetService {
             });
         }
 
-        List<SalesTarget> createTargets = request.getCreateTargets();
+        List<SalesTargetRequest.CreateSalesTarget> createTargets = request.getCreateTargets();
         if (nonNull(createTargets)) {
             createTargets.forEach((c) -> {
                 SalesTarget existTarget = salesTargetMapper.getBySalesIdAndMonth(c.getSalesId(), request.getTargetMonth());

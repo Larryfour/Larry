@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SalesTargetRequest {
 
-    class CreateSalesTarget extends SalesTarget{
+    public class CreateSalesTarget extends SalesTarget{
         private String salesName;
 
         public String getSalesName() {
