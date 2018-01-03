@@ -1788,7 +1788,8 @@ POST /sales-crm/sales/target
         {
             "salesId": 12,
             "targetAmount": 9000,
-            "targetOrders": 5
+            "targetOrders": 5,
+            "salesName": "张三"
         }
     ],
     "deleteTargetIds": [

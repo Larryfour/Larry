@@ -8,9 +8,22 @@ import java.util.List;
  * Created by sunhao on 2017-10-18.
  */
 public class SalesTargetRequest {
+
+    class CreateSalesTarget extends SalesTarget{
+        private String salesName;
+
+        public String getSalesName() {
+            return salesName;
+        }
+
+        public void setSalesName(String salesName) {
+            this.salesName = salesName;
+        }
+    }
+
     private String targetMonth;
     private List<SalesTarget> updateTargets;
-    private List<SalesTarget> createTargets;
+    private List<CreateSalesTarget> createTargets;
     private List<Integer> deleteTargetIds;
 
     public String getTargetMonth() {
@@ -29,11 +42,11 @@ public class SalesTargetRequest {
         this.updateTargets = updateTargets;
     }
 
-    public List<SalesTarget> getCreateTargets() {
+    public List<CreateSalesTarget> getCreateTargets() {
         return createTargets;
     }
 
-    public void setCreateTargets(List<SalesTarget> createTargets) {
+    public void setCreateTargets(List<CreateSalesTarget> createTargets) {
         this.createTargets = createTargets;
     }
 
