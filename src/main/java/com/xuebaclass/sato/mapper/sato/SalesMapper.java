@@ -28,4 +28,11 @@ public interface SalesMapper {
 	@Select("SELECT * FROM SALES WHERE STATUS = 0")
 	List<Sales> getSales();
 
+	/**
+	 * @param
+	 * @return
+	 */
+	@Select("SELECT * FROM SALES WHERE GROUP_ID <> 0 AND STATUS = 0")
+	List<Sales> getTelephoneSales();
+
 }

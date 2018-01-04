@@ -1,7 +1,7 @@
 package com.xuebaclass.sato.controller;
 
 import com.xuebaclass.sato.model.request.SalesTargetRequest;
-import com.xuebaclass.sato.service.SalesTargetService;
+import com.xuebaclass.sato.service.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("sales")
 public class SalesController {
     @Autowired
-    private SalesTargetService salesTargetService;
+    private SalesService salesService;
 
     /**
      * 根据月份获取月目标
@@ -22,7 +22,7 @@ public class SalesController {
      */
     @GetMapping(value = "/{targetMonth}/target")
     public ResponseEntity getSalesMonthTarget(@PathVariable(value = "targetMonth") String targetMonth) {
-        return ResponseEntity.ok(salesTargetService.getSalesMonthTarget(targetMonth));
+        return ResponseEntity.ok(salesService.getSalesMonthTarget(targetMonth));
     }
 
     /**
@@ -32,7 +32,17 @@ public class SalesController {
      */
     @PostMapping(value = "/target")
     public ResponseEntity setSalesMonthTarget(@RequestBody SalesTargetRequest request) throws Exception {
-        salesTargetService.setSalesMonthTarget(request);
-        return ResponseEntity.ok(salesTargetService.getSalesMonthTarget(request.getTargetMonth()));
+        salesService.setSalesMonthTarget(request);
+        return ResponseEntity.ok(salesService.getSalesMonthTarget(request.getTargetMonth()));
+    }
+
+    /**
+     * 根据月份获取月目标
+     *
+     * @return
+     */
+    @GetMapping(value = "/telephone")
+    public ResponseEntity getTelephoneSales() throws Exception {
+        return ResponseEntity.ok(salesService.getTelephoneSales());
     }
 }

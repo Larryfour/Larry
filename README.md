@@ -1827,5 +1827,43 @@ RESP:
 ]
 ```
 
+### 获取电话销售销售列表
+REQ:
+  
+GET /sales-crm/sales/telephone
+```json
+
+```
+
+RESP:
+```json
+[
+    {
+        "id": "4",
+        "createdDate": "2017-08-22T04:06:32Z",
+        "createdBy": "sato:user:no-user",
+        "lastModifiedDate": "2017-08-22T04:06:32Z",
+        "lastModifiedBy": "sato:user:no-user",
+        "version": 0,
+        "name": "巩学枝",
+        "userName": "gongxuezhi",
+        "mobile": "18518486086",
+        "groupId": 1
+    },
+    {
+        "id": "7",
+        "createdDate": "2017-08-22T04:06:32Z",
+        "createdBy": "sato:user:no-user",
+        "lastModifiedDate": "2017-08-22T04:06:32Z",
+        "lastModifiedBy": "sato:user:no-user",
+        "version": 0,
+        "name": "刘香媛",
+        "userName": "liuxiangyuan",
+        "mobile": "13810336820",
+        "groupId": 1
+    }
+]
+```
+
 
 

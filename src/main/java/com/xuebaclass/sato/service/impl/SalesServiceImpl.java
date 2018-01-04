@@ -3,10 +3,11 @@ package com.xuebaclass.sato.service.impl;
 import com.xuebaclass.sato.exception.CrmException;
 import com.xuebaclass.sato.mapper.crm.SalesTargetMapper;
 import com.xuebaclass.sato.mapper.sato.SalesMapper;
+import com.xuebaclass.sato.model.Sales;
 import com.xuebaclass.sato.model.SalesTarget;
 import com.xuebaclass.sato.model.request.SalesTargetRequest;
 import com.xuebaclass.sato.model.response.SalesTargetResponse;
-import com.xuebaclass.sato.service.SalesTargetService;
+import com.xuebaclass.sato.service.SalesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ import static java.util.Objects.nonNull;
 
 @Transactional
 @Service
-public class SalesTargetServiceImpl implements SalesTargetService {
-    private static final Logger logger = LoggerFactory.getLogger(SalesTargetServiceImpl.class);
+public class SalesServiceImpl implements SalesService {
+    private static final Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
 
     @Resource
     private SalesTargetMapper salesTargetMapper;
@@ -89,5 +90,10 @@ public class SalesTargetServiceImpl implements SalesTargetService {
                 salesTargetMapper.create(c);
             });
         }
+    }
+
+    @Override
+    public List<Sales> getTelephoneSales() throws Exception {
+        return salesMapper.getTelephoneSales();
     }
 }
