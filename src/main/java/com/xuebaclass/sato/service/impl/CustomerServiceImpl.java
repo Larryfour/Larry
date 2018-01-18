@@ -21,6 +21,7 @@ import com.xuebaclass.sato.model.response.PayingCustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
 import com.xuebaclass.sato.utils.CurrentUser;
 import com.xuebaclass.sato.utils.Utils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -383,4 +384,20 @@ public class CustomerServiceImpl implements CustomerService {
             dynamicRecordMapper.create(record);
         }
     }
+
+	@Override
+	public Customer getById1(String id) {
+		// TODO Auto-generated method stub
+		return customerMapper.getById1(id);
+	}
+	
+	
+	
+	
+	@Override
+	public Page<Customer> getTry(Pageable pageable, Customer request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

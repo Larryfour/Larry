@@ -244,7 +244,6 @@ public class BpmnServiceImpl implements BpmnService {
             logger.info("get nim account error:[" + e.getResponseBodyAsString() + "]");
             throw new CrmException(e.getResponseBodyAsString());
         }
-
     }
 
     private Map<String, String> textVariable(String name, String value) {

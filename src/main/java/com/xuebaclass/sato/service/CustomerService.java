@@ -9,6 +9,7 @@ import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.model.response.DistributionResponse;
 import com.xuebaclass.sato.model.response.PayingCustomersResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -33,5 +34,9 @@ public interface CustomerService {
     Page<PayingCustomersResponse> getMyselfPayingCustomers(Pageable pageable, PayingCustomersRequest request) throws Exception;
 
     DistributionResponse distribution(DistributionRequest request) throws Exception;
+
+    Customer getById1(String id);
+
+	Page<Customer> getTry(Pageable pageable, Customer request);
 
 }

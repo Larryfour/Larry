@@ -10,8 +10,11 @@ import com.xuebaclass.sato.model.request.DistributionRequest;
 import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.model.response.PayingCustomersResponse;
+
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
@@ -636,4 +639,8 @@ public interface CustomerMapper {
      */
     @Select("SELECT * FROM CUSTOMER WHERE XUEBA_NO = #{xuebaNo}")
     Customer getCustomerByXuebaNo(@Param("xuebaNo") Integer xuebaNo);
+    
+    @Select("SELECT * FROM CUSTOMER WHERE ID = #{id}")
+	Customer getById1(String id);
+    
 }

@@ -9,6 +9,7 @@ import com.xuebaclass.sato.model.request.PayingCustomersRequest;
 import com.xuebaclass.sato.model.response.CustomersResponse;
 import com.xuebaclass.sato.model.response.PayingCustomersResponse;
 import com.xuebaclass.sato.service.CustomerService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-
     /**
      * 创建客户
      *
@@ -105,9 +105,9 @@ public class CustomerController {
     @GetMapping(value = "/myself")
     public ResponseEntity<PagedResources<Resource<CustomersResponse>>>
     getMyselfCustomers(@PageableDefault Pageable pageable,
-                       PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, CustomersMyselfRequest request) throws Exception {
+            PagedResourcesAssembler<CustomersResponse> pagedResourcesAssembler, CustomersMyselfRequest request) throws Exception {
         logger.info("################### get customers for myself  #######################");
-
+        
         Page<CustomersResponse> customers = customerService.getMyselfCustomers(pageable, request);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
@@ -141,5 +141,18 @@ public class CustomerController {
         Page<PayingCustomersResponse> customers = customerService.getPayingCustomers(pageable, request);
         return ResponseEntity.ok(pagedResourcesAssembler.toResource(customers));
     }
+    
+    
+    
+    /**
+     * 根据客户id，获取客户内容
+     *
+     * @return
+     */
+    @GetMapping(value = "/find/{id}")
+    public ResponseEntity getById1(@PathVariable String id) throws Exception {
+        logger.info("################### get customer info by id1 #######################");
 
+        return ResponseEntity.ok(customerService.getById1(id));
+    }
 }
